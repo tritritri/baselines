@@ -1,6 +1,7 @@
 package com.baseline.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -108,8 +109,16 @@ public class EnergyHourly {
 	 * @return element from the start time (from) to the end time (maxDate) 
 	 */
 	public String toStringAsc(long from, long to){
+	
+		
 		String result = "";
 		
+		ArrayList<String> arrString = toArrStringAsc(from, to);
+		for (int i=0; i<arrString.size(); i++){
+			result = result + arrString.get(i) + "\n";
+		}
+		
+		/*
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		// loop from minDate to maxDate
 		Calendar currCal = Calendar.getInstance();
@@ -122,11 +131,44 @@ public class EnergyHourly {
 			}
 			// advance one hour
 			currCal.add(Calendar.HOUR_OF_DAY, 1);
-		}		
+		}
+		*/
+		
 		return result;
 	}
 	
-	
+
+	/**
+	 * Convert each element having key between from and to (inclusive) into string.
+	 * @param from starting key
+	 * @param to ending key
+	 * @return an array (list) of string representation the element
+	 */
+	public ArrayList<String> toArrStringAsc(long from, long to){
+		
+		// initialize the result structure
+		ArrayList<String> result = new ArrayList<String>();
+		
+		// loop from minDate to maxDate
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		Calendar currCal = Calendar.getInstance();
+		currCal.setTimeInMillis(from);		
+		while (currCal.getTimeInMillis() <= to) {
+			
+			// get the element
+			Double energy = data.get(currCal.getTimeInMillis());
+			
+			// check if the reading for current time is exist
+			if (energy!=null){
+				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + energy);
+			}
+			
+			// advance one hour
+			currCal.add(Calendar.HOUR_OF_DAY, 1);
+		}		
+		return result;
+	}
+
 	
 	/**
 	 * Copy data to destination. Between from and to (inclusive), hourly advances.

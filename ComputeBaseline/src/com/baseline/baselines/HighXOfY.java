@@ -280,4 +280,11 @@ public class HighXOfY implements Baseline{
 		}
 		
 	}
+
+
+	@Override
+	public ArrayList<String> getResultString() {
+		return baseline.toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+		
+	}
 }
