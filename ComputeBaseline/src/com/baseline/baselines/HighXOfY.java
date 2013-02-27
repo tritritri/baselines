@@ -1,9 +1,6 @@
 package com.baseline.baselines;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -68,7 +65,7 @@ public class HighXOfY implements Baseline{
 			Util.setCalToEndOfTheDay(endCal);
 			
 			// read the file input
-			readInput(input);
+			Util.hourlyCSVToSensorReadings(input, this.data);
 
 			// copy the original data for the baseline calculation
 			data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline);
@@ -226,37 +223,6 @@ public class HighXOfY implements Baseline{
 	}
 
 
-	private void readInput(String fileInput) {
-		try {
-			
-			// read file
-			BufferedReader in = new BufferedReader(new FileReader(fileInput));
-			String line = null;  
-			// read all lines
-			while ( (line=in.readLine()) != null ){
-				String[] lineArray = line.split(",");
-				
-				// first element is date, second element is hour
-				Calendar dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
-				
-				// third element is reading
-				double kWh = Double.parseDouble(lineArray[2]);
-				
-				// put the data 
-				data.insert(dateCal.getTimeInMillis(), kWh);
-			}
-			
-			in.close();
-			//.. System.out.println(data);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
 
 
 	@Override

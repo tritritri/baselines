@@ -19,8 +19,6 @@ public class Test {
 		
 		failedCount += t.run();
 		
-		
-		
 		t = new TestDays(3);
 		failedCount += t.run();
 		

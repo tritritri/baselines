@@ -1,5 +1,8 @@
 package com.baseline.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,5 +114,36 @@ public class Util {
 
 	}
 	
-	
+	public static void hourlyCSVToSensorReadings(String fileInput, SensorReadings data) {
+		try {
+			
+			// read file
+			BufferedReader in = new BufferedReader(new FileReader(fileInput));
+			String line = null;  
+			// read all lines
+			while ( (line=in.readLine()) != null ){
+				String[] lineArray = line.split(",");
+				
+				// first element is date, second element is hour
+				Calendar dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
+				
+				// third element is reading
+				double kWh = Double.parseDouble(lineArray[2]);
+				
+				// put the data 
+				data.insert(dateCal.getTimeInMillis(), kWh);
+			}
+			
+			in.close();
+			//.. System.out.println(data);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
 }

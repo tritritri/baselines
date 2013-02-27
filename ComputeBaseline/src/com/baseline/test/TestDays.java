@@ -47,8 +47,9 @@ public class TestDays {
 			
 			// Run test for several baselines
 			String[] baseline={"PJMEco", "CAISO", "NYISO", "Mid4Of6"};
-			String fileInput="examples/input-example.txt";
-			String fileRefDir = "examples/tests/";
+			String dirSep = System.getProperty("file.separator");
+			String fileInput="examples" + dirSep + "input-example.txt";
+			String fileRefDir = "examples" + dirSep + "tests" + dirSep;
 			
 			String baselinePackage="com.baseline.baselines";
 			
