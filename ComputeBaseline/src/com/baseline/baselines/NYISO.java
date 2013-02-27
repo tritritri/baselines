@@ -1,5 +1,10 @@
 package com.baseline.baselines;
-
+/**
+ * Implement NYISO baseline.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
+ */
 public class NYISO extends HighXOfY implements Baseline{
 	public NYISO () {
 		

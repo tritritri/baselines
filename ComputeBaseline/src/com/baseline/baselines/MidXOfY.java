@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.baseline.util.Util;
-
+/**
+ * Generic class for Middle X out of Y days baseline.
+ * Such as: Mid4Of6.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.27
+ */
 public class MidXOfY extends HighXOfY implements Baseline{
 	public MidXOfY () {
 		

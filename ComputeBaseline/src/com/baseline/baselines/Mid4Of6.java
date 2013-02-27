@@ -1,6 +1,11 @@
 package com.baseline.baselines;
 
-
+/**
+ * Implement Mid4Of6 baseline.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.03.27
+ */
 public class Mid4Of6 extends MidXOfY implements Baseline{
 	public Mid4Of6 () {
 		

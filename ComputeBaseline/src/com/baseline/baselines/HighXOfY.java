@@ -17,12 +17,11 @@ import com.baseline.util.EnergyHourly;
 import com.baseline.util.Util;
 
 /**
- * Class to compute PJM Economic baseline
- * from startDate
- * to endDate
+ * Basic class for Highest X out of Y days type of baseline.
+ * Such as: PJM Economic, CAISO, and NYISO.
  * 
- * created 2013.02.23
- * @author tritritri
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
  *
  */
 public class HighXOfY implements Baseline{
@@ -263,7 +262,7 @@ public class HighXOfY implements Baseline{
 	@Override
 	public void writeResult(PrintStream out) {
 
-		out.println(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+		out.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 
 	}
 
@@ -273,7 +272,7 @@ public class HighXOfY implements Baseline{
 		PrintWriter fileOut;
 		try {
 			fileOut = new PrintWriter(fileName);
-			fileOut.println(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+			fileOut.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 			fileOut.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -4,10 +4,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 /**
- * Interface for all baselines
+ * Interface for all baselines.
  * 
- * @author tritritri
- * created: 2013.02.23
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
  */
 public interface Baseline {
 	

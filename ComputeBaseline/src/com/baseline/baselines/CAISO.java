@@ -1,5 +1,11 @@
 package com.baseline.baselines;
-
+/**
+ * Implement CAISO baseline.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
+ *
+ */
 public class CAISO extends HighXOfY implements Baseline{
 	public CAISO () {
 		

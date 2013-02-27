@@ -14,7 +14,12 @@ import org.apache.commons.cli.PosixParser;
 import com.baseline.baselines.Baseline;
 import com.baseline.constants.Constants;
  
-
+/**
+ * Main class for computing baselines.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
+ */
 public class ComputeBaseline {
 
 	/**

@@ -1,5 +1,12 @@
 package com.baseline.baselines;
 
+/**
+ * Implement PJM Economic baseline.
+ * 
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
+ *
+ */
 public class PJMEco extends HighXOfY implements Baseline{
 	public PJMEco () {
 		
