@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.baseline.constants.Constants;
-import com.baseline.util.EnergyHourly;
+import com.baseline.util.SensorReadings;
 import com.baseline.util.Util;
 
 /**
@@ -28,8 +28,8 @@ public class HighXOfY implements Baseline{
 	
 	private Calendar startCal;
 	private Calendar endCal;
-	private EnergyHourly data;
-	protected EnergyHourly baseline;
+	private SensorReadings data;
+	protected SensorReadings baseline;
 	protected int WEEKDAY_X;
 	protected int WEEKDAY_Y;
 	protected int WEEKEND_X;
@@ -42,8 +42,8 @@ public class HighXOfY implements Baseline{
 		
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();
-		data = new EnergyHourly();
-		baseline = new EnergyHourly();
+		data = new SensorReadings();
+		baseline = new SensorReadings();
 		
 		
 	}
@@ -71,7 +71,7 @@ public class HighXOfY implements Baseline{
 			readInput(input);
 
 			// copy the original data for the baseline calculation
-			data.copy(data.getMinDate(), data.getMaxDate(), baseline);
+			data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline);
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
@@ -182,7 +182,7 @@ public class HighXOfY implements Baseline{
 				result.add(source);	
 			
 				// get the average of that day
-				avgs.add(baseline.getAvgDay(tempCal));
+				avgs.add(baseline.getAvgOneDayHourly(tempCal));
 				count ++;
 			}
 		}

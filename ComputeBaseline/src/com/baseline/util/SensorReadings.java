@@ -10,32 +10,26 @@ import java.util.Iterator;
 import com.baseline.constants.Constants;
 
 /**
- * A hash map data structure, stores date (as Long) as its key, and energy as its value (as Double)
- * Semantics: The key is date up to hours granularity. 
+ * A hash map data structure, stores timestamp (as Long) as its key, and sensor reading as its value (as Double)
  * The value is energy consumed during that hour.
  * If minDate is set (see setMinDate), method insert will accept only the date after minDate
  *   
- * @author tritritri
- * created: 2013.02.23
+ * @author Tri Kurniawan Wijaya
+ * @date   2013.02.23
  */
-public class EnergyHourly {
+public class SensorReadings {
 	
 	HashMap<Long,Double> data;
 	long maxDate;
 	long minDate;
 	
 	
-	public EnergyHourly(){
+	public SensorReadings(){
 		data = new HashMap<Long,Double>();
 		maxDate = 0;
 		minDate = 0;
 	}
 	
-	/*
-	public void setMinDate(Date minDate){
-		this.minDate = minDate.getTime();
-	}
-	*/
 	
 	/**
 	 * Inserting date and energy.
@@ -44,19 +38,6 @@ public class EnergyHourly {
 	 * @param energy
 	 */
 	public void insert(Long date, double energy){
-		
-		/*
-		// check if the minDate is set
-		if (this.minDate != null){
-			// if yes, then compare the date inserted
-			// if earlier than minDate, reject
-			if (date.getTime() < minDate){
-				return;
-			}
-		}
-		
-		// if minDate=null or date inserted >= minDate		
-		 */
 		
 		data.put(date, energy);
 		if (data.size() == 1) {
@@ -118,22 +99,6 @@ public class EnergyHourly {
 			result = result + arrString.get(i) + "\n";
 		}
 		
-		/*
-		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
-		// loop from minDate to maxDate
-		Calendar currCal = Calendar.getInstance();
-		currCal.setTimeInMillis(from);		
-		while (currCal.getTimeInMillis() <= to) {
-			Double energy = data.get(currCal.getTimeInMillis());
-			// check if the reading for current time is exist
-			if (energy!=null){
-				result = result + formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + energy +"\n";
-			}
-			// advance one hour
-			currCal.add(Calendar.HOUR_OF_DAY, 1);
-		}
-		*/
-		
 		return result;
 	}
 	
@@ -175,9 +140,8 @@ public class EnergyHourly {
 	 * @param from starting point of the copy
 	 * @param to ending point of the copy
 	 * @param destination target collection
-	 */
-	
-	public void copy(long from, long to, EnergyHourly destination) {
+	 */	
+	public void copyHourly(long from, long to, SensorReadings destination) {
 		Calendar currCal = Calendar.getInstance();
 		currCal.setTimeInMillis(from);
 		while (currCal.getTimeInMillis() <= to) {
@@ -186,12 +150,13 @@ public class EnergyHourly {
 		}		
 	}
 
+	
 	/**
-	 * Get average energy reading for a day 
+	 * Get average readings for a day from each one hour reading
 	 * @param targetCal compute average for this day
 	 * @return
 	 */
-	public double getAvgDay(Calendar targetCal) {
+	public double getAvgOneDayHourly(Calendar targetCal) {
 		// initialize the counter 
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
