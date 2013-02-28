@@ -35,7 +35,8 @@ public class YahooWeatherDataReader {
 	 * Query Yahoo weather service and return tomorrow temperature forecast.
 	 * 
 	 * @param WOEID
-	 * @return a TemperatureForecast object containing the target day, the min temperature and the max temperature
+	 * @return a TemperatureForecast object containing the target day, the min temperature
+	 * and the max temperature, or null in case of error
 	 */
 	public TemperatureForecast get1DayForecast(String location) {
 		
@@ -76,16 +77,19 @@ public class YahooWeatherDataReader {
 			// TODO
 			// Check unit of measurements of temp
 			
-			Node yweatherForecast = getNodes("yweather:forecast", item.getChildNodes()).get(1);
+			List<Node> yweatherForecastNodes = getNodes("yweather:forecast", item.getChildNodes()); 
+			if(yweatherForecastNodes.size() == 2){
+				Node yweatherForecast = yweatherForecastNodes.get(1);
 			
-			try {
-				Date date = new SimpleDateFormat("dd MMM yyyy").parse(getNodeAttr("date", yweatherForecast));
-				double minTempInF = Double.valueOf(getNodeAttr("low", yweatherForecast));
-				double maxTempInF = Double.valueOf(getNodeAttr("high", yweatherForecast));
-				return new TemperatureForecast(date, minTempInF, maxTempInF);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return null;
+				try {
+					Date date = new SimpleDateFormat("dd MMM yyyy").parse(getNodeAttr("date", yweatherForecast));
+					double minTempInF = Double.valueOf(getNodeAttr("low", yweatherForecast));
+					double maxTempInF = Double.valueOf(getNodeAttr("high", yweatherForecast));
+					return new TemperatureForecast(date, minTempInF, maxTempInF);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		}
 		return null;
