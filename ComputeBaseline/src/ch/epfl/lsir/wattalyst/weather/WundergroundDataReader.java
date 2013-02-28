@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +20,11 @@ import de.mbenning.weather.wunderground.api.domain.WeatherStation;
 import de.mbenning.weather.wunderground.impl.services.HttpDataReaderService;
 import de.mbenning.weather.wunderground.impl.services.WeatherStationService;
 
+/**
+ * 
+ * @author vasirani
+ *
+ */
 public class WundergroundDataReader {
 
 	private HttpDataReaderService dataReader;
