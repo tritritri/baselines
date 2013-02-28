@@ -27,6 +27,9 @@ public class HighXOfY implements Baseline{
 	private Calendar endCal;
 	private SensorReadings data;
 	protected SensorReadings baseline;
+	
+	// choose X out of Y days
+	
 	protected int WEEKDAY_X;
 	protected int WEEKDAY_Y;
 	protected int WEEKEND_X;
@@ -41,7 +44,6 @@ public class HighXOfY implements Baseline{
 		endCal = Calendar.getInstance();
 		data = new SensorReadings();
 		baseline = new SensorReadings();
-		
 		
 	}
 	

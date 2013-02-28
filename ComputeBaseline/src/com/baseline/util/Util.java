@@ -61,6 +61,17 @@ public class Util {
 	}
 
 	/**
+	 * Set minute to 59, second to 59, millisecond to 999
+	 * @param calendar
+	 */
+	public static void setToBeginningOfTheHour(Calendar calendar) {
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
+	}
+
+	/**
 	 * Return the index of the minimum vale
 	 * 
 	 * @param avgs
