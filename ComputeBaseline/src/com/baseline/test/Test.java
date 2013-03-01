@@ -22,8 +22,11 @@ public class Test {
 		t = new TestDays(3);
 		failedCount += t.run();
 		
+		TestRegression tR = new TestRegression();
+		failedCount += tR.run();
+		
 		if ( failedCount == 0 ){
-			System.out.println("All tests succeed.");
+			System.out.println("All tests are passed.");
 		} else 
 		if (failedCount == 1) {
 			System.out.println("1 test failed.");

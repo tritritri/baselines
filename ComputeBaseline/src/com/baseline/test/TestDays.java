@@ -1,21 +1,17 @@
 package com.baseline.test;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.baseline.baselines.Baseline;
 import com.baseline.constants.Constants;
 
 /**
  * Test baselines on X days
  * 
- * @author tritritri
+ * @author Tri Kurniawan Wijaya
  * created: 2013.02.27
  */
 public class TestDays {
@@ -38,6 +34,7 @@ public class TestDays {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 * @throws IOException 
+	 * @return the number of failed test
 	 */
 	public int run() {
 		
@@ -66,13 +63,9 @@ public class TestDays {
 			// check baselines one by one
 			for (int i=0; i<baseline.length; i++){
 				String fileRef =  fileRefDir+ "z" + numOfDays + "-" + baseline[i] + "-" + startDateStr + ".txt";
-				String msg = "Test "+ "z" + numOfDays + "-" + baseline[i] + "-"+ startDateStr;
-				if (testBaselines(baselinePackage+"."+baseline[i], fileInput, startDateStr, endDateStr, fileRef)){
-					System.out.println(msg+": passed");
-				} else {
-					System.out.println(msg+": failed");
+				if (UtilForTest.testBaselines(baselinePackage+"."+baseline[i], fileInput, startDateStr, endDateStr, fileRef)==false ){
 					failedCount++;
-				}
+				} 
 			}
 			
 		} catch (ParseException | InstantiationException | IllegalAccessException
@@ -84,49 +77,6 @@ public class TestDays {
 		
 	}
 
-	/**
-	 * Test each baseline
-	 * @param baseline Baseline being tested
-	 * @param fileInput input file contains the historical load data
-	 * @param dateStr the target date of the baseline computation
-	 * @param fileReference text file contain the expected answer
-	 * @return
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws IOException
-	 */
-	private boolean testBaselines(String baseline, String fileInput, String startDateStr, String endDateStr, String fileReference) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
-
-		// build the baseline
-		Baseline b = (Baseline) Class.forName(baseline).newInstance(); 
-		b.compute(fileInput, startDateStr, endDateStr);
-		
-		// get the result
-		ArrayList<String> arrResult = b.getResultString();
-		
-		// open the reference
-		BufferedReader in = new BufferedReader(new FileReader(fileReference));
-
-		// compare the result with the reference
-		String line = null;
-		int i=0;
-		while ((line = in.readLine()) != null ){
-			if (i>=arrResult.size()) {
-				System.err.println("[Test] The number of lines in "+ fileReference +" and size of result is mismatch");
-				in.close();
-				return false;
-			}
-			if (!line.equals(arrResult.get(i))){
-				System.err.println("[Test] Mismatch in line "+(i+1));
-				in.close();
-				return false;
-			}
-			i++;
-		}
-		in.close();
-		return true;
-	}
 
 
 }

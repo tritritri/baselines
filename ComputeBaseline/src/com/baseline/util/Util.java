@@ -157,4 +157,42 @@ public class Util {
 		
 	}
 
+	
+	/**
+	 * Compare file text line by line against an array list of string element by element.
+	 * "Equal" if line i in the file is equal to element i in the array if their, for i=all lines in the file.
+	 *  
+	 * @param fileName
+	 * @param arrString
+	 * @return file size + 1 (the number of lines + 1, hence the size of the array + 1) if the file and the array is equal.
+	 * 1 up to file size denoted the mismatched line
+	 * -1 if the file and the array does not have the same size  
+	 */
+	public static int isEqual(String fileName, ArrayList<String> arrString){
+		
+		int i=0;
+		try {
+			// open the file
+			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			// compare the result with the reference
+			String line = null;
+			while ((line = in.readLine()) != null ){
+				if (i>=arrString.size()) {
+					in.close();
+					return -1;
+				}
+				if (!line.equals(arrString.get(i))){
+					in.close();
+					return i+1;
+				}
+				i++;
+			}
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return i+1;
+
+	}
 }
