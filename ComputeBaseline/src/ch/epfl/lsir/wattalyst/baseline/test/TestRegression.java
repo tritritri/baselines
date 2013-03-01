@@ -27,9 +27,11 @@ public class TestRegression {
 		
 		try {
 			baseline="ch.epfl.lsir.wattalyst.baseline.baselines.Regression";
-			fileInput = examplesDir+"load-dummy.txt,"+examplesDir+"temp-dummy.txt,"+
-						examplesDir+"algLinearRegression.txt";
+			// fileInput = examplesDir+"load-dummy.txt,"+examplesDir+"temp-dummy.txt,"+
+			//			examplesDir+"algLinearRegression.txt";
 
+			fileInput = "config-reg.txt";
+			
 			startDateStr = "2013-02-15"; 
 			endDateStr = "2013-02-15";
 			fileRef = testsDir + "z1-Regression-2013-02-15.txt";

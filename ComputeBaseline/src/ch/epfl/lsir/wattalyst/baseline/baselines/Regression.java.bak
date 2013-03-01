@@ -1,10 +1,8 @@
 package ch.epfl.lsir.wattalyst.baseline.baselines;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -12,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
 
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -44,12 +41,12 @@ public class Regression implements Baseline{
 	private int WEEKDAY_LAG;
 	private int WEEKEND_LAG;
 
+	// data structure for features/context
+	private SensorReadings temp;
+	
 	// data structure for target variables / baseline to compute
 	private SensorReadings data; // original data
 	private SensorReadings baseline; // will be developed as the baseline
-	
-	// data structure for features/context
-	private SensorReadings temp;
 	
 	private String contextFileName;
 	private String algFileName;
@@ -82,22 +79,12 @@ public class Regression implements Baseline{
 		
 		try {
 
-			// get all configuration for regression
-			Properties prop = new Properties();
-			prop.load(new FileInputStream(input));
+			// parse file input data.txt,temp.txt
+			String[] fileNames = input.split(",");
+			String dataFileName = fileNames[0].trim();
+			this.contextFileName = fileNames[1].trim();
+			this.algFileName = fileNames[2].trim();
 			
-			// get files for energy, context (temperature), and algorithm 
-			String dataFileName = prop.getProperty("energy-file");
-			this.contextFileName = prop.getProperty("temperature-file");
-			this.algFileName = prop.getProperty("algorithm-file");
-			
-			// get features parameter (for learning)
-			this.WEEKDAY_Y = Integer.parseInt(prop.getProperty("history-weekday"));
-			this.WEEKEND_Y = Integer.parseInt(prop.getProperty("history-weekend"));
-			this.WEEKDAY_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
-			this.WEEKEND_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
-			
-			// set start and end target date
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 			startCal.setTime(formatter.parse(startDate));
 			Util.setToTheBeginningOfTheDay(startCal);
@@ -150,7 +137,7 @@ public class Regression implements Baseline{
 			// done computing baseline
 
 
-		} catch (ParseException | IOException e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
@@ -237,7 +224,6 @@ public class Regression implements Baseline{
 			if (VERBOSE==1) System.out.println("new instance: " + newInst.toString());
 			
 			double cPredict = c.classifyInstance(newInst);
-			cPredict =  Math.round(cPredict * 100000) / 100000;
 			if (VERBOSE==1) System.out.println(cPredict);
 
 			Util.setToTheBeginningOfTheHour(cal);			
