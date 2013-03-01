@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.baseline.util.SensorReadings;
+import com.baseline.util.Util;
+
 
 /**
  * 
@@ -32,15 +36,15 @@ public class YahooWeatherDataReader {
 	private static final double FAHRENHEIT_TO_CELSIUS = -17.22222222222222;
 
 	/**
-	 * Query Yahoo weather service and return tomorrow temperature forecast.
+	 * Invoke Yahoo weather service and return temperature data.
 	 * 
-	 * @param WOEID
-	 * @return a TemperatureForecast object containing the target day, the min temperature
-	 * and the max temperature, or null in case of error
+	 * @param place
+	 * @return a SensorReadings object containing average temperature data for today
+	 * and tomorrow
 	 */
-	public TemperatureForecast get1DayForecast(String location) {
+	public SensorReadings getTemperatureData(String place) {
 		
-		String WOEID = getWOEIDForSpecificPlace(location);
+		String WOEID = getWOEIDForSpecificPlace(place);
 		
 		if(WOEID != null){
 			
@@ -79,17 +83,9 @@ public class YahooWeatherDataReader {
 			
 			List<Node> yweatherForecastNodes = getNodes("yweather:forecast", item.getChildNodes()); 
 			if(yweatherForecastNodes.size() == 2){
-				Node yweatherForecast = yweatherForecastNodes.get(1);
-			
-				try {
-					Date date = new SimpleDateFormat("dd MMM yyyy").parse(getNodeAttr("date", yweatherForecast));
-					double minTempInF = Double.valueOf(getNodeAttr("low", yweatherForecast));
-					double maxTempInF = Double.valueOf(getNodeAttr("high", yweatherForecast));
-					return new TemperatureForecast(date, minTempInF, maxTempInF);
-				} catch (ParseException e) {
-					e.printStackTrace();
-					return null;
-				}
+				Node today = yweatherForecastNodes.get(0);
+				Node tomorrow = yweatherForecastNodes.get(1);
+				return createSensorReadings(today, tomorrow);
 			}
 		}
 		return null;
@@ -98,13 +94,67 @@ public class YahooWeatherDataReader {
 	/*
 	 * 
 	 */
-	private String getWOEIDForSpecificPlace(String location) {
+	private SensorReadings createSensorReadings(Node today, Node tomorrow) {
+		try {
+			
+			Date date = new SimpleDateFormat("dd MMM yyyy").parse(getNodeAttr("date", today));
+			double minTemp = Double.valueOf(getNodeAttr("low", today));
+			double maxTemp = Double.valueOf(getNodeAttr("high", today));
+			
+			SensorReadings readings = new SensorReadings();
+			double avgTemp = (maxTemp + minTemp)/2;
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			Util.setCalToStartOfTheDay(calendar);
+			for(int h = 0; h < 24; h++){
+				readings.insert(calendar.getTime().getTime(), avgTemp);
+				calendar.add(Calendar.HOUR_OF_DAY, 1);
+			}
+			
+			date = new SimpleDateFormat("dd MMM yyyy").parse(getNodeAttr("date", tomorrow));
+			minTemp = Double.valueOf(getNodeAttr("low", tomorrow));
+			maxTemp = Double.valueOf(getNodeAttr("high", tomorrow));
+			
+			avgTemp = (maxTemp + minTemp)/2;
+			calendar.setTime(date);
+			Util.setCalToStartOfTheDay(calendar);
+			for(int h = 0; h < 24; h++){
+				readings.insert(calendar.getTime().getTime(), avgTemp);
+				calendar.add(Calendar.HOUR_OF_DAY, 1);
+			}
+			return readings;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/*
+	 * Create a 24 time slots SensorReadings with the average temperature as forecast
+	 */
+	private SensorReadings createSensorReadings(Date date, double minTemp, double maxTemp) {
+		SensorReadings readings = new SensorReadings();
+		double avgTemp = (maxTemp + minTemp)/2;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		Util.setCalToStartOfTheDay(calendar);
+		for(int h = 0; h < 24; h++){
+			readings.insert(date.getTime(), avgTemp);
+			calendar.add(Calendar.HOUR_OF_DAY, 1);
+		}
+		return readings;
+	}
+
+	/*
+	 * 
+	 */
+	private String getWOEIDForSpecificPlace(String place) {
 
 		RestTemplate restTemplate = new RestTemplate();
 		String XMLresult = restTemplate
 				.getForObject(
 						"http://where.yahooapis.com/v1/places.q({location})?appid={appid}",
-						String.class, location, APPID);
+						String.class, place, APPID);
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
@@ -127,12 +177,12 @@ public class YahooWeatherDataReader {
 		NodeList root = doc.getChildNodes();
 
 		// Navigate down the hierarchy to get to the place node
-		Node places = getNode("places", root);
-		Node place = getNode("place", places.getChildNodes());
+		Node placesNode = getNode("places", root);
+		Node placeNode = getNode("place", placesNode.getChildNodes());
 
-		if(place != null){
+		if(placeNode != null){
 			// Load the woeid data from the XML
-			NodeList placeChildNodes = place.getChildNodes();
+			NodeList placeChildNodes = placeNode.getChildNodes();
 			return getNodeValue("woeid", placeChildNodes);
 		}
 		return null;
@@ -203,6 +253,6 @@ public class YahooWeatherDataReader {
 	 */
 	public static void main(String[] args) {
 		YahooWeatherDataReader reader = new YahooWeatherDataReader();
-		System.out.println(reader.get1DayForecast("Lulea"));
+		System.out.println(reader.getTemperatureData("Lulea"));
 	}
 }

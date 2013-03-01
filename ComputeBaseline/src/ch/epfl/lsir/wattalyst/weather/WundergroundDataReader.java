@@ -156,6 +156,7 @@ public class WundergroundDataReader {
 	 */
 	public SensorReadings getHourlyTemperatures(Date weatherStartDate, Date weatherEndDate, WeatherStation weatherStation) {
 		
+		// Check dates
 		Calendar calendar = Calendar.getInstance();
 		Util.setCalToStartOfTheDay(calendar);		
 		if(weatherStartDate.equals(calendar.getTime()) || weatherStartDate.after(calendar.getTime())){
@@ -181,12 +182,20 @@ public class WundergroundDataReader {
 		Util.setCalToStartOfTheDay(calendar);
 		weatherDate = calendar.getTime();
 				
+		// Retrieve hourly temperatures for all the days between start and end
 		while(weatherDate.before(weatherEndDate) || weatherDate.equals(weatherEndDate)){
 			double[] hourlyTemperaturesForDay = getHourlyTemperatures(weatherDate, weatherStation);
 			if(hourlyTemperaturesForDay != null){
 				for(int h = 0; h < hourlyTemperaturesForDay.length; h++){
 					calendar.set(Calendar.HOUR_OF_DAY, h);
 					hourlyTemperatures.insert(calendar.getTimeInMillis(), hourlyTemperaturesForDay[h]);
+				}
+			}
+			// If for a given day there are no data, fill with Double.NaN
+			else{
+				for(int h = 0; h < 24; h++){
+					calendar.set(Calendar.HOUR_OF_DAY, h);
+					hourlyTemperatures.insert(calendar.getTimeInMillis(), Double.NaN);
 				}
 			}
 			calendar.setTime(weatherDate);
