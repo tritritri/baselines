@@ -48,6 +48,7 @@ public class Regression implements Baseline{
 	private SensorReadings data; // original data
 	private SensorReadings baseline; // will be developed as the baseline
 	
+	private String contextFileName;
 	private String algFileName;
 	
 	private int VERBOSE = 0;
@@ -81,7 +82,7 @@ public class Regression implements Baseline{
 			// parse file input data.txt,temp.txt
 			String[] fileNames = input.split(",");
 			String dataFileName = fileNames[0].trim();
-			String featureFileName = fileNames[1].trim();
+			this.contextFileName = fileNames[1].trim();
 			this.algFileName = fileNames[2].trim();
 			
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
@@ -99,7 +100,7 @@ public class Regression implements Baseline{
 			
 			// read the context (feature) data, in this case: temperature
 			temp = new SensorReadings();
-			Util.hourlyCSVToSensorReadings(featureFileName, temp);
+			Util.hourlyCSVToSensorReadings(contextFileName, temp);
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
@@ -211,6 +212,11 @@ public class Regression implements Baseline{
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
 
 			// put current temp
+			if (temp.get(cal.getTimeInMillis()) == null){
+				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				System.err.println("[ERROR] [Regression] There is no context data in "+this.contextFileName+ " for "+formatter.format(cal.getTime())+".");
+				System.exit(0);
+			}
 			newInst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2), temp.get(cal.getTimeInMillis()));
 			
 			// put dummy value on the target value			
