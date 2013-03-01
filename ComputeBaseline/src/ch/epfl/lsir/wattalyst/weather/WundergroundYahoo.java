@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.baseline.util.SensorReadings;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 import de.mbenning.weather.wunderground.api.domain.WeatherStation;
 
@@ -37,13 +37,13 @@ public class WundergroundYahoo implements Temperature {
 		
 		// Save the original start and end date into the calendars
 		startCal.setTime(startDate);
-		Util.setCalToStartOfTheDay(startCal);
+		Util.setToTheBeginningOfTheDay(startCal);
 		endCal.setTime(endDate);
-		Util.setCalToEndOfTheDay(endCal);
+		Util.setToTheEndOfTheDay(endCal);
 		
 		// Set the end date for Wunderground to yesterday if it is today or in the future
 		Calendar calendar = Calendar.getInstance();
-		Util.setCalToStartOfTheDay(calendar);	
+		Util.setToTheBeginningOfTheDay(calendar);	
 		boolean invokeYahoo = false;
 		
 		Date weatherStartDate = startDate;

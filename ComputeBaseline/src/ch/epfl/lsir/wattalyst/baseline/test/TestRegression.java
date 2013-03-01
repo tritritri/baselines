@@ -26,7 +26,7 @@ public class TestRegression {
 		String testsDir = examplesDir + "tests" + dirSep;
 		
 		try {
-			baseline="com.baseline.baselines.Regression";
+			baseline="ch.epfl.lsir.wattalyst.baseline.baselines.Regression";
 			fileInput = examplesDir+"load-dummy.txt,"+examplesDir+"temp-dummy.txt,"+
 						examplesDir+"algLinearRegression.txt";
 

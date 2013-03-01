@@ -3,8 +3,8 @@ package ch.epfl.lsir.wattalyst.baseline.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.baseline.baselines.Baseline;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.baselines.Baseline;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 public class UtilForTest {
 	/**

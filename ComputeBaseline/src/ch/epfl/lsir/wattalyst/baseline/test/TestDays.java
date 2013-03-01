@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 /**
  * Test baselines on X days
@@ -48,7 +48,7 @@ public class TestDays {
 			String fileInput="examples" + dirSep + "input-example.txt";
 			String fileRefDir = "examples" + dirSep + "tests" + dirSep;
 			
-			String baselinePackage="com.baseline.baselines";
+			String baselinePackage="ch.epfl.lsir.wattalyst.baseline.baselines";
 			
 			// initial date
 			String startDateStr = "2013-02-21"; 
@@ -71,6 +71,7 @@ public class TestDays {
 		} catch (ParseException | InstantiationException | IllegalAccessException
 				| ClassNotFoundException | IOException e) {
 			e.printStackTrace();
+			failedCount++;
 		}
 		
 		return failedCount;

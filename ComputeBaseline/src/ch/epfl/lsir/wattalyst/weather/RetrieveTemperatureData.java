@@ -11,8 +11,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 
-import com.baseline.constants.Constants;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 public class RetrieveTemperatureData {
 
@@ -63,10 +63,10 @@ public class RetrieveTemperatureData {
 		// initialize and retrieve the temperature
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(start);
-		Util.setCalToStartOfTheDay(calendar);
+		Util.setToTheBeginningOfTheDay(calendar);
 		start = calendar.getTime();
 		calendar.setTime(end);
-		Util.setCalToStartOfTheDay(calendar);
+		Util.setToTheBeginningOfTheDay(calendar);
 		end = calendar.getTime();
 		
 		Temperature t = (Temperature) Class.forName(temperature).newInstance(); 

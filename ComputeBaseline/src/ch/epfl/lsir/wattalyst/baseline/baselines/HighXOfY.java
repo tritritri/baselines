@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.baseline.constants.Constants;
-import com.baseline.util.SensorReadings;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 /**
  * Basic class for Highest X out of Y days type of baseline.
@@ -62,9 +62,9 @@ public class HighXOfY implements Baseline{
 		try {
 			// set start and end time for calculating baseline
 			startCal.setTime(formatter.parse(startDate));
-			Util.setCalToStartOfTheDay(startCal);
+			Util.setToTheBeginningOfTheDay(startCal);
 			endCal.setTime(formatter.parse(endDate));
-			Util.setCalToEndOfTheDay(endCal);
+			Util.setToTheEndOfTheDay(endCal);
 			
 			// read the file input
 			Util.hourlyCSVToSensorReadings(input, this.data);
@@ -95,7 +95,7 @@ public class HighXOfY implements Baseline{
 			}
 
 			// start to compute the baseline
-			Util.setCalToStartOfTheDay(computeCal);
+			Util.setToTheBeginningOfTheDay(computeCal);
 
 			// loop to get the baseline
 			while (!computeCal.after(endCal)){
@@ -129,7 +129,7 @@ public class HighXOfY implements Baseline{
 		// loop for hour 00 to hour 23
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
-		Util.setCalToStartOfTheDay(tempCal);
+		Util.setToTheBeginningOfTheDay(tempCal);
 		for (int i=0;i<24; i++) {
 			tempCal.set(Calendar.HOUR_OF_DAY, i);
 			

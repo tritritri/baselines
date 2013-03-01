@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 /**
  * A hash map data structure, stores timestamp (as Long) as its key, and sensor reading as its value (as Double)
@@ -160,7 +160,7 @@ public class SensorReadings {
 		// initialize the counter 
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
-		Util.setCalToStartOfTheDay(tempCal);
+		Util.setToTheBeginningOfTheDay(tempCal);
 		
 		// start the counter
 		int count = 0;

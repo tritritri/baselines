@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class Util {
 	
@@ -40,7 +40,7 @@ public class Util {
 	 * Set hour to 0, minute to 0, second to 0, millisecond to 0
 	 * @param calendar
 	 */
-	public static void setCalToStartOfTheDay(Calendar calendar) {
+	public static void setToTheBeginningOfTheDay(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -52,7 +52,7 @@ public class Util {
 	 * Set hour to 23, minute to 59, second to 59, millisecond to 999
 	 * @param calendar
 	 */
-	public static void setCalToEndOfTheDay(Calendar calendar) {
+	public static void setToTheEndOfTheDay(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
@@ -64,7 +64,7 @@ public class Util {
 	 * Set minute to 59, second to 59, millisecond to 999
 	 * @param calendar
 	 */
-	public static void setToBeginningOfTheHour(Calendar calendar) {
+	public static void setToTheBeginningOfTheHour(Calendar calendar) {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);

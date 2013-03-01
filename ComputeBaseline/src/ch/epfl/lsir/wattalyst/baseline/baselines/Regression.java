@@ -18,9 +18,9 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Utils;
 
-import com.baseline.constants.Constants;
-import com.baseline.util.SensorReadings;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 /**
  * 
@@ -87,9 +87,9 @@ public class Regression implements Baseline{
 			
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 			startCal.setTime(formatter.parse(startDate));
-			Util.setCalToStartOfTheDay(startCal);
+			Util.setToTheBeginningOfTheDay(startCal);
 			endCal.setTime(formatter.parse(endDate));
-			Util.setCalToEndOfTheDay(endCal);
+			Util.setToTheEndOfTheDay(endCal);
 			
 			// read the target data, in this case: the energy sensors
 			Util.hourlyCSVToSensorReadings(dataFileName, data);
@@ -126,7 +126,7 @@ public class Regression implements Baseline{
 			}
 			
 			// start to compute the baseline
-			Util.setCalToStartOfTheDay(computeCal);
+			Util.setToTheBeginningOfTheDay(computeCal);
 
 			// loop to get the baseline
 			while (!computeCal.after(endCal)){
@@ -226,7 +226,7 @@ public class Regression implements Baseline{
 			double cPredict = c.classifyInstance(newInst);
 			if (VERBOSE==1) System.out.println(cPredict);
 
-			Util.setToBeginningOfTheHour(cal);			
+			Util.setToTheBeginningOfTheHour(cal);			
 			baseline.insert(cal.getTimeInMillis(), cPredict);
 						
 

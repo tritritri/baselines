@@ -21,8 +21,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.baseline.util.SensorReadings;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 
 /**
@@ -105,7 +105,7 @@ public class YahooWeatherDataReader {
 			double avgTemp = (maxTemp + minTemp)/2;
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
-			Util.setCalToStartOfTheDay(calendar);
+			Util.setToTheBeginningOfTheDay(calendar);
 			for(int h = 0; h < 24; h++){
 				readings.insert(calendar.getTime().getTime(), avgTemp);
 				calendar.add(Calendar.HOUR_OF_DAY, 1);
@@ -117,7 +117,7 @@ public class YahooWeatherDataReader {
 			
 			avgTemp = (maxTemp + minTemp)/2;
 			calendar.setTime(date);
-			Util.setCalToStartOfTheDay(calendar);
+			Util.setToTheBeginningOfTheDay(calendar);
 			for(int h = 0; h < 24; h++){
 				readings.insert(calendar.getTime().getTime(), avgTemp);
 				calendar.add(Calendar.HOUR_OF_DAY, 1);
@@ -137,7 +137,7 @@ public class YahooWeatherDataReader {
 		double avgTemp = (maxTemp + minTemp)/2;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		Util.setCalToStartOfTheDay(calendar);
+		Util.setToTheBeginningOfTheDay(calendar);
 		for(int h = 0; h < 24; h++){
 			readings.insert(date.getTime(), avgTemp);
 			calendar.add(Calendar.HOUR_OF_DAY, 1);

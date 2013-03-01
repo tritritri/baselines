@@ -11,8 +11,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 
-import com.baseline.baselines.Baseline;
-import com.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.baselines.Baseline;
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
  
 /**
  * Main class for computing baselines.

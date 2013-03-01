@@ -12,8 +12,8 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import com.baseline.util.SensorReadings;
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 import de.mbenning.weather.wunderground.api.domain.DataSet;
 import de.mbenning.weather.wunderground.api.domain.WeatherStation;
@@ -113,7 +113,7 @@ public class WundergroundDataReader {
 	public double[] getHourlyTemperatures(Date weatherDate, WeatherStation weatherStation) {
 		
 		Calendar calendar = Calendar.getInstance();
-		Util.setCalToStartOfTheDay(calendar);		
+		Util.setToTheBeginningOfTheDay(calendar);		
 		if(weatherDate.equals(calendar.getTime()) || weatherDate.after(calendar.getTime())){
 			throw new RuntimeException("Weather date must be before the present day");
 		}
@@ -158,7 +158,7 @@ public class WundergroundDataReader {
 		
 		// Check dates
 		Calendar calendar = Calendar.getInstance();
-		Util.setCalToStartOfTheDay(calendar);		
+		Util.setToTheBeginningOfTheDay(calendar);		
 		if(weatherStartDate.equals(calendar.getTime()) || weatherStartDate.after(calendar.getTime())){
 			throw new RuntimeException("Weather start date must be before the present day");
 		}
@@ -174,12 +174,12 @@ public class WundergroundDataReader {
 		SensorReadings hourlyTemperatures = new SensorReadings();
 				
 		calendar.setTime(weatherEndDate);
-		Util.setCalToEndOfTheDay(calendar);
+		Util.setToTheEndOfTheDay(calendar);
 		weatherEndDate = calendar.getTime();
 		
 		Date weatherDate = weatherStartDate;
 		calendar.setTime(weatherDate);
-		Util.setCalToStartOfTheDay(calendar);
+		Util.setToTheBeginningOfTheDay(calendar);
 		weatherDate = calendar.getTime();
 				
 		// Retrieve hourly temperatures for all the days between start and end

@@ -3,7 +3,7 @@ package ch.epfl.lsir.wattalyst.baseline.baselines;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.baseline.util.Util;
 /**
  * Generic class for Middle X out of Y days baseline.
  * Such as: Mid4Of6.
