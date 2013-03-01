@@ -135,9 +135,14 @@ public class WundergroundDataReader {
 		}
 		if(!datasets.isEmpty()){
 			double[] hourlyTemperatures = new double[24];
+			for(int h = 0; h < hourlyTemperatures.length; h++){
+				hourlyTemperatures[h] = Double.NaN;
+			}
 			int[] counters = new int[24];
 			for(DataSet data : datasets){
 				calendar.setTime(data.getDateTime());
+				if(hourlyTemperatures[calendar.get(Calendar.HOUR_OF_DAY)] == Double.NaN)
+					hourlyTemperatures[calendar.get(Calendar.HOUR_OF_DAY)] = 0;
 				hourlyTemperatures[calendar.get(Calendar.HOUR_OF_DAY)] = hourlyTemperatures[calendar.get(Calendar.HOUR_OF_DAY)] + 
 						(data.getTemperature() - hourlyTemperatures[calendar.get(Calendar.HOUR_OF_DAY)])/(counters[calendar.get(Calendar.HOUR_OF_DAY)] + 1);
 				counters[calendar.get(Calendar.HOUR_OF_DAY)]++;
