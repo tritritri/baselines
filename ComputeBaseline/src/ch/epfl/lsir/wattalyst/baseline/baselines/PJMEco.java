@@ -1,4 +1,4 @@
-package com.baseline.baselines;
+package ch.epfl.lsir.wattalyst.baseline.baselines;
 
 /**
  * Implement PJM Economic baseline.

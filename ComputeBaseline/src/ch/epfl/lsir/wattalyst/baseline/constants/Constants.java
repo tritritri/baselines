@@ -1,4 +1,4 @@
-package com.baseline.constants;
+package ch.epfl.lsir.wattalyst.baseline.constants;
 
 /**
  * All constants needed

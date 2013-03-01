@@ -1,4 +1,4 @@
-package com.baseline.baselines;
+package ch.epfl.lsir.wattalyst.baseline.baselines;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.baseline.compute;
+package ch.epfl.lsir.wattalyst.baseline.compute;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

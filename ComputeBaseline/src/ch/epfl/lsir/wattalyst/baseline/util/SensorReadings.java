@@ -1,4 +1,4 @@
-package com.baseline.util;
+package ch.epfl.lsir.wattalyst.baseline.util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

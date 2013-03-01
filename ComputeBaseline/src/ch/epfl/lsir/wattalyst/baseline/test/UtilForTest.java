@@ -1,4 +1,4 @@
-package com.baseline.test;
+package ch.epfl.lsir.wattalyst.baseline.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
