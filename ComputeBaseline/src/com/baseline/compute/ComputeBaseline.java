@@ -52,14 +52,22 @@ public class ComputeBaseline {
 		if (cmd.hasOption("h") || args.length==0) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(80);
-			String helpString = "java -jar ComputeBaseline.jar [OPTIONS] BASELINE INPUTFILE TARGETDATE\n" 
+			String helpString = "java -jar ComputeBaseline.jar [OPTIONS] BASELINE INPUT TARGETDATE\n" 
 					+ "Example: java -jar ComputeBaseline.jar PJMEco input.txt 2013-02-21\n"
-					+ "BASELINE is PJMEco | CAISO | NYISO | Mid4Of6 \n"
-					+ "INPUTFILE is a file text of lines DATE,HOUR,KWH, where: \n" +
+					+ "BASELINE is PJMEco | CAISO | NYISO | Mid4Of6 | Regression \n"
+					+ "TARGETDATE is of form yyyy-MM-dd\n"
+					+ "INPUT is a SENSORFILE, i.e., a file text of lines DATE,HOUR,READINGS, where: \n" +
 					  "... DATE is of form yyyy-MM-dd, \n"
 					+ "... HOUR is 0-23, and \n" +
-					  "... KWH is energy consumed during that date and hour in kWh.\n"
-					+ "TARGETDATE is of form yyyy-MM-dd\n"
+					  "... READINGS is value measured at DATE,HOUR. \n" +
+					  "..... For example, energy consumed during DATE,HOUR in kWh.\n" +
+					  ". Except when BASELINE is Regression, INPUT is of form \n" +
+					  "... SENSORFILE1,SENSORFILE2,ALGFILE, where \n" +
+					  "... SENSORFILE1 is the target baseline, \n" +
+					  "... SENSORFILE2 is a context, e.g., temperature sensor, and \n" +
+					  "... ALGFILE is one line or Weka classifier name\n" +
+					  ".... Example: load.txt,temperature.txt,alg.txt\n"
+					  
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
