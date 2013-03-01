@@ -50,6 +50,8 @@ public class Regression implements Baseline{
 	
 	private String algFileName;
 	
+	private int VERBOSE = 0;
+	
 	public Regression(){
 		
 		startCal = Calendar.getInstance();
@@ -66,7 +68,6 @@ public class Regression implements Baseline{
 		WEEKDAY_LAG = 5;
 		WEEKEND_LAG = 2;
 				
-		System.err.println("Exit regression constructor");
 	}
 	
 	/**
@@ -74,7 +75,6 @@ public class Regression implements Baseline{
 	 * @throws FileNotFoundException 
 	 */
 	public void compute(String input, String startDate, String endDate){
-		System.err.println("enter regression compute");
 		
 		try {
 
@@ -89,11 +89,6 @@ public class Regression implements Baseline{
 			Util.setCalToStartOfTheDay(startCal);
 			endCal.setTime(formatter.parse(endDate));
 			Util.setCalToEndOfTheDay(endCal);
-			
-			
-			System.err.println("startCal: " + startCal.getTime());
-			System.err.println("endCal: " + endCal.getTime());
-			
 			
 			// read the target data, in this case: the energy sensors
 			Util.hourlyCSVToSensorReadings(dataFileName, data);
@@ -149,6 +144,7 @@ public class Regression implements Baseline{
 
 	private void ComputeBaselineOneDayHourly(Calendar targetDay) {
 		
+		if (VERBOSE==1)
 		System.out.println("[ComputeBaselineOneDayHourly] " + targetDay.getTime());
 		// get historical data (except for the target day (of course))
 		ArrayList<Calendar> trainingCals = getTrainingDays(targetDay);
@@ -163,10 +159,12 @@ public class Regression implements Baseline{
 	
 	private void ComputeBaselineOneHour(ArrayList<Calendar> trainingCals, Calendar targetDay, int targetH) {
 		
-		System.out.println(" Target days: "+targetDay.getTime());
-		System.out.println(" target hour: "+ targetH);
-		for (int i=0; i<trainingCals.size();i++){
-			System.out.println(" historical date: "+trainingCals.get(i).getTime());
+		if (VERBOSE==1){
+			System.out.println(" Target days: "+targetDay.getTime());
+			System.out.println(" target hour: "+ targetH);
+			for (int i=0; i<trainingCals.size();i++){
+				System.out.println(" historical date: "+trainingCals.get(i).getTime());
+			}			
 		}
 
 		// create the attributes (lag attributes and target attribute)		
@@ -175,7 +173,7 @@ public class Regression implements Baseline{
 		
 		// create the training set
 		Instances trainingSet = createWekaTrainingSet(trainingCals, targetDay, targetH, fvWekaAttrs);
-		System.out.println(trainingSet.toString());
+		if (VERBOSE==1) System.out.println(trainingSet.toString());
 		
 		try {
 			// read the algorithm
@@ -189,11 +187,11 @@ public class Regression implements Baseline{
 			// set the classifier
 			Classifier c = (Classifier) Utils.forName(Classifier.class, algorithmName, params);
 		    c.buildClassifier(trainingSet);
-			System.out.println(c.toString());
+		    if (VERBOSE==1) System.out.println(c.toString());
 
 		    // take the last instance of the training instance
 			Instance lastInst = trainingSet.lastInstance();		
-			System.out.println(lastInst.toString());
+			if (VERBOSE==1) System.out.println(lastInst.toString());
 
 			// create a new instance
 			Instance newInst = new Instance(numLag*2+2);
@@ -217,10 +215,10 @@ public class Regression implements Baseline{
 			
 			// put dummy value on the target value			
 			newInst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2+1), 0);
-			System.out.println("new instance: " + newInst.toString());
+			if (VERBOSE==1) System.out.println("new instance: " + newInst.toString());
 			
 			double cPredict = c.classifyInstance(newInst);
-			System.out.println(cPredict);
+			if (VERBOSE==1) System.out.println(cPredict);
 
 			Util.setToBeginningOfTheHour(cal);			
 			baseline.insert(cal.getTimeInMillis(), cPredict);
@@ -250,16 +248,6 @@ public class Regression implements Baseline{
 			Instance inst = createWekaInstanceForTargetIdx(trainingCals, i, targetH, numLag, fvWekaAttrs);
 			trainingSet.add(inst);
 		}
-		
-		/*
-		System.out.println("target date   : " + targetCal.getTime());
-		System.out.println("target hour   : " + targetH);
-		System.out.println("days lookback : " + currY);
-		System.out.println("lagLen        : " + currZ);
-		System.out.println( trainingSet.toString() );
-
-		System.exit(0);
-		*/
 		
 		return trainingSet;
 
@@ -324,7 +312,7 @@ public class Regression implements Baseline{
 	}
 	
 	
-	protected ArrayList<Calendar> getTrainingDays(Calendar targetCal) {
+	private ArrayList<Calendar> getTrainingDays(Calendar targetCal) {
 
 		// array to store calendars to be used for computing the baselines
 		ArrayList<Calendar> result = new ArrayList<Calendar>();
@@ -358,7 +346,7 @@ public class Regression implements Baseline{
 		return result;
 	}
 
-	protected int getYDOWType(int dowType) {
+	private int getYDOWType(int dowType) {
 		if (dowType == Util.WEEKDAY ) {
 			return WEEKDAY_Y;
 		} else {
@@ -366,7 +354,7 @@ public class Regression implements Baseline{
 		}
 	}
 
-	protected int getLagDOWType(int dowType) {
+	private int getLagDOWType(int dowType) {
 		if (dowType == Util.WEEKDAY ) {
 			return WEEKDAY_LAG;
 		} else {
