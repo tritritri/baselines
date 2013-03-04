@@ -54,7 +54,7 @@ public class Regression implements Baseline{
 	private String contextFileName;
 	private String algFileName;
 	
-	private int VERBOSE = 1;
+	private int VERBOSE = 0;
 	
 	public Regression(){
 		
