@@ -36,8 +36,8 @@ public class RetrieveTemperatureData {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
 			String helpString = "java -jar RetrieveTemperatureData.jar [OPTIONS] DATASOURCE STARTDATE ENDDATE COUNTRY PLACE\n" 
-					+ "Example: java -jar RetrieveTemperatureData.jar WundergroundYahoo 2013-02-21 2013-02-26 Sweden Lulea \n"
-					+ "DATASOURCE is WundergroundYahoo | [...] \n"
+					+ "Example: java -jar RetrieveTemperatureData.jar Wunderground 2013-02-21 2013-02-26 Sweden Lulea \n"
+					+ "DATASOURCE is Wunderground \n"
 					+ "STARTDATE and ENDDATE are of form yyyy-MM-dd\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
