@@ -30,6 +30,7 @@ do
 	echo history-weekend = 10 >> $fileConfig
 	echo lag-weekday = 5 >> $fileConfig
 	echo lag-weekend = 2 >> $fileConfig
+	echo min-value-allowed = 0 >> $fileConfig
 
 	# run
 	java -jar $program -o $resultDir/$baseline-$sensor.txt -z $horizonLen $baseline $fileConfig $startDate

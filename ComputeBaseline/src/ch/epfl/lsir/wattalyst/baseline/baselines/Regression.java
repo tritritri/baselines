@@ -53,6 +53,9 @@ public class Regression implements Baseline{
 	
 	private String contextFileName;
 	private String algFileName;
+	private String dataFileName;
+	
+	private double minValue;
 	
 	private int VERBOSE = 0;
 	
@@ -87,7 +90,7 @@ public class Regression implements Baseline{
 			prop.load(new FileInputStream(input));
 			
 			// get files for energy, context (temperature), and algorithm 
-			String dataFileName = prop.getProperty("energy-file");
+			this.dataFileName = prop.getProperty("energy-file");
 			this.contextFileName = prop.getProperty("temperature-file");
 			this.algFileName = prop.getProperty("algorithm-file");
 			
@@ -96,6 +99,9 @@ public class Regression implements Baseline{
 			this.WEEKEND_Y = Integer.parseInt(prop.getProperty("history-weekend"));
 			this.WEEKDAY_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
 			this.WEEKEND_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
+			
+			// set the minimum reading value required
+			this.minValue = Integer.parseInt(prop.getProperty("min-value-allowed"));
 			
 			// set start and end target date
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
@@ -228,7 +234,7 @@ public class Regression implements Baseline{
 			if (temp.get(cal.getTimeInMillis()) == null){
 				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
 				System.err.println("[ERROR] [Regression] There is no context data in "+this.contextFileName+ " for "+formatter.format(cal.getTime())+".");
-				System.exit(0);
+				System.exit(1);
 			}
 			newInst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2), temp.get(cal.getTimeInMillis()));
 			
@@ -237,9 +243,15 @@ public class Regression implements Baseline{
 			if (VERBOSE==1) System.out.println("new instance: " + newInst.toString());
 			
 			double cPredict = c.classifyInstance(newInst);
-			cPredict =  Math.round(cPredict * 100000) / 100000;
-			if (VERBOSE==1) System.out.println(cPredict);
+			
+			// fix to min value
+			if (cPredict < this.minValue) cPredict = this.minValue;				
 
+			// round to 5 digit decimal
+			cPredict =  Math.round(cPredict * 100000) / 100000.0;
+
+			if (VERBOSE==1) System.out.println(cPredict);
+			
 			Util.setToTheBeginningOfTheHour(cal);			
 			baseline.insert(cal.getTimeInMillis(), cPredict);
 						
@@ -248,12 +260,17 @@ public class Regression implements Baseline{
 			e.printStackTrace();
 		}
 		
-		
-		
-		
-
 	}
 	
+	/**
+	 * Creating all training set needed
+	 * The dataset is taken from trainingCals
+	 * @param trainingCals
+	 * @param targetCal
+	 * @param targetH
+	 * @param fvWekaAttrs
+	 * @return
+	 */
 	private Instances createWekaTrainingSet(ArrayList<Calendar> trainingCals, Calendar targetCal, int targetH, FastVector fvWekaAttrs) {
 		
 		int currY = getYDOWType(Util.getDOWType(targetCal));
@@ -273,6 +290,16 @@ public class Regression implements Baseline{
 
 	}
 
+	/**
+	 * Create an instance of the training set
+	 * @param trainingCals an array of date included in the whole training set. The date involved in this instance
+	 * is a subset of all dates in trainingCals
+	 * @param targetIdx is a index of element in the trainingCals (so, it is the date) for a target attribute
+	 * @param targetH and this is the target hour
+	 * @param numLag how many lags (historical day) taken into account for an instance
+	 * @param fvWekaAttrs the instance are made w.r.t to this weka attributes
+	 * @return
+	 */
 	private Instance createWekaInstanceForTargetIdx(ArrayList<Calendar> trainingCals, int targetIdx, int targetH, int numLag, FastVector fvWekaAttrs) {
 		// currZ historical load, currZ historical temp, 1 curr temp, 1 target attr (curr load) 			
 		Instance inst = new Instance(numLag*2+2);
@@ -282,7 +309,14 @@ public class Regression implements Baseline{
 			Calendar cal = Calendar.getInstance(); 
 			cal.setTimeInMillis(trainingCals.get(targetIdx+numLag-j).getTimeInMillis());
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
+			
+			// check if we miss some data
+			if (baseline.get(cal.getTimeInMillis())==null) {
+				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
+				System.exit(0);
+			}
 			inst.setValue((Attribute)fvWekaAttrs.elementAt(j), baseline.get(cal.getTimeInMillis()));
+			
 			if (temp.get(cal.getTimeInMillis())==null) {
 				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
 				System.exit(0);
@@ -301,6 +335,10 @@ public class Regression implements Baseline{
 		inst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2), temp.get(cal.getTimeInMillis()));
 
 		// put current load
+		if (baseline.get(cal.getTimeInMillis())==null) {
+			System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
+			System.exit(0);
+		}
 		inst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2+1), baseline.get(cal.getTimeInMillis()));
 
 		return inst;
