@@ -30,7 +30,7 @@ public class TestRegression {
 			// fileInput = examplesDir+"load-dummy.txt,"+examplesDir+"temp-dummy.txt,"+
 			//			examplesDir+"algLinearRegression.txt";
 
-			fileInput = "config-reg.txt";
+			fileInput = examplesDir + "config-reg.txt";
 			
 			startDateStr = "2013-02-15"; 
 			endDateStr = "2013-02-15";

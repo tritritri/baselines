@@ -139,10 +139,10 @@ public class Util {
 				Calendar dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
 				
 				// third element is reading
-				double kWh = Double.parseDouble(lineArray[2]);
+				double reading = Double.parseDouble(lineArray[2]);
 				
 				// put the data 
-				data.insert(dateCal.getTimeInMillis(), kWh);
+				data.insert(dateCal.getTimeInMillis(), reading);
 			}
 			
 			in.close();

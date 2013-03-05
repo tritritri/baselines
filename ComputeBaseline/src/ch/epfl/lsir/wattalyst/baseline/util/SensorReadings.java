@@ -38,7 +38,7 @@ public class SensorReadings {
 	 * @param energy
 	 */
 	public void insert(Long date, double energy){
-		
+
 		data.put(date, energy);
 		if (data.size() == 1) {
 			maxDate = date;
@@ -141,13 +141,20 @@ public class SensorReadings {
 	 * @param to ending point of the copy
 	 * @param destination target collection
 	 */	
-	public void copyHourly(long from, long to, SensorReadings destination) {
+	public boolean copyHourly(long from, long to, SensorReadings destination) {
 		Calendar currCal = Calendar.getInstance();
 		currCal.setTimeInMillis(from);
 		while (currCal.getTimeInMillis() <= to) {
+			// check if the data is exist
+			if (!data.containsKey(currCal.getTimeInMillis())) {
+				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				System.err.println("[ERROR] [SensorReadings] There is no data for "+formatter.format(currCal.getTime())+".");
+				return false;
+			}
 			destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
 			currCal.add(Calendar.HOUR_OF_DAY, 1);
 		}		
+		return true;
 	}
 
 	

@@ -70,7 +70,12 @@ public class HighXOfY implements Baseline{
 			Util.hourlyCSVToSensorReadings(input, this.data);
 
 			// copy the original data for the baseline calculation
-			data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline);
+			if (data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline) == true) {
+				// nothing to do
+			} else {
+				System.err.println("[ERROR] [HighXOfY] Failed in copying " + input);
+				System.exit(1);
+			}
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
@@ -148,6 +153,9 @@ public class HighXOfY implements Baseline{
 			if (count > 0) {
 				avg = total / count;
 			}
+			// round to 5 digit decimal
+			avg =  Math.round(avg * 100000) / 100000.0;
+
 			// store
 			baseline.insert(tempCal.getTimeInMillis(), avg);
 		}
