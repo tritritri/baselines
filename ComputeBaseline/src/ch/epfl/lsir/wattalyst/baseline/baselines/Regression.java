@@ -283,6 +283,10 @@ public class Regression implements Baseline{
 			cal.setTimeInMillis(trainingCals.get(targetIdx+numLag-j).getTimeInMillis());
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
 			inst.setValue((Attribute)fvWekaAttrs.elementAt(j), baseline.get(cal.getTimeInMillis()));
+			if (temp.get(cal.getTimeInMillis())==null) {
+				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
+				System.exit(0);
+			}			
 			inst.setValue((Attribute)fvWekaAttrs.elementAt(j+numLag), temp.get(cal.getTimeInMillis()));
 		}
 
