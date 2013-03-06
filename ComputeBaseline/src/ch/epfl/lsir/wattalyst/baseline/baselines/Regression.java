@@ -101,7 +101,7 @@ public class Regression implements Baseline{
 			this.WEEKDAY_Y = Integer.parseInt(prop.getProperty("history-weekday"));
 			this.WEEKEND_Y = Integer.parseInt(prop.getProperty("history-weekend"));
 			this.WEEKDAY_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
-			this.WEEKEND_LAG = Integer.parseInt(prop.getProperty("lag-weekday"));
+			this.WEEKEND_LAG = Integer.parseInt(prop.getProperty("lag-weekend"));
 			
 			// set the minimum reading value required
 			this.minValue = Integer.parseInt(prop.getProperty("min-value-allowed"));
