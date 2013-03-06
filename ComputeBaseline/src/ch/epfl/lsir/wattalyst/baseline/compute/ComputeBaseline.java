@@ -87,6 +87,13 @@ public class ComputeBaseline {
 		String startDate = args[args.length-1];
 		String endDate = startDate;
 		
+		// if verbose is set
+		if (cmd.hasOption("v")){
+			Constants.VERBOSE=1;
+		} else {
+			Constants.VERBOSE=0;
+		}
+		
 		// if horizon is set
 		if (cmd.hasOption("z")){
 			int hz = Integer.parseInt(cmd.getOptionValue("z")) - 1;
@@ -130,6 +137,7 @@ public class ComputeBaseline {
 		
 	public static Options createOptions(){
 		Options options = new Options();
+		options.addOption("v", "verbose", false, "Print some debugging information.");
 		options.addOption("o", "output", true, "Write the baseline into a file.");
 		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date).");
 		options.addOption("e", "excludeDays", true, "A file containing a list of date to be excluded from historical data for computing baseline. One date per line with format yyyy-MM-dd");

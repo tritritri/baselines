@@ -98,7 +98,8 @@ public class HighXOfY implements Baseline{
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
 				
 				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data.getMaxDate())) 
-				+ " to " + formatOutput.format(startCal.getTime()) + " is not available. " 
+				+ " to " + formatOutput.format(startCal.getTime()) + " in " + input
+				+ " is not available. "  
 				+ "Estimation will be done for that period using the specified baseline method.");
 			}
 
@@ -206,7 +207,7 @@ public class HighXOfY implements Baseline{
 		}
 
 		// try to print
-		if (Constants.VERBOSE == 2){
+		if (Constants.VERBOSE == 1){
 			for (int i=0; i<result.size(); i++){
 				System.out.println("days selected "+i+": "+result.get(i).getTime());
 			}

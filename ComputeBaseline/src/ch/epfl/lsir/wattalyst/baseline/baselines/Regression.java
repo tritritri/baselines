@@ -183,6 +183,7 @@ public class Regression implements Baseline{
 	private void ComputeBaselineOneHour(ArrayList<Calendar> trainingCals, Calendar targetDay, int targetH) {
 		
 		if (Constants.VERBOSE==1){
+			System.out.println("\n==========================");
 			System.out.println(" Target days: "+targetDay.getTime());
 			System.out.println(" target hour: "+ targetH);
 			for (int i=0; i<trainingCals.size();i++){
@@ -213,8 +214,8 @@ public class Regression implements Baseline{
 		    if (Constants.VERBOSE==1) System.out.println(c.toString());
 
 		    // take the last instance of the training instance
-			Instance lastInst = trainingSet.lastInstance();		
-			if (Constants.VERBOSE==1) System.out.println(lastInst.toString());
+			//.. Instance lastInst = trainingSet.lastInstance();		
+			//.. if (Constants.VERBOSE==1) System.out.println(lastInst.toString());
 
 			// create a new instance
 			Instance newInst = new Instance(numLag*2+2);
@@ -253,7 +254,7 @@ public class Regression implements Baseline{
 			// round to 5 digit decimal
 			cPredict =  Math.round(cPredict * 100000) / 100000.0;
 
-			if (Constants.VERBOSE==1) System.out.println(cPredict);
+			if (Constants.VERBOSE==1) System.out.println("Predicted value: "+cPredict);
 			
 			Util.setToTheBeginningOfTheHour(cal);			
 			baseline.insert(cal.getTimeInMillis(), cPredict);
@@ -414,7 +415,7 @@ public class Regression implements Baseline{
 				count ++;
 			}
 		}
-		if (Constants.VERBOSE==2) {
+		if (Constants.VERBOSE==1) {
 			for (int i=0; i<result.size(); i++){
 				System.out.println("days selected "+i+": "+result.get(i).getTime());
 			}
