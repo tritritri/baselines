@@ -1,9 +1,13 @@
 package ch.epfl.lsir.wattalyst.baseline.compute;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -30,8 +34,9 @@ public class ComputeBaseline {
 	 * @throws InstantiationException 
 	 * @throws ParseException 
 	 * @throws org.apache.commons.cli.ParseException 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException, org.apache.commons.cli.ParseException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, ParseException, org.apache.commons.cli.ParseException, IOException {
 		
 		// baseline = PJMEco, CAISO, NYISO, Mid4of6, ISONE
 		
@@ -98,28 +103,54 @@ public class ComputeBaseline {
 		Date end = formatter.parse(endDate);
 		if ( end.getTime() < start.getTime() ) {
 			System.err.println("[Error] end date should not be earlier than start date");
-			System.exit(0);
+			System.exit(1);
 		}
 		
+
 		// initialize and compute the baseline
-		Baseline b = (Baseline) Class.forName(baseline).newInstance(); 
-		b.compute(fileInput, startDate, endDate);
+		Baseline b = (Baseline) Class.forName(baseline).newInstance();
+
+		// check if we have option -e : exclude some dates
+		// Long is the date, while Boolean is for dummy element/value
+		if (cmd.hasOption("e")){
+			HashMap<Long,Byte> exclDays = parseExcludedDays(cmd.getOptionValue("e"));
+			b.compute(fileInput, startDate, endDate, exclDays);
+		} else {
+			b.compute(fileInput, startDate, endDate);
+		}
+				
 		
 		// output the result
 		if (cmd.hasOption("o")){
 			b.writeResultToFile(cmd.getOptionValue("o"));
 		} else {
 			b.writeResult(System.out);
-		}
-		
+		}	
 	}
-	
+		
 	public static Options createOptions(){
 		Options options = new Options();
 		options.addOption("o", "output", true, "Write the baseline into a file.");
 		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date).");
+		options.addOption("e", "excludeDays", true, "A file containing a list of date to be excluded from historical data for computing baseline. One date per line with format yyyy-MM-dd");
 		options.addOption("h", "help", false, "Help. Print this message.");		
 		return options;	
+	}
+	
+	private static HashMap<Long,Byte> parseExcludedDays(String fileInput) throws IOException, ParseException{
+
+		HashMap<Long,Byte> exclDays = new HashMap<Long,Byte>(); 
+
+		// read file input for a list of excluded days
+		BufferedReader excIn = new BufferedReader(new FileReader(fileInput));
+		String line="";
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		while ( (line = excIn.readLine()) != null ) {
+			exclDays.put(formatter.parse(line).getTime(), (byte) 0);				
+		}
+		excIn.close();
+		
+		return exclDays;
 	}
 }
 

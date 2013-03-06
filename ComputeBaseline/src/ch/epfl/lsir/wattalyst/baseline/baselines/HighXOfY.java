@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
@@ -26,14 +27,15 @@ public class HighXOfY implements Baseline{
 	private Calendar startCal;
 	private Calendar endCal;
 	private SensorReadings data;
-	protected SensorReadings baseline;
-	
+	private SensorReadings baseline;
+	private HashMap<Long,Byte> exclDays; // list of days to be excluded from historical computation 
 	// choose X out of Y days
 	
 	protected int WEEKDAY_X;
 	protected int WEEKDAY_Y;
 	protected int WEEKEND_X;
 	protected int WEEKEND_Y;
+	
 	
 	/**
 	 * Constructor, initialize main variable/data structure needed.
@@ -44,10 +46,11 @@ public class HighXOfY implements Baseline{
 		endCal = Calendar.getInstance();
 		data = new SensorReadings();
 		baseline = new SensorReadings();
+		exclDays = null;
 		
 	}
 	
-	
+	/// THIS SHOULD BE REPLACED BY THE EXCLUDED DAYS ONE
 	/**
 	 * 
 	 * @param input file name as an input
@@ -183,6 +186,14 @@ public class HighXOfY implements Baseline{
 			tempCal.add(Calendar.DAY_OF_MONTH, -1);
 			
 			if (Util.getDOWType(tempCal) == Util.getDOWType(targetCal)) {
+				
+				// test if tempCal is not in exclDays
+				if (exclDays != null ){
+					if ( exclDays.containsKey(tempCal.getTimeInMillis()) ){
+						continue;
+					}
+				}
+					
 				// store the calendar
 				Calendar source = Calendar.getInstance();
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
@@ -194,6 +205,12 @@ public class HighXOfY implements Baseline{
 			}
 		}
 
+		// try to print
+		if (Constants.VERBOSE == 2){
+			for (int i=0; i<result.size(); i++){
+				System.out.println("days selected "+i+": "+result.get(i).getTime());
+			}
+		}
 		// retain highest X of Y
 		daysRemoval(targetCal, avgs, result);		
 		return result;
@@ -261,5 +278,12 @@ public class HighXOfY implements Baseline{
 	public ArrayList<String> getResultString() {
 		return baseline.toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
 		
+	}
+
+
+	@Override
+	public void compute(String fileInput, String startDate, String endDate,HashMap<Long, Byte> exclDays) {
+		this.exclDays = exclDays;
+		compute(fileInput, startDate, endDate);						
 	}
 }

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import weka.classifiers.Classifier;
@@ -55,14 +56,16 @@ public class Regression implements Baseline{
 	private String algFileName;
 	private String dataFileName;
 	
+	// list of days to be excluded from historical computation
+	private HashMap<Long,Byte> exclDays;  
+
 	private double minValue;
-	
-	private int VERBOSE = 0;
 	
 	public Regression(){
 		
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();
+		exclDays = null;
 		
 		temp = new SensorReadings();
 		data = new SensorReadings();
@@ -164,7 +167,7 @@ public class Regression implements Baseline{
 
 	private void ComputeBaselineOneDayHourly(Calendar targetDay) {
 		
-		if (VERBOSE==1)
+		if (Constants.VERBOSE==1)
 		System.out.println("[ComputeBaselineOneDayHourly] " + targetDay.getTime());
 		// get historical data (except for the target day (of course))
 		ArrayList<Calendar> trainingCals = getTrainingDays(targetDay);
@@ -179,7 +182,7 @@ public class Regression implements Baseline{
 	
 	private void ComputeBaselineOneHour(ArrayList<Calendar> trainingCals, Calendar targetDay, int targetH) {
 		
-		if (VERBOSE==1){
+		if (Constants.VERBOSE==1){
 			System.out.println(" Target days: "+targetDay.getTime());
 			System.out.println(" target hour: "+ targetH);
 			for (int i=0; i<trainingCals.size();i++){
@@ -193,7 +196,7 @@ public class Regression implements Baseline{
 		
 		// create the training set
 		Instances trainingSet = createWekaTrainingSet(trainingCals, targetDay, targetH, fvWekaAttrs);
-		if (VERBOSE==1) System.out.println(trainingSet.toString());
+		if (Constants.VERBOSE==1) System.out.println(trainingSet.toString());
 		
 		try {
 			// read the algorithm
@@ -207,11 +210,11 @@ public class Regression implements Baseline{
 			// set the classifier
 			Classifier c = (Classifier) Utils.forName(Classifier.class, algorithmName, params);
 		    c.buildClassifier(trainingSet);
-		    if (VERBOSE==1) System.out.println(c.toString());
+		    if (Constants.VERBOSE==1) System.out.println(c.toString());
 
 		    // take the last instance of the training instance
 			Instance lastInst = trainingSet.lastInstance();		
-			if (VERBOSE==1) System.out.println(lastInst.toString());
+			if (Constants.VERBOSE==1) System.out.println(lastInst.toString());
 
 			// create a new instance
 			Instance newInst = new Instance(numLag*2+2);
@@ -240,7 +243,7 @@ public class Regression implements Baseline{
 			
 			// put dummy value on the target value			
 			newInst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2+1), 0);
-			if (VERBOSE==1) System.out.println("new instance: " + newInst.toString());
+			if (Constants.VERBOSE==1) System.out.println("new instance: " + newInst.toString());
 			
 			double cPredict = c.classifyInstance(newInst);
 			
@@ -250,7 +253,7 @@ public class Regression implements Baseline{
 			// round to 5 digit decimal
 			cPredict =  Math.round(cPredict * 100000) / 100000.0;
 
-			if (VERBOSE==1) System.out.println(cPredict);
+			if (Constants.VERBOSE==1) System.out.println(cPredict);
 			
 			Util.setToTheBeginningOfTheHour(cal);			
 			baseline.insert(cal.getTimeInMillis(), cPredict);
@@ -385,9 +388,6 @@ public class Regression implements Baseline{
 
 		int Y = getYDOWType(Util.getDOWType(targetCal));
 				
-		// data structure to store average kWh of a day
-		ArrayList<Double> avgs = new ArrayList<Double>(Y);
-		
 		// calendar for loop 
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
@@ -398,17 +398,28 @@ public class Regression implements Baseline{
 			tempCal.add(Calendar.DAY_OF_MONTH, -1);
 			
 			if (Util.getDOWType(tempCal) == Util.getDOWType(targetCal)) {
+
+				// test if tempCal is not in exclDays
+				if (exclDays != null ){
+					if ( exclDays.containsKey(tempCal.getTimeInMillis()) ){
+						continue;
+					}
+				}
+
 				// store the calendar
 				Calendar source = Calendar.getInstance();
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
 				result.add(source);	
 			
-				// get the average of that day
-				avgs.add(baseline.getAvgOneDayHourly(tempCal));
 				count ++;
 			}
 		}
-
+		if (Constants.VERBOSE==2) {
+			for (int i=0; i<result.size(); i++){
+				System.out.println("days selected "+i+": "+result.get(i).getTime());
+			}
+		}
+		
 		return result;
 	}
 
@@ -455,6 +466,14 @@ public class Regression implements Baseline{
 	public ArrayList<String> getResultString() {
 		return baseline.toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
 		
+	}
+
+	@Override
+	public void compute(String fileInput, String startDate, String endDate,	HashMap<Long, Byte> exclDays) {
+		
+		this.exclDays = exclDays;
+		compute(fileInput, startDate, endDate);						
+
 	}
 
 }

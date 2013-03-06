@@ -4,16 +4,18 @@ dataDir=data
 startDate=2013-03-04
 horizonLen=7
 resultDir=result\_$startDate\_z$horizonLen
+excludeFile=exclude.txt
 
-#mkdir $resultDir
+rm -rf $resultDir 
+mkdir $resultDir
 
-#for baseline in "PJMEco" "CAISO" "NYISO" "Mid4Of6" 
-#do 
-#	for sensor in "344" "346" "348" "590" "1083" 
-#	do 
-#		java -jar $program -o $resultDir/$baseline-$sensor.txt -z $horizonLen $baseline $dataDir/$sensor.txt $startDate
-#	done
-#done
+for baseline in "PJMEco" "CAISO" "NYISO" "Mid4Of6" 
+do 
+	for sensor in "344" "346" "348" "590" "1083" 
+	do 
+		java -jar $program -e $excludeFile -o $resultDir/$baseline-$sensor.txt -z $horizonLen $baseline $dataDir/$sensor.txt $startDate
+	done
+done
 
 
 # now for regression
@@ -33,6 +35,6 @@ do
 	echo min-value-allowed = 0 >> $fileConfig
 
 	# run
-	java -jar $program -o $resultDir/$baseline-$sensor.txt -z $horizonLen $baseline $fileConfig $startDate
+	java -jar $program -e $excludeFile -o $resultDir/$baseline-$sensor.txt -z $horizonLen $baseline $fileConfig $startDate
 done
 

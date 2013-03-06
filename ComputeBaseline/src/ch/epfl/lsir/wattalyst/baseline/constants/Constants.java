@@ -7,6 +7,7 @@ package ch.epfl.lsir.wattalyst.baseline.constants;
  * @date   2013.02.27
  */
 public class Constants {
+	public static int VERBOSE = 0;
 	public static String DATE_FORMAT = "yyyy-MM-dd";
 	public static String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }
