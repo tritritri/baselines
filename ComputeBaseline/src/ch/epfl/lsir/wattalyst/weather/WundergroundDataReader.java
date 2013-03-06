@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -72,7 +71,7 @@ public class WundergroundDataReader {
 				if(history.has("observations")){
 					JsonArray observations = history.get("observations").getAsJsonArray();
 					for(JsonElement obs : observations){
-						JsonObject date = obs.getAsJsonObject().get("utcdate").getAsJsonObject();
+						JsonObject date = obs.getAsJsonObject().get("date").getAsJsonObject();
 						int year = date.get("year").getAsInt();
 						int month = date.get("mon").getAsInt();
 						int day = date.get("mday").getAsInt();
@@ -80,17 +79,15 @@ public class WundergroundDataReader {
 						double temp = obs.getAsJsonObject().get("tempm").getAsDouble();		
 						temp = (temp == -9999 ? Double.NaN : temp);
 						
-						Calendar utcCal = Calendar.getInstance();
-						utcCal.setTimeZone(TimeZone.getTimeZone("UTC"));	
-						utcCal.set(Calendar.YEAR, year);
-						utcCal.set(Calendar.MONTH, month - 1);
-						utcCal.set(Calendar.DAY_OF_MONTH, day);
-						utcCal.set(Calendar.HOUR_OF_DAY, hour);
-						utcCal.set(Calendar.MINUTE, 0);
-						utcCal.set(Calendar.SECOND, 0);
-						utcCal.set(Calendar.MILLISECOND, 0);
+						calendar.set(Calendar.YEAR, year);
+						calendar.set(Calendar.MONTH, month - 1);
+						calendar.set(Calendar.DAY_OF_MONTH, day);
+						calendar.set(Calendar.HOUR_OF_DAY, hour);
+						calendar.set(Calendar.MINUTE, 0);
+						calendar.set(Calendar.SECOND, 0);
+						calendar.set(Calendar.MILLISECOND, 0);
 						
-						hourlyTemperatures.insert(utcCal.getTimeInMillis(), temp);
+						hourlyTemperatures.insert(calendar.getTimeInMillis(), temp);
 					}
 				}
 			}
@@ -102,46 +99,40 @@ public class WundergroundDataReader {
 		// If end date is today or in the future, invoke also "hourly10day"
 		if(endDate.equals(today) || endDate.after(today)){
 		
-			String JSONresult = restTemplate.getForObject("http://api.wunderground.com/api/{API_ID}/hourly10day/geolookup/q/{country}/{place}.json",
+			String JSONresult = restTemplate.getForObject("http://api.wunderground.com/api/{API_ID}/hourly10day/q/{country}/{place}.json",
 					String.class, API_ID, country, place);
 			JsonObject obj = parser.parse(JSONresult).getAsJsonObject();
 			
-			// Get the time zone 
-			if(obj.has("location")){
-				JsonObject location = obj.get("location").getAsJsonObject();
-				String tz_long = location.get("tz_long").getAsString();
-				TimeZone timeZone = TimeZone.getTimeZone(tz_long);
+			// Get the forecast
+			if(obj.has("hourly_forecast")){
+				JsonArray hourly_forecast = obj.get("hourly_forecast").getAsJsonArray();
 				
-				if(obj.has("hourly_forecast")){
-					JsonArray hourly_forecast = obj.get("hourly_forecast").getAsJsonArray();
+				for(JsonElement forecast : hourly_forecast){
+					JsonObject FCTTIME = forecast.getAsJsonObject().get("FCTTIME").getAsJsonObject();
+					int year = FCTTIME.get("year").getAsInt();
+					int month = FCTTIME.get("mon").getAsInt();
+					int day = FCTTIME.get("mday").getAsInt();
+					int hour = FCTTIME.get("hour").getAsInt();
 					
-					Calendar localCalendar = Calendar.getInstance();
-					localCalendar.setTimeZone(timeZone);
+					calendar.set(Calendar.YEAR, year);
+					calendar.set(Calendar.MONTH, month - 1);
+					calendar.set(Calendar.DAY_OF_MONTH, day);
+					calendar.set(Calendar.HOUR_OF_DAY, hour);
+					calendar.set(Calendar.MINUTE, 0);
+					calendar.set(Calendar.SECOND, 0);
+					calendar.set(Calendar.MILLISECOND, 0);
 					
-					for(JsonElement forecast : hourly_forecast){
-						JsonObject FCTTIME = forecast.getAsJsonObject().get("FCTTIME").getAsJsonObject();
-						int year = FCTTIME.get("year").getAsInt();
-						int month = FCTTIME.get("mon").getAsInt();
-						int day = FCTTIME.get("mday").getAsInt();
-						int hour = FCTTIME.get("hour").getAsInt();
-						
-						localCalendar.set(Calendar.YEAR, year);
-						localCalendar.set(Calendar.MONTH, month - 1);
-						localCalendar.set(Calendar.DAY_OF_MONTH, day);
-						localCalendar.set(Calendar.HOUR_OF_DAY, hour);
-						localCalendar.set(Calendar.MINUTE, 0);
-						localCalendar.set(Calendar.SECOND, 0);
-						localCalendar.set(Calendar.MILLISECOND, 0);
-						
-						if(localCalendar.getTime().after(endDate)){
-							break;
-						}
-						JsonObject temperature = forecast.getAsJsonObject().get("temp").getAsJsonObject();
-						double temp = temperature.get("metric").getAsDouble();
-						temp = (temp == -9999 ? Double.NaN : temp);
-						
-						hourlyTemperatures.insert(localCalendar.getTimeInMillis(), temp);
+					if(calendar.getTime().before(startDate)){
+						continue;
 					}
+					else if(calendar.getTime().after(endDate)){
+						break;
+					}
+					JsonObject temperature = forecast.getAsJsonObject().get("temp").getAsJsonObject();
+					double temp = temperature.get("metric").getAsDouble();
+					temp = (temp == -9999 ? Double.NaN : temp);
+					
+					hourlyTemperatures.insert(calendar.getTimeInMillis(), temp);
 				}
 			}
 		}
@@ -156,8 +147,8 @@ public class WundergroundDataReader {
 	 */
 	public static void main(String[] args) throws ParseException{
 		WundergroundDataReader r = new WundergroundDataReader();
-		Date startDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130304");
-		Date endDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130305");
+		Date startDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130307");
+		Date endDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130308");
 		System.out.println(r.getHourlyTemperatures(startDate, endDate, "Sweden", "Lulea").toStringAsc());
 	}
 }
