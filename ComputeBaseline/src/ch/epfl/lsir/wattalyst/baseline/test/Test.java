@@ -25,6 +25,9 @@ public class Test {
 		TestRegression tR = new TestRegression();
 		failedCount += tR.run();
 		
+		TestISONE tI = new TestISONE();
+		failedCount += tI.run();
+
 		if ( failedCount == 0 ){
 			System.out.println("All tests are passed.");
 		} else 

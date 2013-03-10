@@ -50,7 +50,6 @@ public class HighXOfY implements Baseline{
 		
 	}
 	
-	/// THIS SHOULD BE REPLACED BY THE EXCLUDED DAYS ONE
 	/**
 	 * 
 	 * @param input file name as an input
@@ -60,9 +59,9 @@ public class HighXOfY implements Baseline{
 	@Override
 	public void compute(String input, String startDate, String endDate){
 		
-		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		
 		try {
+			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 			// set start and end time for calculating baseline
 			startCal.setTime(formatter.parse(startDate));
 			Util.setToTheBeginningOfTheDay(startCal);

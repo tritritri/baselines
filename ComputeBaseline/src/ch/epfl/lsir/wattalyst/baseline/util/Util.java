@@ -95,7 +95,7 @@ public class Util {
 
 
 	/**
-	 * Tested if the day of week of cal is weekday or weekend. 
+	 * Test if the day of week of cal is weekday or weekend. 
 	 * @param cal calendar to be tested
 	 * @return Util.WEEKDAY if cal is weekday, Util.WEEKEND if cal is weekend
 	 */
@@ -194,5 +194,21 @@ public class Util {
 
 		return i+1;
 
+	}
+	
+	public static boolean isInitialDay(Calendar cal){
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) == 0 && 
+				cal.get(Calendar.SECOND) == 0 && cal.get(Calendar.MILLISECOND) == 0 ) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isEqualDate(Calendar cal1, Calendar cal2){
+		if (cal1.get(Calendar.YEAR)==cal2.get(Calendar.YEAR) &&
+				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR))
+			return true;
+		else
+			return false;
 	}
 }

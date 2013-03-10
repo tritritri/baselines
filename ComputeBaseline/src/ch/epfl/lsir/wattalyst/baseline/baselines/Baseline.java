@@ -12,11 +12,39 @@ import java.util.HashMap;
  */
 public interface Baseline {
 	
-	public void compute(String fileInput, String startDate, String endDate);	
+	/**
+	 * Method to compute the baseline
+	 * @param fileInput
+	 * @param startDate starting date of the baseline in format yyyy-MM-dd
+	 * @param endDate ending date of the baseline in format yyyy-MM-dd
+	 */
+	public void compute(String fileInput, String startDate, String endDate);
+	
+	/**
+	 * Compute the baseline in the existence of excluded days
+	 * @param fileInput 
+	 * @param startDate starting date of the baseline 
+	 * @param endDate ending date of the baseline
+	 * @param exclDays historical days to be excluded from baseline computation
+	 */
+	public void compute(String fileInput, String startDate, String endDate,	HashMap<Long, Byte> exclDays);
+
+	/**
+	 * Get baseline result in form of array of String
+	 * @return array of string contain the baseline
+	 */
 	public ArrayList<String> getResultString();
+	
+	/**
+	 * Print the baseline result to Printstream out
+	 * @param out
+	 */
 	public void writeResult(PrintStream out);
+	
+	/**
+	 * Write baseline into a file
+	 * @param fileName
+	 */
 	public void writeResultToFile(String fileName);
-	public void compute(String fileInput, String startDate, String endDate,
-			HashMap<Long, Byte> exclDays);
 
 }
