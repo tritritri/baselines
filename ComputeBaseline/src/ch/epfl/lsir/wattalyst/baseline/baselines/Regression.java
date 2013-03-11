@@ -252,7 +252,7 @@ public class Regression implements Baseline{
 			if (cPredict < this.minValue) cPredict = this.minValue;				
 
 			// round to 5 digit decimal
-			cPredict =  Math.round(cPredict * 100000) / 100000.0;
+			//.. cPredict =  Math.round(cPredict * 100000) / 100000.0;
 
 			if (Constants.VERBOSE==1) System.out.println("Predicted value: "+cPredict);
 			

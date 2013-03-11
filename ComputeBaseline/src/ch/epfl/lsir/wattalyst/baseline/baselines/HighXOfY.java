@@ -157,7 +157,7 @@ public class HighXOfY implements Baseline{
 				avg = total / count;
 			}
 			// round to 5 digit decimal
-			avg =  Math.round(avg * 100000) / 100000.0;
+			//.. avg =  Math.round(avg * 100000) / 100000.0;
 
 			// store
 			baseline.insert(tempCal.getTimeInMillis(), avg);

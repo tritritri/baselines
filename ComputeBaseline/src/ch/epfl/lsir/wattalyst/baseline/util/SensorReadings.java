@@ -68,18 +68,29 @@ public class SensorReadings {
 		return minDate;
 	}
 	
+	/**
+	 * Print all elements (timing and readings) using iterator
+	 * Reading value printed is rounded, up to 5 decimal point 
+	 */
 	public String toString(){
 		String result = "";
 		Iterator<Long> iter = (Iterator<Long>) data.keySet().iterator();
 		while (iter.hasNext()){
 			Long key = iter.next();
-			double energy = data.get(key);			
+			double energy = data.get(key);	
+
+			// round to 5 digit decimal
+			energy =  Math.round(energy * 100000) / 100000.0;
+
 			result = result + "["+ new Date(key) + "," + energy +"] \n";
 		}
 		result = result + "maxDate: " + new Date(maxDate) + "\n";
 		return result;
 	}
 
+	/**
+	 * @return String of elements, ordered by timing
+	 */
 	public String toStringAsc(){
 		return toStringAsc(minDate, maxDate);
 	}
@@ -105,6 +116,7 @@ public class SensorReadings {
 
 	/**
 	 * Convert each element having key between from and to (inclusive) into string.
+	 * Value printed is rounded, up to 5 decimal point 
 	 * @param from starting key
 	 * @param to ending key
 	 * @return an array (list) of string representation the element
@@ -122,7 +134,9 @@ public class SensorReadings {
 			
 			// get the element
 			Double energy = data.get(currCal.getTimeInMillis());
-			
+			// round to 5 digit decimal
+			energy =  Math.round(energy * 100000) / 100000.0;
+
 			// check if the reading for current time is exist
 			if (energy!=null){
 				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + energy);
@@ -134,7 +148,6 @@ public class SensorReadings {
 		return result;
 	}
 
-	
 	/**
 	 * Copy data to destination. Between from and to (inclusive), hourly advances.
 	 * @param from starting point of the copy
@@ -194,6 +207,30 @@ public class SensorReadings {
 	public Double get(long timeInMillis) {
 		
 		return data.get(timeInMillis);
+	}
+	
+	
+	/**
+	 * Calculate the difference between this.data.value and reference.data.value
+	 * for all element contained in this.data
+	 * @param reference other SensorReading to be compared to
+	 * @param result append all timing in this.data and its value subtracted by its value in other
+	 * @return true if all comparison has been computed, false if there is a missing value in the reference 
+	 */
+	public boolean comparedTo(SensorReadings reference, SensorReadings result){
+		Iterator<Long> iter = this.data.keySet().iterator();
+		while ( iter.hasNext() ) {
+			long timing = iter.next();
+			Double ref = reference.get(timing);
+			if (ref == null) {
+				System.err.println("[ERROR] [SensorReadings.comparedTo] no value for "+new Date(timing) + 
+						" in the reference");
+				return false;
+			}
+			double error = this.data.get(timing) - ref;			
+			result.insert(timing, error);
+		}
+		return true;
 	}
 	
 }
