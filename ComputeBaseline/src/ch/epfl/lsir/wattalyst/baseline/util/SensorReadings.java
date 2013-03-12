@@ -11,7 +11,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 /**
  * A hash map data structure, stores timestamp (as Long) as its key, and sensor reading as its value (as Double)
- * The value is energy consumed during that hour.
+ * The value is reading consumed during that hour.
  * If minDate is set (see setMinDate), method insert will accept only the date after minDate
  *   
  * @author Tri Kurniawan Wijaya
@@ -32,14 +32,14 @@ public class SensorReadings {
 	
 	
 	/**
-	 * Inserting date and energy.
+	 * Inserting date and reading.
 	 * If minDate is set (see setMinDate), accept only date no earlier than minDate
 	 * @param date
-	 * @param energy
+	 * @param reading
 	 */
-	public void insert(Long date, double energy){
+	public void insert(Long date, double reading){
 
-		data.put(date, energy);
+		data.put(date, reading);
 		if (data.size() == 1) {
 			maxDate = date;
 			minDate = date;
@@ -77,12 +77,12 @@ public class SensorReadings {
 		Iterator<Long> iter = (Iterator<Long>) data.keySet().iterator();
 		while (iter.hasNext()){
 			Long key = iter.next();
-			double energy = data.get(key);	
+			double reading = data.get(key);	
 
 			// round to 5 digit decimal
-			energy =  Math.round(energy * 100000) / 100000.0;
+			reading =  Math.round(reading * 100000) / 100000.0;
 
-			result = result + "["+ new Date(key) + "," + energy +"] \n";
+			result = result + "["+ new Date(key) + "," + reading +"] \n";
 		}
 		result = result + "maxDate: " + new Date(maxDate) + "\n";
 		return result;
@@ -133,13 +133,13 @@ public class SensorReadings {
 		while (currCal.getTimeInMillis() <= to) {
 			
 			// get the element
-			Double energy = data.get(currCal.getTimeInMillis());
-			// round to 5 digit decimal
-			energy =  Math.round(energy * 100000) / 100000.0;
+			Double reading = data.get(currCal.getTimeInMillis());
 
 			// check if the reading for current time is exist
-			if (energy!=null){
-				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + energy);
+			if (reading!=null){
+				// round to 5 digit decimal
+				reading =  Math.round(reading * 100000) / 100000.0;
+				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + reading);
 			}
 			
 			// advance one hour
@@ -187,10 +187,10 @@ public class SensorReadings {
 		double total = 0.0;
 		for (int i=0; i<24; i++){
 			tempCal.set(Calendar.HOUR_OF_DAY, i);
-			Double energy = data.get(tempCal.getTimeInMillis());
-			if ( energy!= null ){
+			Double reading = data.get(tempCal.getTimeInMillis());
+			if ( reading!= null ){
 				count ++;
-				total = total + energy;
+				total = total + reading;
 			}
 		}
 		
@@ -200,9 +200,9 @@ public class SensorReadings {
 	}
 
 	/**
-	 * Get an energy reading for a given time.
+	 * Get a reading for a given time.
 	 * @param timeInMillis 
-	 * @return the energy reading on timeInMillis.
+	 * @return the reading on timeInMillis.
 	 */
 	public Double get(long timeInMillis) {
 		
