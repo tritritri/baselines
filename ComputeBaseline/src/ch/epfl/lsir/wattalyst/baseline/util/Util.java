@@ -125,6 +125,12 @@ public class Util {
 
 	}
 	
+	/**
+	 * Read csv file, put it in SensorReadings data structure
+	 * @param fileInput Inpu file name. The file is of form DATE,HOUR,READINGS. 
+	 * Where DATE=yyyy-MM-dd, HOUR=HH, READINGS=double
+	 * @param data the resulting data structure
+	 */
 	public static void hourlyCSVToSensorReadings(String fileInput, SensorReadings data) {
 		try {
 			

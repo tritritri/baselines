@@ -1,0 +1,20 @@
+#
+# @author Tri Kurniawan Wijaya
+# @date 2013.03.19
+#
+
+# An example of config file without temperature data
+
+# files
+energy-file = examples/load-dummy.txt
+algorithm-file = examples/algLinearRegression.txt
+
+
+# features parameters
+history-weekday = 20
+history-weekend = 10
+lag-weekday = 5
+lag-weekend = 2
+
+# set minimal value allowed in the prediction
+min-value-allowed = 0
