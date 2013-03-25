@@ -180,239 +180,7 @@ class BaselineTask extends TimerTask {
     /**
      * 
      */
-	private boolean createDataDirectories() {
-		File dir = new File(HISTORIC_SENSOR_DATA_DIR);
-		if(!dir.exists()){
-			if(!dir.mkdirs()){
-				System.out.println("[Error] Cannot create directory " + HISTORIC_SENSOR_DATA_DIR);
-				return false;
-			}
-		}
-		dir = new File(HISTORIC_TEMP_DATA_DIR);
-		if(!dir.exists()){
-			if(!dir.mkdirs()){
-				System.out.println("[Error] Cannot create directory " + HISTORIC_TEMP_DATA_DIR);
-				return false;
-			}
-		}
-		dir = new File(BASELINE_DATA_DIR);
-		if(!dir.exists()){
-			if(!dir.mkdirs()){
-				System.out.println("[Error] Cannot create directory " + BASELINE_DATA_DIR);
-				return false;
-			}
-		}
-		
-		for(String blID : baselineIDs){
-			String baselineType = this.getBaselineType(blID);
-			dir = new File(BASELINE_DATA_DIR + System.getProperty("file.separator") + 
-					baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_INPUT);
-			if(!dir.exists()){
-				if(!dir.mkdirs()){
-					System.out.println("[Error] Cannot create directory " + (BASELINE_DATA_DIR + System.getProperty("file.separator") + 
-							baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_INPUT));
-					return false;
-				}
-			}
-			dir = new File(BASELINE_DATA_DIR + System.getProperty("file.separator") + 
-					baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_OUTPUT);
-			if(!dir.exists()){
-				if(!dir.mkdirs()){
-					System.out.println("[Error] Cannot create directory " + (BASELINE_DATA_DIR + System.getProperty("file.separator") + 
-							baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_OUTPUT));
-					return false;
-				}
-			}
-		}
-		return true;	
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-    private boolean setupBaselineInputFiles() {
-    	
-    	for(String blID : baselineIDs){
-    		
-    		String configFile = "";
-    		
-    		// Setup input file for Regression. 
-    		if(this.getBaselineType(blID).equals("Regression")){
-	    		
-    			try {
-    				String algLinearRegressionFile =  getBaselineInputDataDir(blID) + System.getProperty("file.separator") + "algLinearRegression.txt";
-    				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(algLinearRegressionFile)));
-					writer.write(regression + "\n");
-					writer.flush();
-					writer.close();
-					
-    				configFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, getHistoryStartDate(), getHistoryEndDate());
-    				writer = new BufferedWriter(new FileWriter(new File(configFile)));
-					writer.write(ENERGYFILE_PARAM + " = " + HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(getSensorID(blID), getHistoryStartDate(), getHistoryEndDate()) + "\n");
-					writer.write(TEMPERATUREFILE_PARAM + " = " + HISTORIC_TEMP_DATA_DIR + System.getProperty("file.separator") + getTemperatureDataFile(getSensorID(blID), getHistoryStartDate(), getBaselineEndDate()) + "\n");
-					writer.write(ALGORITHMFILE_PARAM + " = " + algLinearRegressionFile + "\n");
-					writer.write(HISTORYWEEKDAY_PARAM + " = " + historyWeekday + "\n");
-					writer.write(HISTORYWEEKEND_PARAM + " = " + historyWeekend + "\n");
-					writer.write(LAGWEEKDAY_PARAM + " = " + lagWeekday + "\n");
-					writer.write(LAGWEEKEND_PARAM + " = " + lagWeekend + "\n");
-					writer.write(MINVALUEMALLOWED_PARAM + " = " + minValueAllowed + "\n");
-					
-					writer.flush();
-					writer.close();
-				} catch (IOException e) {
-					System.out.println("[Error] Cannot create input file " + configFile);
-					return false;
-				}
-    		}
-    		// For all the other baselines, the input file is simply the historic sensor data file
-    		else{
-    			String historicSensorDataFile = HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(getSensorID(blID), getHistoryStartDate(), getHistoryEndDate());
-    			configFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, getHistoryStartDate(), getHistoryEndDate());
-    			try {
-					FileUtils.copyFile(new File(historicSensorDataFile), new File(configFile));
-				} catch (IOException e) {
-					System.out.println("[Error] Cannot create input file " + configFile);
-					return false;
-				}
-    		}
-    	}
-    	return true;
-	}
-
-	/*
-     * 
-     */
-    private void computeBaselines() {
-    	
-    	// Set the start date and end date for the baseline
-    	Date blStartDate = getBaselineStartDate();
-    	Date blEndDate = getBaselineEndDate();
-    	
-    	// Set the start date and end date for the historic values
-    	Date histStartDate = getHistoryStartDate();
-    	Date histEndDate = getHistoryEndDate();
-    	
-    	for(String blID : baselineIDs){
-    		
-    		// Set the input file
-    		String inputFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, histStartDate, histEndDate);
-    		    		
-    		// Set the output file
-    		String outputFile = getBaselineOutputDataDir(blID) + System.getProperty("file.separator") + getBaselineOutputDataFile(blID, blStartDate, blEndDate);
-    		
-    		// Set the baseline method
-    		String baseline = getBaselineClass(blID);
-    		Baseline b;
-			try {
-				b = (Baseline) Class.forName(baseline).newInstance();
-				b.compute(inputFile, formatter.format(blStartDate), formatter.format(blEndDate));
-				b.writeResultToFile(outputFile);
-			} 
-			catch (InstantiationException e) {
-				System.out.println("[Error] Cannot instantiate " + baseline);
-			} 
-			catch (IllegalAccessException e) {
-				System.out.println("[Error] Cannot instantiate " + baseline);
-			} 
-			catch (ClassNotFoundException e) {
-				System.out.println("[Error] Cannot instantiate " + baseline);
-			}
-			catch (Exception e) {
-				System.out.println("[Error] Cannot compute baseline " + blID);
-			}
-			
-    	}
-	}
-
-	/**
-     * 
-     */
-    private void retrieveHistoricTemperatureData() {
-    	
-    	// Set the start date and end date for the historic values and forecast
-    	Date tempStartDate = getHistoryStartDate();
-    	Date tempEndDate = getBaselineEndDate();
-    	
-    	List<String> sensorIDs = new ArrayList<String>();
-    	for(String blID : baselineIDs){
-    		
-    		// Set the sensor name from the baseline ID
-    		String id = getSensorID(blID);
-			
-    		if(!sensorIDs.contains(id)){
-    			sensorIDs.add(id);
-    		}
-    		
-    	}
-    	
-    	for(String id : sensorIDs){
-    					
-	    	// Set the output file
-    		String outputFile = getTemperatureDataFile(id, tempStartDate, tempEndDate);
-    		
-    		// Set the country and location
-        	System.out.println("[WARNING] Must query Wattalyst DB for location of the sensor, assume Lulea only");
-        	String country = "Sweden";
-        	String place = "Lulea";
-        	
-	    	Temperature t = new Wunderground();
-	    	t.compute(tempStartDate, tempEndDate, country, place);
-			t.writeResultToFile(outputFile);
-
-			// TODO Remove
-			// For Wunderground call limit
-			try {
-				Thread.sleep(60 * 1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-    	}
-	}
-
-	/**
-     * 
-     */
-    private void retrieveHistoricSensorData() {
-		
-    	// Set the start date and end date for the historic values
-    	Date histStartDate = getHistoryStartDate();
-    	Date histEndDate = getHistoryEndDate();
-    				
-    	List<String> sensorIDs = new ArrayList<String>();
-    	for(String blID : baselineIDs){
-    		
-    		// Set the sensor name from the baseline ID
-    		String id = getSensorID(blID);
-			
-    		if(!sensorIDs.contains(id)){
-    			sensorIDs.add(id);
-    		}
-    		
-    	}
-    	
-    	for(String id : sensorIDs){
-    		
-			// Set the output file
-    		String outputFile = HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(id, histStartDate, histEndDate);
-    					
-			// Retrieve the energy data
-			EnergyData energyData = new EnergyData();
-			try {
-				energyData.compute(id, histStartDate, histEndDate);
-				energyData.writeResultToFile(outputFile);
-			} catch (Exception e) {
-				System.out.println("[ERROR] Cannot retrieve historic data for " + id);
-			}
-			
-		}
-    	
-	}
-
-	/**
-     * 
-     */
-    private boolean retrieveConfigParameters() {
+    protected boolean retrieveConfigParameters() {
 		try {
 			
 			BufferedReader reader = new BufferedReader(new FileReader(new File(BLDAEMON_CONFIG_FILE)));
@@ -530,11 +298,11 @@ class BaselineTask extends TimerTask {
 		}
 		
 	}
-
-	/**
+    
+    /**
      * 
      */
-    private void retrieveBaselineIDs() {
+    protected void retrieveBaselineIDs() {
     	baselineIDs = new ArrayList<String>();
     	
     	System.out.println("[WARNING] Interface with Wattalyst DB not ready yet, return default list");
@@ -562,6 +330,238 @@ class BaselineTask extends TimerTask {
     	baselineIDs.add("wattalyst.lulea.location_43.sensor_590.ISONE");
     	baselineIDs.add("wattalyst.lulea.location_43.sensor_590.Regression");
     }
+
+    /**
+     * 
+     */
+    protected boolean createDataDirectories() {
+		File dir = new File(HISTORIC_SENSOR_DATA_DIR);
+		if(!dir.exists()){
+			if(!dir.mkdirs()){
+				System.out.println("[Error] Cannot create directory " + HISTORIC_SENSOR_DATA_DIR);
+				return false;
+			}
+		}
+		dir = new File(HISTORIC_TEMP_DATA_DIR);
+		if(!dir.exists()){
+			if(!dir.mkdirs()){
+				System.out.println("[Error] Cannot create directory " + HISTORIC_TEMP_DATA_DIR);
+				return false;
+			}
+		}
+		dir = new File(BASELINE_DATA_DIR);
+		if(!dir.exists()){
+			if(!dir.mkdirs()){
+				System.out.println("[Error] Cannot create directory " + BASELINE_DATA_DIR);
+				return false;
+			}
+		}
+		
+		for(String blID : baselineIDs){
+			String baselineType = this.getBaselineType(blID);
+			dir = new File(BASELINE_DATA_DIR + System.getProperty("file.separator") + 
+					baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_INPUT);
+			if(!dir.exists()){
+				if(!dir.mkdirs()){
+					System.out.println("[Error] Cannot create directory " + (BASELINE_DATA_DIR + System.getProperty("file.separator") + 
+							baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_INPUT));
+					return false;
+				}
+			}
+			dir = new File(BASELINE_DATA_DIR + System.getProperty("file.separator") + 
+					baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_OUTPUT);
+			if(!dir.exists()){
+				if(!dir.mkdirs()){
+					System.out.println("[Error] Cannot create directory " + (BASELINE_DATA_DIR + System.getProperty("file.separator") + 
+							baselineType + System.getProperty("file.separator") + BASELINE_DATA_DIR_OUTPUT));
+					return false;
+				}
+			}
+		}
+		return true;	
+	}
+	
+	/**
+     * 
+     */
+    protected void retrieveHistoricSensorData() {
+		
+    	// Set the start date and end date for the historic values
+    	Date histStartDate = getHistoryStartDate();
+    	Date histEndDate = getHistoryEndDate();
+    				
+    	List<String> sensorIDs = new ArrayList<String>();
+    	for(String blID : baselineIDs){
+    		
+    		// Set the sensor name from the baseline ID
+    		String id = getSensorID(blID);
+			
+    		if(!sensorIDs.contains(id)){
+    			sensorIDs.add(id);
+    		}
+    		
+    	}
+    	
+    	for(String id : sensorIDs){
+    		
+			// Set the output file
+    		String outputFile = HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(id, histStartDate, histEndDate);
+    					
+			// Retrieve the energy data
+			EnergyData energyData = new EnergyData();
+			try {
+				energyData.compute(id, histStartDate, histEndDate);
+				energyData.writeResultToFile(outputFile);
+			} catch (Exception e) {
+				System.out.println("[ERROR] Cannot retrieve historic data for " + id);
+			}
+			
+		}
+    	
+	}	
+    
+    /**
+     * 
+     */
+    protected void retrieveHistoricTemperatureData() {
+    	
+    	// Set the start date and end date for the historic values and forecast
+    	Date tempStartDate = getHistoryStartDate();
+    	Date tempEndDate = getBaselineEndDate();
+    	
+    	List<String> sensorIDs = new ArrayList<String>();
+    	for(String blID : baselineIDs){
+    		
+    		// Set the sensor name from the baseline ID
+    		String id = getSensorID(blID);
+			
+    		if(!sensorIDs.contains(id)){
+    			sensorIDs.add(id);
+    		}
+    		
+    	}
+    	
+    	for(String id : sensorIDs){
+    					
+	    	// Set the output file
+    		String outputFile = getTemperatureDataFile(id, tempStartDate, tempEndDate);
+    		
+    		// Set the country and location
+        	System.out.println("[WARNING] Must query Wattalyst DB for location of the sensor, assume Lulea only");
+        	String country = "Sweden";
+        	String place = "Lulea";
+        	
+	    	Temperature t = new Wunderground();
+	    	t.compute(tempStartDate, tempEndDate, country, place);
+			t.writeResultToFile(outputFile);
+
+			// TODO Remove
+			// For Wunderground call limit
+			try {
+				Thread.sleep(60 * 1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    	}
+	}
+    
+    /**
+	 * 
+	 * @return
+	 */
+    protected boolean setupBaselineInputFiles() {
+    	
+    	for(String blID : baselineIDs){
+    		
+    		String configFile = "";
+    		
+    		// Setup input file for Regression. 
+    		if(this.getBaselineType(blID).equals("Regression")){
+	    		
+    			try {
+    				String algLinearRegressionFile =  getBaselineInputDataDir(blID) + System.getProperty("file.separator") + "algLinearRegression.txt";
+    				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(algLinearRegressionFile)));
+					writer.write(regression + "\n");
+					writer.flush();
+					writer.close();
+					
+    				configFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, getHistoryStartDate(), getHistoryEndDate());
+    				writer = new BufferedWriter(new FileWriter(new File(configFile)));
+					writer.write(ENERGYFILE_PARAM + " = " + HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(getSensorID(blID), getHistoryStartDate(), getHistoryEndDate()) + "\n");
+					writer.write(TEMPERATUREFILE_PARAM + " = " + HISTORIC_TEMP_DATA_DIR + System.getProperty("file.separator") + getTemperatureDataFile(getSensorID(blID), getHistoryStartDate(), getBaselineEndDate()) + "\n");
+					writer.write(ALGORITHMFILE_PARAM + " = " + algLinearRegressionFile + "\n");
+					writer.write(HISTORYWEEKDAY_PARAM + " = " + historyWeekday + "\n");
+					writer.write(HISTORYWEEKEND_PARAM + " = " + historyWeekend + "\n");
+					writer.write(LAGWEEKDAY_PARAM + " = " + lagWeekday + "\n");
+					writer.write(LAGWEEKEND_PARAM + " = " + lagWeekend + "\n");
+					writer.write(MINVALUEMALLOWED_PARAM + " = " + minValueAllowed + "\n");
+					
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					System.out.println("[Error] Cannot create input file " + configFile);
+					return false;
+				}
+    		}
+    		// For all the other baselines, the input file is simply the historic sensor data file
+    		else{
+    			String historicSensorDataFile = HISTORIC_SENSOR_DATA_DIR + System.getProperty("file.separator") + getHistoricSensorDataFile(getSensorID(blID), getHistoryStartDate(), getHistoryEndDate());
+    			configFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, getHistoryStartDate(), getHistoryEndDate());
+    			try {
+					FileUtils.copyFile(new File(historicSensorDataFile), new File(configFile));
+				} catch (IOException e) {
+					System.out.println("[Error] Cannot create input file " + configFile);
+					return false;
+				}
+    		}
+    	}
+    	return true;
+	}
+
+	/**
+	 * 
+	 */
+    protected void computeBaselines() {
+    	
+    	// Set the start date and end date for the baseline
+    	Date blStartDate = getBaselineStartDate();
+    	Date blEndDate = getBaselineEndDate();
+    	
+    	// Set the start date and end date for the historic values
+    	Date histStartDate = getHistoryStartDate();
+    	Date histEndDate = getHistoryEndDate();
+    	
+    	for(String blID : baselineIDs){
+    		
+    		// Set the input file
+    		String inputFile = getBaselineInputDataDir(blID) + System.getProperty("file.separator") + getBaselineInputDataFile(blID, histStartDate, histEndDate);
+    		    		
+    		// Set the output file
+    		String outputFile = getBaselineOutputDataDir(blID) + System.getProperty("file.separator") + getBaselineOutputDataFile(blID, blStartDate, blEndDate);
+    		
+    		// Set the baseline method
+    		String baseline = getBaselineClass(blID);
+    		Baseline b;
+			try {
+				b = (Baseline) Class.forName(baseline).newInstance();
+				b.compute(inputFile, formatter.format(blStartDate), formatter.format(blEndDate));
+				b.writeResultToFile(outputFile);
+			} 
+			catch (InstantiationException e) {
+				System.out.println("[Error] Cannot instantiate " + baseline);
+			} 
+			catch (IllegalAccessException e) {
+				System.out.println("[Error] Cannot instantiate " + baseline);
+			} 
+			catch (ClassNotFoundException e) {
+				System.out.println("[Error] Cannot instantiate " + baseline);
+			}
+			catch (Exception e) {
+				System.out.println("[Error] Cannot compute baseline " + blID);
+			}
+			
+    	}
+	}
    
 	/**
      * 
