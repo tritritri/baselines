@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -25,15 +24,22 @@ public class Util {
 	 * @throws ParseException
 	 */
 	public static Calendar dateStrHourToCal(String date, int hour) throws ParseException{
+
+		String dateStr = "";
+		if (hour < 10) dateStr = date + " 0"+hour+":00:00";
+			else dateStr = date + " " + hour+":00:00";
 		
-		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+		//formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Calendar cal = Calendar.getInstance();
-		cal.setTimeZone(TimeZone.getTimeZone("UTC"));
-		cal.setTime(formatter.parse(date));
-		cal.set(Calendar.HOUR_OF_DAY, hour);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+		//System.out.println("formatter date: "+formatter.parse(dateStr) + ": "+formatter.parse(date).getTime());
+		cal.setTimeInMillis(formatter.parse(dateStr).getTime());
+		//System.out.println(cal.getTimeInMillis());
+		
+		//System.out.println("resulting date: "+cal.getTime());
+		//System.out.println(cal.getTimeInMillis());
+		//System.out.println("resulting timezone: "+cal.getTimeZone());
+		//System.exit(1);
 		return cal;
 		
 	}

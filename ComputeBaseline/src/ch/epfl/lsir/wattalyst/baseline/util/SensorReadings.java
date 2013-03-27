@@ -161,15 +161,15 @@ public class SensorReadings {
 			// check if the data is exist
 			if (!data.containsKey(currCal.getTimeInMillis())) {
 				
-				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				System.err.println("[ERROR] [SensorReadings] There is no data for "+
-						currCal.getTimeInMillis() + " ["+formatter.format(currCal.getTime())+"].");
-				return false;
+				//SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				//System.err.println("[ERROR] [SensorReadings] There is no data for "+
+				//		currCal.getTimeInMillis() + " ["+formatter.format(currCal.getTime())+"].");
+				//return false;
 				
 			} else {
 				destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
 			}
-			currCal.add(Calendar.HOUR, 1);
+			currCal.add(Calendar.HOUR_OF_DAY, 1);
 		}		
 		return true;
 	}

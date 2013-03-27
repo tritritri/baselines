@@ -95,7 +95,6 @@ public class HighXOfY implements Baseline{
 				// compute from startDate, hour 0 until endDate hour 23
 				computeCal.setTimeInMillis(data.getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				
 				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data.getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + input
 				+ " is not available. "  
