@@ -6,12 +6,12 @@ cd bin
 # create jar for ComputeBaseline
 rm -f ComputeBaseline.jar
 echo Main-class: ch.epfl.lsir.wattalyst.baseline.compute.ComputeBaseline > manifest.txt
-jar cvfm ComputeBaseline.jar manifest.txt ch org/apache weka
+jar cvfm ComputeBaseline.jar manifest.txt ch/epfl/lsir/wattalyst/baseline org/apache weka
 
 # create jar for ComputeError
 rm -f ComputeError.jar
 echo Main-class: ch.epfl.lsir.wattalyst.baseline.compute.ComputeError > manifest.txt
-jar cvfm ComputeError.jar manifest.txt ch org/apache
+jar cvfm ComputeError.jar manifest.txt ch/epfl/lsir/wattalyst/baseline org/apache
 
 # go to main project directory
 cd ..
