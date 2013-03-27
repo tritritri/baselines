@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -27,6 +28,7 @@ public class Util {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		Calendar cal = Calendar.getInstance();
+		cal.setTimeZone(TimeZone.getTimeZone("UTC"));
 		cal.setTime(formatter.parse(date));
 		cal.set(Calendar.HOUR_OF_DAY, hour);
 		cal.set(Calendar.MINUTE, 0);
@@ -143,7 +145,10 @@ public class Util {
 				
 				// first element is date, second element is hour
 				Calendar dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
-				
+				if (Constants.VERBOSE==1) {
+					System.out.println("[Util.hourlyCSVToSensorReadings] "+lineArray[0]+", "+lineArray[1] + 
+							" ["+dateCal.getTimeInMillis()+"]. ");
+				}
 				// third element is reading
 				double reading = Double.parseDouble(lineArray[2]);
 				

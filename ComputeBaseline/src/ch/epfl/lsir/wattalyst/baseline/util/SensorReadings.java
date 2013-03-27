@@ -155,17 +155,21 @@ public class SensorReadings {
 	 * @param destination target collection
 	 */	
 	public boolean copyHourly(long from, long to, SensorReadings destination) {
-		Calendar currCal = Calendar.getInstance();
+		Calendar currCal = Calendar.getInstance();		
 		currCal.setTimeInMillis(from);
 		while (currCal.getTimeInMillis() <= to) {
 			// check if the data is exist
 			if (!data.containsKey(currCal.getTimeInMillis())) {
+				
 				SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				System.err.println("[ERROR] [SensorReadings] There is no data for "+formatter.format(currCal.getTime())+".");
+				System.err.println("[ERROR] [SensorReadings] There is no data for "+
+						currCal.getTimeInMillis() + " ["+formatter.format(currCal.getTime())+"].");
 				return false;
+				
+			} else {
+				destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
 			}
-			destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
-			currCal.add(Calendar.HOUR_OF_DAY, 1);
+			currCal.add(Calendar.HOUR, 1);
 		}		
 		return true;
 	}
