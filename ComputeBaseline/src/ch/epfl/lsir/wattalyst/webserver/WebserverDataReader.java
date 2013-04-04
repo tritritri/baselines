@@ -33,52 +33,58 @@ public class WebserverDataReader {
 		// Invoke the web service and retrieve the result
 		DataAccessService service = new DataAccessService();
 		DataAccess port = service.getDataAccessPort();
-		ValueListResultContainer result = port.getValuesForSensorByRange(sensorName, startDate.getTime(), endDate.getTime());
 		
 		// Create a sensor readings data structure 
 		SensorReadings readings = new SensorReadings();
-		
-		// Put the result in a sorted set
-		if("OK".equals(result.getStatus().value())){
-			TreeSet<AValueDto> sortedSet = new TreeSet<AValueDto>();
-			for(AValueDto r : result.getValues()){
-				sortedSet.add(r);
-			}
-// TODO comment this part	
-//				if(r instanceof NumericValueDto){
-//					Calendar c = Calendar.getInstance();
-//					c.setTimeInMillis(r.getTimestamp());
-//					System.out.println(r.getTimestamp() + "," + ((NumericValueDto) r).getValue()); 
-//					System.out.println(c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH) +
-//						"," + c.get(Calendar.HOUR_OF_DAY) + "," + c.get(Calendar.MINUTE) + "," +
-//						((NumericValueDto)r).getValue());
-//				}
-//			}
-//			System.out.println();
-// TODO end comment	
+					
+		try{
+			ValueListResultContainer result = port.getValuesForSensorByRange(sensorName, startDate.getTime(), endDate.getTime());
 			
-			// Generate a sensor readings data set using the difference method (e.g. for energy)
-			if(useDifferenceMethod){
-				Calendar current = Calendar.getInstance();
-				current.setTime(startDate);
-				while(!current.getTime().after(endDate)){
-					Double lower = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime());
-					Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000 - 1); //3600000 = 1*60*60*1000: 1 hour shift
-					
-					if(lower.isNaN() || upper.isNaN()){
-						readings.insert(current.getTimeInMillis(), Double.NaN);
+			// Put the result in a sorted set
+			if("OK".equals(result.getStatus().value())){
+				TreeSet<AValueDto> sortedSet = new TreeSet<AValueDto>();
+				for(AValueDto r : result.getValues()){
+					sortedSet.add(r);
+	//			}
+	// TODO comment this part	
+					if(r instanceof NumericValueDto){
+						Calendar c = Calendar.getInstance();
+						c.setTimeInMillis(r.getTimestamp());
+						System.out.println(r.getTimestamp() + "," + ((NumericValueDto) r).getValue()); 
+						System.out.println(c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH) +
+							"," + c.get(Calendar.HOUR_OF_DAY) + "," + c.get(Calendar.MINUTE) + "," +
+							((NumericValueDto)r).getValue());
 					}
-					else {
-						readings.insert(current.getTimeInMillis(), (upper - lower));
+				}
+				System.out.println();
+	// TODO end comment	
+				
+				// Generate a sensor readings data set using the difference method (e.g. for energy)
+				if(useDifferenceMethod){
+					Calendar current = Calendar.getInstance();
+					current.setTime(startDate);
+					while(!current.getTime().after(endDate)){
+						Double lower = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime());
+						Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000 - 1); //3600000 = 1*60*60*1000: 1 hour shift
+						
+						if(lower.isNaN() || upper.isNaN()){
+							readings.insert(current.getTimeInMillis(), Double.NaN);
+						}
+						else {
+							readings.insert(current.getTimeInMillis(), (upper - lower));
+						}
+						
+						current.add(Calendar.HOUR_OF_DAY, 1);
 					}
-					
-					current.add(Calendar.HOUR_OF_DAY, 1);
+				}
+				// Generate a sensor readings data set aggregating different readings in the same hour (e.g. for power)
+				else{
+					throw new RuntimeException("Not implemented yet!");
 				}
 			}
-			// Generate a sensor readings data set aggregating different readings in the same hour (e.g. for power)
-			else{
-				throw new RuntimeException("Not implemented yet!");
-			}
+		}
+		catch(Exception e){
+			
 		}
 		
 		return readings;
@@ -110,8 +116,8 @@ public class WebserverDataReader {
 	 */
 	public static void main(String[] args) throws RemoteException, ParseException{
 		WebserverDataReader reader = new WebserverDataReader();
-		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-08 02:10:00");
-		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-08 02:13:00");
+		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-18 00:00:00");
+		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-04-03 23:59:00");
 		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_43.sensor_346", startDate, endDate, true);
 		System.out.println(readings.toStringAsc());
 	}

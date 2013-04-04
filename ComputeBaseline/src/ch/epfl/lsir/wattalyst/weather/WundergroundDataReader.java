@@ -147,8 +147,8 @@ public class WundergroundDataReader {
 	 */
 	public static void main(String[] args) throws ParseException{
 		WundergroundDataReader r = new WundergroundDataReader();
-		Date startDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130307");
-		Date endDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130308");
+		Date startDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130318");
+		Date endDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130408");
 		System.out.println(r.getHourlyTemperatures(startDate, endDate, "Sweden", "Lulea").toStringAsc());
 	}
 }
