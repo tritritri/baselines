@@ -59,7 +59,7 @@ public class ComputeBaseline {
 			help.setWidth(90);
 			String helpString = "java -jar ComputeBaseline.jar [OPTIONS] BASELINE INPUT TARGETDATE\n" 
 					+ "Example: java -jar ComputeBaseline.jar PJMEco input-example.txt 2013-02-21\n"
-					+ "BASELINE is PJMEco | CAISO | NYISO | Mid4Of6 | ISONE | Regression \n"
+					+ "BASELINE is PJMEco | CAISO | NYISO | Mid4Of6 | ISONE | Supervised \n"
 					+ "TARGETDATE is of form yyyy-MM-dd\n"
 					+ "INPUT is a SENSORFILE: a file text of lines DATE,HOUR,READINGS, where:\n" +
 					  "... DATE is of form yyyy-MM-dd, \n"

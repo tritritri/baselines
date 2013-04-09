@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author Tri Kurniawan Wijaya
  * @date   2013.02.28
  */ 
-public class TestRegression {
+public class TestSupervised {
 
 	public int run ()  {
 		String baseline = null;
@@ -26,7 +26,7 @@ public class TestRegression {
 		String testsDir = examplesDir + "tests" + dirSep;
 		
 		try {
-			baseline="ch.epfl.lsir.wattalyst.baseline.baselines.Regression";
+			baseline="ch.epfl.lsir.wattalyst.baseline.baselines.Supervised";
 			// fileInput = examplesDir+"load-dummy.txt,"+examplesDir+"temp-dummy.txt,"+
 			//			examplesDir+"algLinearRegression.txt";
 

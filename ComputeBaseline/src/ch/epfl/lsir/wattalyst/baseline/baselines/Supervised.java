@@ -32,7 +32,7 @@ import ch.epfl.lsir.wattalyst.baseline.util.Util;
  * @date   2013.02.28
  *
  */
-public class Regression implements Baseline{
+public class Supervised implements Baseline{
 
 	private Calendar startCal;
 	private Calendar endCal;
@@ -61,7 +61,7 @@ public class Regression implements Baseline{
 
 	private double minValue;
 	
-	public Regression(){
+	public Supervised(){
 		
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();

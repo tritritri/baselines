@@ -22,7 +22,7 @@ public class Test {
 		t = new TestDays(3);
 		failedCount += t.run();
 		
-		TestRegression tR = new TestRegression();
+		TestSupervised tR = new TestSupervised();
 		failedCount += tR.run();
 		
 		TestISONE tI = new TestISONE();
