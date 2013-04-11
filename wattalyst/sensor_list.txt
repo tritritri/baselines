@@ -1,0 +1,21 @@
++------+----------------------+
+> | id   | title                |
+> +------+----------------------+
+> |  337 | outdoor_temperature  |
+> |  338 | indoor_temperature   |
+> |  339 | supplytemp DH            |
+> |  340 | returntemp DH            |
+> |  341 | Flow DH             |
+> |  342 | Volym DH             |
+> |  343 | Power DH            |
+> |  344 | Energy DH            |
+> |  345 | Power heating DH      |
+> |  346 | Energy heating DH      |
+> |  347 | Power water DH |
+> |  348 | Energy water DH |
+> |  589 | Power EL            |
+> |  590 | Energy EL            |
+> | 1082 | PowerJPlug         |
+> | 1083 | Energy JPlug         |
+> | 1086 | Reaktiv Power JPlug |
+> +------+----------------------+

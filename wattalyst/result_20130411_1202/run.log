@@ -1,0 +1,7 @@
+java -jar RetrieveSensorData.jar -o s345.txt wattalyst.lulea.location_43.sensor_345 2012-12-01--00:00 2013-04-11--23:59
+java -jar RetrieveSensorData.jar -o s346.txt wattalyst.lulea.location_43.sensor_346 2012-12-01--00:00 2013-04-11--23:59
+
+java -jar RetrieveEnergyData.jar -o e346.txt wattalyst.lulea.location_43.sensor_346 2012-12-01--00:00 2013-04-11--23:59
+java -jar RetrieveEnergyData.jar -o e348.txt wattalyst.lulea.location_43.sensor_348 2012-12-01--00:00 2013-04-11--23:59
+java -jar RetrieveEnergyData.jar -o e590.txt wattalyst.lulea.location_43.sensor_590 2012-12-01--00:00 2013-04-11--23:59
+
