@@ -66,8 +66,8 @@ public class ComputeBaseline {
 					+ "... HOUR is 0-23, and \n" +
 					  "... READINGS is value measured at DATE,HOUR. \n" +
 					  "..... For example, energy consumed during DATE,HOUR in kWh.\n" +
-					  ". Except when BASELINE is Regression, INPUT is a configuration file \n" +
-					  ". Example: java -jar ComputeBaseline.jar Regression config-reg.txt 2013-02-21\n"
+					  ". Except when BASELINE is Supervised, INPUT is a configuration file \n" +
+					  ". Example: java -jar ComputeBaseline.jar Supervised config-reg.txt 2013-02-21\n"
 					  /*
 					  ". Except when BASELINE is Regression, INPUT is of form \n" +
 					  "... SENSORFILE1,SENSORFILE2,ALGFILE, where \n" +
