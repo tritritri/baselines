@@ -31,8 +31,9 @@ public class RetrieveEnergyData {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
 			String helpString = "java -jar RetrieveEnergyData.jar [OPTIONS] SENSORNAME STARTDATE ENDDATE \n" 
+					+ "Compute hourly energy consumption read by (accumulative) energy sensor SENSORNAME"
 					+ "Example: java -jar RetrieveEnergyData.jar wattalyst.lulea.location_43.sensor_346 2013-02-21--00:00 2013-02-26--23:59\n"
-					+ "STARTDATE and ENDDATE are of form yyyy-MM-dd--HH-mm\n"
+					+ "STARTDATE and ENDDATE are of form yyyy-MM-dd--HH:mm\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
