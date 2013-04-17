@@ -19,10 +19,11 @@ public class UtilForTest {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static boolean testBaselines(String baseline, String fileInput, String startDateStr, String endDateStr, String fileReference) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+	public static boolean testBaselines(String baseline, String fileInput, String startDateStr, String endDateStr, String fileReference, boolean optionHistory) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
 
 		// build the baseline
-		Baseline b = (Baseline) Class.forName(baseline).newInstance(); 
+		Baseline b = (Baseline) Class.forName(baseline).newInstance();
+		b.setInputHistoryOption(optionHistory);
 		b.compute(fileInput, startDateStr, endDateStr);
 		
 		// get the result
@@ -42,4 +43,7 @@ public class UtilForTest {
 		return true;
 	}
 
+	public static boolean testBaselines(String baseline, String fileInput, String startDateStr, String endDateStr, String fileReference) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException {
+		return testBaselines(baseline, fileInput, startDateStr, endDateStr, fileReference, false);
+	}
 }

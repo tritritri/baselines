@@ -1,0 +1,15 @@
+
+# files
+energy-file = examples/input-example.txt
+temperature-file = examples/temp-example.txt
+algorithm-file = examples/algLinearRegression.txt
+
+
+# features parameters
+history-weekday = 20
+history-weekend = 10
+lag-weekday = 5
+lag-weekend = 2
+
+# set minimal value allowed in the prediction
+min-value-allowed = 0

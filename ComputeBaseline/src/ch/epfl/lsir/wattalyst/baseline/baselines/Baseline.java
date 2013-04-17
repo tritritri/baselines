@@ -47,4 +47,9 @@ public interface Baseline {
 	 */
 	public void writeResultToFile(String fileName);
 
+	/**
+	 * Set option inputHistory=flag
+	 * @param flag boolean value for the inputHistory option
+	 */
+	public void setInputHistoryOption(boolean flag);
 }

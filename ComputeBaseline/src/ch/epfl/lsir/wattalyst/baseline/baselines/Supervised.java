@@ -46,8 +46,7 @@ public class Supervised implements Baseline{
 	private int WEEKEND_LAG;
 
 	// data structure for target variables / baseline to compute
-	private SensorReadings data; // original data
-	private SensorReadings baseline; // will be developed as the baseline
+	private SensorReadings[] data; // original data
 	
 	// data structure for features/context
 	private SensorReadings context;
@@ -61,6 +60,9 @@ public class Supervised implements Baseline{
 
 	private double minValue;
 	
+	private boolean inputHistory;
+	private int historyAccess;
+	
 	public Supervised(){
 		
 		startCal = Calendar.getInstance();
@@ -68,8 +70,9 @@ public class Supervised implements Baseline{
 		exclDays = null;
 		
 		context = new SensorReadings();
-		data = new SensorReadings();
-		baseline = new SensorReadings();
+		data = new SensorReadings[2];
+		data[0] = new SensorReadings();
+		data[1] = new SensorReadings();
 	
 		WEEKDAY_Y = 20;
 		WEEKEND_Y = 10;
@@ -78,6 +81,8 @@ public class Supervised implements Baseline{
 		WEEKDAY_LAG = 5;
 		WEEKEND_LAG = 2;
 				
+		inputHistory = false;
+		historyAccess = 1;
 	}
 	
 	/**
@@ -114,10 +119,10 @@ public class Supervised implements Baseline{
 			Util.setToTheEndOfTheDay(endCal);
 			
 			// read the target data, in this case: the energy sensors
-			Util.hourlyCSVToSensorReadings(dataFileName, data);
+			Util.hourlyCSVToSensorReadings(dataFileName, data[0]);
 
 			// copy the original data for the baseline calculation
-			data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline);
+			data[0].copyHourly(data[0].getMinDate(), data[0].getMaxDate(), data[1]);
 
 			
 			// read the context (feature) data, in this case: temperature
@@ -132,16 +137,16 @@ public class Supervised implements Baseline{
 
 			Calendar computeCal = Calendar.getInstance();
 			
-			if ( data.getMaxDate() >= lastNeeded.getTimeInMillis() ) {
+			if ( data[0].getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
 				computeCal.setTimeInMillis(startCal.getTimeInMillis());				
 			} else {
 				// otherwise, compute endHourOfDatabasewhen until prevStartDate
 				// compute from startDate, hour 0 until endDate hour 23
-				computeCal.setTimeInMillis(data.getMaxDate());
+				computeCal.setTimeInMillis(data[0].getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
 				
-				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data.getMaxDate())) 
+				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data[0].getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + dataFileName 
 				+" is not available. " +
 				"Estimation will be done for that period using the specified baseline method.");
@@ -213,7 +218,7 @@ public class Supervised implements Baseline{
 		    c.buildClassifier(trainingSet);
 		    if (Constants.VERBOSE==1) System.out.println(c.toString());
 
-			// create a new instance
+			// create a new instance to classify
 		    int numCols = numLag*2+2;
 		    if (this.contextFileName==null) numCols = numLag+1;
 			Instance newInst = new Instance(numCols);
@@ -223,7 +228,7 @@ public class Supervised implements Baseline{
 				cal.set(Calendar.HOUR_OF_DAY, targetH);
 
 				// put load historical data
-				newInst.setValue((Attribute)fvWekaAttrs.elementAt(j), baseline.get(cal.getTimeInMillis()));
+				newInst.setValue((Attribute)fvWekaAttrs.elementAt(j), data[historyAccess].get(cal.getTimeInMillis()));
 				
 				// put temp historical data
 				if (this.contextFileName!=null) 
@@ -248,6 +253,7 @@ public class Supervised implements Baseline{
 			newInst.setValue((Attribute)fvWekaAttrs.elementAt(numCols-1), 0);
 			if (Constants.VERBOSE==1) System.out.println("new instance: " + newInst.toString());
 			
+			// get prediction value
 			double cPredict = c.classifyInstance(newInst);
 			
 			// fix to min value
@@ -255,8 +261,9 @@ public class Supervised implements Baseline{
 
 			if (Constants.VERBOSE==1) System.out.println("Predicted value: "+cPredict);
 			
+			// store the result (predicted value) 
 			Util.setToTheBeginningOfTheHour(cal);			
-			baseline.insert(cal.getTimeInMillis(), cPredict);
+			data[1].insert(cal.getTimeInMillis(), cPredict);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -315,11 +322,11 @@ public class Supervised implements Baseline{
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
 			
 			// check if we miss some data
-			if (baseline.get(cal.getTimeInMillis())==null) {
+			if (data[historyAccess].get(cal.getTimeInMillis())==null) {
 				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
 				System.exit(0);
 			}
-			inst.setValue((Attribute)fvWekaAttrs.elementAt(j), baseline.get(cal.getTimeInMillis()));
+			inst.setValue((Attribute)fvWekaAttrs.elementAt(j), data[historyAccess].get(cal.getTimeInMillis()));
 			
 			if (this.contextFileName!=null) {
 				if (context.get(cal.getTimeInMillis())==null) {
@@ -344,12 +351,12 @@ public class Supervised implements Baseline{
 		}
 		
 		// put current load
-		if (baseline.get(cal.getTimeInMillis())==null) {
+		if (data[historyAccess].get(cal.getTimeInMillis())==null) {
 			System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
 			System.exit(0);
 		}
 		
-		inst.setValue((Attribute)fvWekaAttrs.elementAt(numCols-1), baseline.get(cal.getTimeInMillis()));
+		inst.setValue((Attribute)fvWekaAttrs.elementAt(numCols-1), data[historyAccess].get(cal.getTimeInMillis()));
 
 		return inst;
 	}
@@ -452,7 +459,7 @@ public class Supervised implements Baseline{
 	@Override
 	public void writeResult(PrintStream out) {
 
-		out.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+		out.print(data[1].toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 
 	}
 
@@ -462,7 +469,7 @@ public class Supervised implements Baseline{
 		PrintWriter fileOut;
 		try {
 			fileOut = new PrintWriter(fileName);
-			fileOut.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+			fileOut.print(data[1].toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 			fileOut.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -473,7 +480,7 @@ public class Supervised implements Baseline{
 
 	@Override
 	public ArrayList<String> getResultString() {
-		return baseline.toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+		return data[1].toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
 		
 	}
 
@@ -483,6 +490,20 @@ public class Supervised implements Baseline{
 		this.exclDays = exclDays;
 		compute(fileInput, startDate, endDate);						
 
+	}
+
+	@Override
+	public void setInputHistoryOption(boolean flag) {
+		inputHistory = flag;
+		if (inputHistory == true) {
+			// if inputHistory is activated, 
+			// we access historical data directly from the input 
+			historyAccess = 0;
+		} else {
+			// otherwise, for baseline calculation more than one day,
+			// we access historical data from previous baseline calculation 
+			historyAccess = 1;
+		}
 	}
 
 }

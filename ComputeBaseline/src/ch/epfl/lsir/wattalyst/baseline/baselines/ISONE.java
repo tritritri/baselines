@@ -39,6 +39,7 @@ public class ISONE implements Baseline{
 	protected int WEEKDAY_Y;
 	protected int WEEKEND_Y;
 
+	private boolean inputHistory;
 
 	public ISONE() {
 		startCal = Calendar.getInstance();
@@ -56,6 +57,7 @@ public class ISONE implements Baseline{
 		WEEKDAY_Y = 5;
 		WEEKEND_Y = 5;
 
+		inputHistory = false;
 	}
 	
 	@Override
@@ -152,11 +154,22 @@ public class ISONE implements Baseline{
 			if (Constants.VERBOSE == 1)
 				System.err.println("ComputeCal: "+computeCal.getTime());
 			// loop to get the baseline
+			Calendar earlyEndCal = Calendar.getInstance();
+			earlyEndCal.setTimeInMillis(endCal.getTimeInMillis());
+			Util.setToTheBeginningOfTheDay(earlyEndCal);
 			while (!computeCal.after(endCal)){
 				ComputeBaselineOneDayHourly(computeCal);
+				
+				// if inputhistory option is set
+				// after we compute baseline for today
+				// we renew the baselineRun until today using the input data
+				if (inputHistory == true && computeCal.before(earlyEndCal) ) {
+					baselineRunHourlyUpTo(Util.WEEKDAY, computeCal);
+					baselineRunHourlyUpTo(Util.WEEKEND, computeCal);
+				}
 				computeCal.add(Calendar.DAY_OF_MONTH, 1);
 			}
-
+			
 			// done computing baseline
 			
 		} catch (ParseException e) {
@@ -187,7 +200,6 @@ public class ISONE implements Baseline{
 						baselineRun[dowType][i] = newValue;
 						// round to 5 digit decimal
 						
-
 					}				
 				}
 			}
@@ -325,6 +337,13 @@ public class ISONE implements Baseline{
 	public void compute(String fileInput, String startDate, String endDate, HashMap<Long, Byte> exclDays) {
 		this.exclDays = exclDays;
 		compute(fileInput, startDate, endDate);						
+		
+	}
+
+	@Override
+	public void setInputHistoryOption(boolean flag) {
+		
+		inputHistory = flag;
 		
 	}
 

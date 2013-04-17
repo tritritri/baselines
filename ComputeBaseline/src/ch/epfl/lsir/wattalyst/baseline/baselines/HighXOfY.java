@@ -26,8 +26,9 @@ public class HighXOfY implements Baseline{
 	
 	private Calendar startCal;
 	private Calendar endCal;
-	private SensorReadings data;
-	private SensorReadings baseline;
+	// data[0] = data, data[1] = baseline
+	private SensorReadings[] data;
+	//private SensorReadings baseline;
 	private HashMap<Long,Byte> exclDays; // list of days to be excluded from historical computation 
 	// choose X out of Y days
 	
@@ -36,6 +37,8 @@ public class HighXOfY implements Baseline{
 	protected int WEEKEND_X;
 	protected int WEEKEND_Y;
 	
+	private boolean inputHistory;
+	private int historyAccess;
 	
 	/**
 	 * Constructor, initialize main variable/data structure needed.
@@ -44,10 +47,15 @@ public class HighXOfY implements Baseline{
 		
 		startCal = Calendar.getInstance();
 		endCal = Calendar.getInstance();
-		data = new SensorReadings();
-		baseline = new SensorReadings();
+		data = new SensorReadings[2];
+		data[0] = new SensorReadings();
+		data[1] = new SensorReadings();
 		exclDays = null;
-		
+
+		// by default, access history from baseline
+		// if inputHistory==true, then we set historyAccess=0 (access history from input data) 
+		inputHistory = false;
+		historyAccess=1;
 	}
 	
 	/**
@@ -69,10 +77,10 @@ public class HighXOfY implements Baseline{
 			Util.setToTheEndOfTheDay(endCal);
 			
 			// read the file input
-			Util.hourlyCSVToSensorReadings(input, this.data);
+			Util.hourlyCSVToSensorReadings(input, this.data[0]);
 
 			// copy the original data for the baseline calculation
-			if (data.copyHourly(data.getMinDate(), data.getMaxDate(), baseline) == true) {
+			if (data[0].copyHourly(data[0].getMinDate(), data[0].getMaxDate(), data[1]) == true) {
 				// nothing to do
 			} else {
 				System.err.println("[ERROR] [HighXOfY] Failed in copying " + input);
@@ -87,15 +95,15 @@ public class HighXOfY implements Baseline{
 
 			Calendar computeCal = Calendar.getInstance();
 			
-			if ( data.getMaxDate() >= lastNeeded.getTimeInMillis() ) {
+			if ( data[0].getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
 				computeCal.setTimeInMillis(startCal.getTimeInMillis());				
 			} else {
 				// otherwise, compute endHourOfDatabasewhen until prevStartDate
 				// compute from startDate, hour 0 until endDate hour 23
-				computeCal.setTimeInMillis(data.getMaxDate());
+				computeCal.setTimeInMillis(data[0].getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data.getMaxDate())) 
+				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data[0].getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + input
 				+ " is not available. "  
 				+ "Estimation will be done for that period using the specified baseline method.");
@@ -146,7 +154,7 @@ public class HighXOfY implements Baseline{
 			double avg = 0.0;
 			for (Calendar s: trainingCals){
 				s.set(Calendar.HOUR_OF_DAY, i);
-				Double energy = baseline.get(s.getTimeInMillis());
+				Double energy = data[historyAccess].get(s.getTimeInMillis());
 				if (energy!=null) {
 					count ++;
 					total += energy;
@@ -159,7 +167,7 @@ public class HighXOfY implements Baseline{
 			//.. avg =  Math.round(avg * 100000) / 100000.0;
 
 			// store
-			baseline.insert(tempCal.getTimeInMillis(), avg);
+			data[1].insert(tempCal.getTimeInMillis(), avg);
 		}
 		
 	}
@@ -199,7 +207,7 @@ public class HighXOfY implements Baseline{
 				result.add(source);	
 			
 				// get the average of that day
-				avgs.add(baseline.getAvgOneDayHourly(tempCal));
+				avgs.add(data[historyAccess].getAvgOneDayHourly(tempCal));
 				count ++;
 			}
 		}
@@ -254,7 +262,7 @@ public class HighXOfY implements Baseline{
 	@Override
 	public void writeResult(PrintStream out) {
 
-		out.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+		out.print(data[1].toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 
 	}
 
@@ -264,7 +272,7 @@ public class HighXOfY implements Baseline{
 		PrintWriter fileOut;
 		try {
 			fileOut = new PrintWriter(fileName);
-			fileOut.print(baseline.toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
+			fileOut.print(data[1].toStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis()));
 			fileOut.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -275,7 +283,7 @@ public class HighXOfY implements Baseline{
 
 	@Override
 	public ArrayList<String> getResultString() {
-		return baseline.toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
+		return data[1].toArrStringAsc(startCal.getTimeInMillis(), endCal.getTimeInMillis());
 		
 	}
 
@@ -284,5 +292,19 @@ public class HighXOfY implements Baseline{
 	public void compute(String fileInput, String startDate, String endDate,HashMap<Long, Byte> exclDays) {
 		this.exclDays = exclDays;
 		compute(fileInput, startDate, endDate);						
+	}
+
+	@Override
+	public void setInputHistoryOption(boolean flag) {
+		inputHistory = flag;	
+		if (inputHistory==true){
+			// if inputHistory option is activated,
+			// we always use input data as historical look up 
+			historyAccess = 0;
+		} else {
+			// (normally, for baseline calculation more than one day, we use
+			// previous baseline calculation for history lookup)
+			historyAccess = 1;
+		}
 	}
 }

@@ -113,10 +113,14 @@ public class ComputeBaseline {
 			System.exit(1);
 		}
 		
-
 		// initialize and compute the baseline
 		Baseline b = (Baseline) Class.forName(baseline).newInstance();
 
+		// if option inputHistory is set
+		if (cmd.hasOption("i")){
+			b.setInputHistoryOption(true);
+		}
+		
 		// check if we have option -e : exclude some dates
 		// Long is the date, while Boolean is for dummy element/value
 		if (cmd.hasOption("e")){
@@ -142,6 +146,9 @@ public class ComputeBaseline {
 		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date).");
 		options.addOption("e", "excludeDays", true, "A file containing a list of date to be excluded from historical data for computing baseline. One date per line with format yyyy-MM-dd");
 		options.addOption("h", "help", false, "Help. Print this message.");		
+		options.addOption("i", "inputhistory", false, "Historical data will always be taken from INPUT. " +
+				"Typically used to speed up next day baseline experiment for very long period. " +
+				"All historical data must be supplied up to for computing baseline for the last day");	
 		return options;	
 	}
 	

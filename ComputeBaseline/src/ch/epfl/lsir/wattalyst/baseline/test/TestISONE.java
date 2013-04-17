@@ -5,7 +5,7 @@ import java.io.IOException;
 
 
 /**
- * Test baselines on X days
+ * Test ISONE baseline 
  * 
  * @author Tri Kurniawan Wijaya
  * created: 2013.02.27

@@ -25,7 +25,10 @@ public class Test {
 		TestSupervised tR = new TestSupervised();
 		failedCount += tR.run();
 		
-		TestISONE tI = new TestISONE();
+		TestISONE tISONE = new TestISONE();
+		failedCount += tISONE.run();
+
+		TestI tI = new TestI();
 		failedCount += tI.run();
 
 		if ( failedCount == 0 ){
