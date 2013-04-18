@@ -6,8 +6,8 @@ algorithm-file = examples/algLinearRegression.txt
 
 
 # features parameters
-history-weekday = 20
-history-weekend = 10
+history-weekday = 28
+history-weekend = 35
 lag-weekday = 5
 lag-weekend = 2
 

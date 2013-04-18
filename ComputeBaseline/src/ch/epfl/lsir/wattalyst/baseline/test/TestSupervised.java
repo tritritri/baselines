@@ -37,7 +37,7 @@ public class TestSupervised {
 			fileRef = testsDir + "z1-Supervised-2013-02-15.txt";
 			testResult = UtilForTest.testBaselines(baseline, fileInput, startDateStr, endDateStr, fileRef);
 			if (testResult == false) failedCount ++;
-			
+						
 			startDateStr = "2013-02-15"; 
 			endDateStr = "2013-02-17";
 			fileRef = testsDir + "z3-Supervised-2013-02-15.txt";
@@ -49,7 +49,7 @@ public class TestSupervised {
 			fileRef = testsDir + "z2-Supervised-2013-02-17.txt";
 			testResult = UtilForTest.testBaselines(baseline, fileInput, startDateStr, endDateStr, fileRef);
 			if (testResult == false) failedCount ++;
-
+			
 			// for inputHistory option
 			startDateStr = "2013-02-11"; 
 			endDateStr = "2013-02-12";

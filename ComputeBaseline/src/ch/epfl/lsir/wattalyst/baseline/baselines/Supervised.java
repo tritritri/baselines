@@ -282,7 +282,9 @@ public class Supervised implements Baseline{
 	 */
 	private Instances createWekaTrainingSet(ArrayList<Calendar> trainingCals, Calendar targetCal, int targetH, FastVector fvWekaAttrs) {
 		
-		int currY = getYDOWType(Util.getDOWType(targetCal));
+		//int currY = getYDOWType(Util.getDOWType(targetCal));
+		int currY = trainingCals.size();
+		//System.out.println("TrainingCal size: "+currY);
 		int numLag = getLagDOWType(Util.getDOWType(targetCal));		
 
 		int numTrain = currY - numLag;
@@ -323,14 +325,14 @@ public class Supervised implements Baseline{
 			
 			// check if we miss some data
 			if (data[historyAccess].get(cal.getTimeInMillis())==null) {
-				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
+				System.err.println("[Error] Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
 				System.exit(0);
 			}
 			inst.setValue((Attribute)fvWekaAttrs.elementAt(j), data[historyAccess].get(cal.getTimeInMillis()));
 			
 			if (this.contextFileName!=null) {
 				if (context.get(cal.getTimeInMillis())==null) {
-					System.err.println("Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
+					System.err.println("[Error] Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
 					System.exit(0);
 				}			
 				inst.setValue((Attribute)fvWekaAttrs.elementAt(j+numLag), context.get(cal.getTimeInMillis()));
@@ -344,7 +346,7 @@ public class Supervised implements Baseline{
 		// put current temperature
 		if (this.contextFileName!=null) {
 			if (context.get(cal.getTimeInMillis())==null) {
-				System.err.println("Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
+				System.err.println("[Error] Entry for "+cal.getTime()+" is not found in "+this.contextFileName);
 				System.exit(0);
 			}
 			inst.setValue((Attribute)fvWekaAttrs.elementAt(numLag*2), context.get(cal.getTimeInMillis()));
@@ -352,7 +354,7 @@ public class Supervised implements Baseline{
 		
 		// put current load
 		if (data[historyAccess].get(cal.getTimeInMillis())==null) {
-			System.err.println("Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
+			System.err.println("[Error] Entry for "+cal.getTime()+" is not found in "+this.dataFileName);
 			System.exit(0);
 		}
 		
@@ -402,14 +404,24 @@ public class Supervised implements Baseline{
 		// array to store calendars to be used for computing the baselines
 		ArrayList<Calendar> result = new ArrayList<Calendar>();
 
-		int Y = getYDOWType(Util.getDOWType(targetCal));
-				
+		long Y = getYDOWType(Util.getDOWType(targetCal));
+		
+		// 0 means we use all history available
+		if (Y==0){
+			
+			Calendar minCal = Calendar.getInstance();
+			
+			minCal.setTimeInMillis(data[0].getMinDate());
+			long diff = targetCal.getTimeInMillis() - minCal.getTimeInMillis();			
+			
+			Y = diff/1000/3600/24; 
+			// System.out.println("Target: "+targetCal.getTime()+", MinCal: "+minCal.getTime()+", diff: "+Y);
+		}
 		// calendar for loop 
 		Calendar tempCal = Calendar.getInstance();
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
-		int count = 0;
-		while (count < Y ){		
-			
+		long count = 0;
+		while (count < Y ){			
 			// backward one day
 			tempCal.add(Calendar.DAY_OF_MONTH, -1);
 			
@@ -427,8 +439,8 @@ public class Supervised implements Baseline{
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
 				result.add(source);	
 			
-				count ++;
 			}
+			count ++;
 		}
 		if (Constants.VERBOSE==1) {
 			for (int i=0; i<result.size(); i++){
@@ -439,7 +451,7 @@ public class Supervised implements Baseline{
 		return result;
 	}
 
-	private int getYDOWType(int dowType) {
+	private int getYDOWType(int dowType) {		
 		if (dowType == Util.WEEKDAY ) {
 			return WEEKDAY_Y;
 		} else {
