@@ -17,9 +17,9 @@ import com.google.gson.JsonParser;
 
 public class WundergroundDataReader {
 
-	private static final String API_ID = "d8a2881e5945445d";
 	private static final String WUNDERGROUND_DATE_FORMAT = "yyyyMMdd";
 	private RestTemplate restTemplate;
+	private String apikey;
 	
 	/**
 	 * 
@@ -64,7 +64,7 @@ public class WundergroundDataReader {
 		JsonParser parser = new JsonParser();
 		while(currentDate.before(endDate)){
 			String JSONresult = restTemplate.getForObject("http://api.wunderground.com/api/{API_ID}/history_{date}/q/{country}/{place}.json",
-					String.class, API_ID, formatter.format(currentDate), country, place);
+					String.class, apikey, formatter.format(currentDate), country, place);
 			JsonObject obj = parser.parse(JSONresult).getAsJsonObject();
 			if(obj.has("history")){
 				JsonObject history = obj.get("history").getAsJsonObject();
@@ -100,7 +100,7 @@ public class WundergroundDataReader {
 		if(endDate.equals(today) || endDate.after(today)){
 		
 			String JSONresult = restTemplate.getForObject("http://api.wunderground.com/api/{API_ID}/hourly10day/q/{country}/{place}.json",
-					String.class, API_ID, country, place);
+					String.class, apikey, country, place);
 			JsonObject obj = parser.parse(JSONresult).getAsJsonObject();
 			
 			// Get the forecast
@@ -150,5 +150,13 @@ public class WundergroundDataReader {
 		Date startDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20121201");
 		Date endDate = new SimpleDateFormat(WUNDERGROUND_DATE_FORMAT).parse("20130409");
 		System.out.println(r.getHourlyTemperatures(startDate, endDate, "Sweden", "Lulea").toStringAsc());
+	}
+
+	/**
+	 * 
+	 * @param apikey
+	 */
+	public void setApiKey(String apikey) {
+		this.apikey = apikey;
 	}
 }
