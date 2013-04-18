@@ -15,6 +15,7 @@ public class Wunderground implements Temperature {
 	private SensorReadings temperature;
 	private Calendar startCal;
 	private Calendar endCal;
+	private String apikey;
 	
 	/**
 	 * 
@@ -46,6 +47,7 @@ public class Wunderground implements Temperature {
 		
 		// Invoke Wunderground service
 		WundergroundDataReader wundergroundDataReader = new WundergroundDataReader();
+		wundergroundDataReader.setApiKey(apikey);
 		SensorReadings temp = wundergroundDataReader.getHourlyTemperatures(startDate, endDate, country, place);
 		temp.copyHourly(temp.getMinDate(), temp.getMaxDate(), temperature);
 	}
@@ -82,6 +84,15 @@ public class Wunderground implements Temperature {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}		
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see ch.epfl.lsir.wattalyst.weather.Temperature#setApyKey(java.lang.String)
+	 */
+	@Override
+	public void setApyKey(String apikey) {
+		this.apikey = apikey;
 	}
 
 }

@@ -116,8 +116,8 @@ public class WebserverDataReader {
 	 */
 	public static void main(String[] args) throws RemoteException, ParseException{
 		WebserverDataReader reader = new WebserverDataReader();
-		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-18 00:00:00");
-		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-04-03 23:59:00");
+		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-14 00:00:00");
+		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-24 23:59:00");
 		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_43.sensor_346", startDate, endDate, true);
 		System.out.println(readings.toStringAsc());
 	}

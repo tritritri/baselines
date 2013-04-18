@@ -35,9 +35,10 @@ public class RetrieveTemperatureData {
 		if (cmd.hasOption("h") || args.length==0) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
-			String helpString = "java -jar RetrieveTemperatureData.jar [OPTIONS] DATASOURCE STARTDATE ENDDATE COUNTRY PLACE\n" 
-					+ "Example: java -jar RetrieveTemperatureData.jar Wunderground 2013-02-21 2013-02-26 Sweden Lulea \n"
+			String helpString = "java -jar RetrieveTemperatureData.jar [OPTIONS] DATASOURCE APIKEY STARTDATE ENDDATE COUNTRY PLACE\n" 
+					+ "Example: java -jar RetrieveTemperatureData.jar Wunderground 1234abcd 2013-02-21 2013-02-26 Sweden Lulea \n"
 					+ "DATASOURCE is Wunderground \n"
+					+ "APIKEY is 1234abcd \n"
 					+ "STARTDATE and ENDDATE are of form yyyy-MM-dd\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
@@ -45,7 +46,8 @@ public class RetrieveTemperatureData {
 		} 
 
 		// process default operand
-		String temperature = "ch.epfl.lsir.wattalyst.weather." + args[args.length-5];
+		String temperature = "ch.epfl.lsir.wattalyst.weather." + args[args.length-6];
+		String apikey = args[args.length-5];
 		String startDate = args[args.length-4];
 		String endDate = args[args.length-3];
 		String country = args[args.length-2];
@@ -70,6 +72,7 @@ public class RetrieveTemperatureData {
 		end = calendar.getTime();
 		
 		Temperature t = (Temperature) Class.forName(temperature).newInstance(); 
+		t.setApyKey(apikey);
 		t.compute(start, end, country, place);
 		
 		// output the result

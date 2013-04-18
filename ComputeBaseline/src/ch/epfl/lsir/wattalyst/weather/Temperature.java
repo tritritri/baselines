@@ -10,5 +10,6 @@ public interface Temperature {
 	public ArrayList<String> getResultString();
 	public void writeResult(PrintStream out);
 	public void writeResultToFile(String fileName);
+	public void setApyKey(String apikey);
 	
 }
