@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -30,8 +31,11 @@ public class Util {
 			else dateStr = date + " " + hour+":00:00";
 		
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 		//formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Calendar cal = Calendar.getInstance();
+		cal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		//System.out.println("formatter date: "+formatter.parse(dateStr) + ": "+formatter.parse(date).getTime());
 		cal.setTimeInMillis(formatter.parse(dateStr).getTime());
 		//System.out.println(cal.getTimeInMillis());

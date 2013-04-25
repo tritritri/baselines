@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
@@ -43,8 +44,11 @@ public class ISONE implements Baseline{
 
 	public ISONE() {
 		startCal = Calendar.getInstance();
+		startCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		endCal = Calendar.getInstance();
+		endCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		minCalAvailable = Calendar.getInstance();
+		minCalAvailable.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		lastComputedCal = new Calendar[2];
 		
 		data = new SensorReadings();
@@ -71,6 +75,8 @@ public class ISONE implements Baseline{
 		
 		try {
 			SimpleDateFormat formatDate= new SimpleDateFormat(Constants.DATE_FORMAT);
+			formatDate.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			// set start and end time for calculating baseline
 			startCal.setTime(formatDate.parse(startDate));
 			Util.setToTheBeginningOfTheDay(startCal);
@@ -98,6 +104,8 @@ public class ISONE implements Baseline{
 			}
 			
 			SimpleDateFormat formatDateTime = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+			formatDateTime.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			if ( Constants.VERBOSE == 1 ) {
 				System.out.println("dataMinDate: " + formatDateTime.format(new Date(dataMinDate)));
 				System.out.println("dataMaxDate: " + formatDateTime.format(new Date(dataMaxDate)));
@@ -107,11 +115,13 @@ public class ISONE implements Baseline{
 			// start computing the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
 			Calendar lastNeeded = Calendar.getInstance();
+			lastNeeded.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			lastNeeded.setTime(startCal.getTime());
 			lastNeeded.add(Calendar.HOUR_OF_DAY, -1);
 
 			// computeCal is the minimum date that should be computed 
 			Calendar computeCal = Calendar.getInstance();
+			computeCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			if ( data.getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
 				computeCal.setTimeInMillis(startCal.getTimeInMillis());				
@@ -120,6 +130,8 @@ public class ISONE implements Baseline{
 				// compute from startDate, hour 0 until endDate hour 23
 				computeCal.setTimeInMillis(data.getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				formatOutput.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 				
 				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data.getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + fileInput
@@ -137,6 +149,7 @@ public class ISONE implements Baseline{
 			
 			// run up to computeCal-1
 			Calendar yesterday = Calendar.getInstance();
+			yesterday.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			yesterday.setTimeInMillis(computeCal.getTimeInMillis());
 			yesterday.add(Calendar.DAY_OF_MONTH, -1);
 			baselineRunHourlyUpTo(Util.WEEKDAY, yesterday);
@@ -155,6 +168,7 @@ public class ISONE implements Baseline{
 				System.err.println("ComputeCal: "+computeCal.getTime());
 			// loop to get the baseline
 			Calendar earlyEndCal = Calendar.getInstance();
+			earlyEndCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			earlyEndCal.setTimeInMillis(endCal.getTimeInMillis());
 			Util.setToTheBeginningOfTheDay(earlyEndCal);
 			while (!computeCal.after(endCal)){
@@ -231,6 +245,7 @@ public class ISONE implements Baseline{
 		// loop until num of historical data is fulfilled
 		int numHist = getYDOWType(dowType);
 		Calendar tempCal = Calendar.getInstance();
+		tempCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(minCalAvailable.getTimeInMillis());
 		int counter = 0;
 		while (counter < numHist && tempCal.before(startCal)) {
@@ -262,6 +277,7 @@ public class ISONE implements Baseline{
 			// if the historical data is enough
 			// set last compute cal
 			lastComputedCal[dowType] = Calendar.getInstance();
+			lastComputedCal[dowType].setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			tempCal.add(Calendar.DAY_OF_MONTH, -1);
 			lastComputedCal[dowType].setTimeInMillis(tempCal.getTimeInMillis());
 			Util.setToTheBeginningOfTheDay(lastComputedCal[dowType]);

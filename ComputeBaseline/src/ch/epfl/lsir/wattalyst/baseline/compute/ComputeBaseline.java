@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -98,7 +99,10 @@ public class ComputeBaseline {
 		if (cmd.hasOption("z")){
 			int hz = Integer.parseInt(cmd.getOptionValue("z")) - 1;
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			Calendar endCal = Calendar.getInstance();
+			endCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			endCal.setTime(formatter.parse(startDate));
 			endCal.add(Calendar.DAY_OF_MONTH, hz);
 			endDate = formatter.format(endCal.getTime());
@@ -106,6 +110,8 @@ public class ComputeBaseline {
 	
 		// check if endDate >= startDate
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 		Date start = formatter.parse(startDate);
 		Date end = formatter.parse(endDate);
 		if ( end.getTime() < start.getTime() ) {
@@ -160,6 +166,8 @@ public class ComputeBaseline {
 		BufferedReader excIn = new BufferedReader(new FileReader(fileInput));
 		String line="";
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 		while ( (line = excIn.readLine()) != null ) {
 			exclDays.put(formatter.parse(line).getTime(), (byte) 0);				
 		}
