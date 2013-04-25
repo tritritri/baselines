@@ -28,7 +28,7 @@ public class UtilForTest {
 		
 		// get the result
 		ArrayList<String> arrResult = b.getResultString();
-		int compare = Util.isEqual(fileReference, arrResult);
+		int compare = Util.isEqualNew(fileReference, arrResult);
 		if (compare==-1){
 			System.err.println("[Test] The number of lines in "+ fileReference +" and size of result is mismatch");
 			System.out.println("Test "+ fileReference + ": failed");

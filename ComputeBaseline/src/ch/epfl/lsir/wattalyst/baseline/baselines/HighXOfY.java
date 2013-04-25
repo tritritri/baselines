@@ -46,10 +46,8 @@ public class HighXOfY implements Baseline{
 	 */
 	public HighXOfY(){
 		
-		startCal = Calendar.getInstance();
-		startCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
-		endCal = Calendar.getInstance();
-		endCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		startCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));		
+		endCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		data = new SensorReadings[2];
 		data[0] = new SensorReadings();
 		data[1] = new SensorReadings();
@@ -94,13 +92,11 @@ public class HighXOfY implements Baseline{
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
-			Calendar lastNeeded = Calendar.getInstance();
-			lastNeeded.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+			Calendar lastNeeded = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			lastNeeded.setTime(startCal.getTime());
 			lastNeeded.add(Calendar.HOUR_OF_DAY, -1);
 
-			Calendar computeCal = Calendar.getInstance();
-			computeCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+			Calendar computeCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			
 			if ( data[0].getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
@@ -151,8 +147,7 @@ public class HighXOfY implements Baseline{
 		
 		// compute the baseline for the day
 		// loop for hour 00 to hour 23
-		Calendar tempCal = Calendar.getInstance();
-		tempCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		Calendar tempCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		Util.setToTheBeginningOfTheDay(tempCal);
 		for (int i=0;i<24; i++) {
@@ -173,8 +168,6 @@ public class HighXOfY implements Baseline{
 			if (count > 0) {
 				avg = total / count;
 			}
-			// round to 5 digit decimal
-			//.. avg =  Math.round(avg * 100000) / 100000.0;
 
 			// store
 			data[1].insert(tempCal.getTimeInMillis(), avg);
@@ -194,8 +187,7 @@ public class HighXOfY implements Baseline{
 		ArrayList<Double> avgs = new ArrayList<Double>(Y);
 		
 		// calendar for loop 
-		Calendar tempCal = Calendar.getInstance();
-		tempCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		Calendar tempCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		int count = 0;
 		while (count < Y ){		
@@ -213,8 +205,7 @@ public class HighXOfY implements Baseline{
 				}
 					
 				// store the calendar
-				Calendar source = Calendar.getInstance();
-				source.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+				Calendar source = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
 				result.add(source);	
 			
