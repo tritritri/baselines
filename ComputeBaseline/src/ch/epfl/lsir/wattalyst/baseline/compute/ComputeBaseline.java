@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -59,15 +60,18 @@ public class ComputeBaseline {
 			help.setWidth(90);
 			String helpString = "java -jar ComputeBaseline.jar [OPTIONS] BASELINE INPUT TARGETDATE\n" 
 					+ "Example: java -jar ComputeBaseline.jar PJMEco input-example.txt 2013-02-21\n"
+					+ "We use local time zone, except if option -t is used.\n"
 					+ "BASELINE is PJMEco | CAISO | NYISO | Mid4Of6 | ISONE | Supervised \n"
 					+ "TARGETDATE is of form yyyy-MM-dd\n"
-					+ "INPUT is a SENSORFILE: a file text of lines DATE,HOUR,READINGS, where:\n" +
+					+ "INPUT is a SENSORFILE: a file text of lines DATE,HOUR,READINGS[,TIMESTAMP] where:\n" +
 					  "... DATE is of form yyyy-MM-dd, \n"
 					+ "... HOUR is 0-23, and \n" +
-					  "... READINGS is value measured at DATE,HOUR. \n" +
+					  "... READINGS is value measured at DATE,HOUR \n" +
+					  "... TIMESTAMP is UNIX timestamp in milliseconds. \n" +
 					  "..... For example, energy consumed during DATE,HOUR in kWh.\n" +
 					  ". Except when BASELINE is Supervised, INPUT is a configuration file \n" +
-					  ". Example: java -jar ComputeBaseline.jar Supervised config-reg.txt 2013-02-21\n"
+					  ". Example: java -jar ComputeBaseline.jar Supervised config-reg.txt 2013-02-21\n"+
+					  "Output is DATE,HOUR,READINGS,TIMESTAMP\n"
 					  /*
 					  ". Except when BASELINE is Regression, INPUT is of form \n" +
 					  "... SENSORFILE1,SENSORFILE2,ALGFILE, where \n" +
@@ -98,14 +102,23 @@ public class ComputeBaseline {
 		if (cmd.hasOption("z")){
 			int hz = Integer.parseInt(cmd.getOptionValue("z")) - 1;
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
-			Calendar endCal = Calendar.getInstance();
+			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
+			Calendar endCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			endCal.setTime(formatter.parse(startDate));
 			endCal.add(Calendar.DAY_OF_MONTH, hz);
 			endDate = formatter.format(endCal.getTime());
 		}
 	
+		// if timezone is set
+		if (cmd.hasOption("t")){
+			Constants.TIMEZONE_REF = cmd.getOptionValue("t");
+		}
+
 		// check if endDate >= startDate
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 		Date start = formatter.parse(startDate);
 		Date end = formatter.parse(endDate);
 		if ( end.getTime() < start.getTime() ) {
@@ -146,6 +159,8 @@ public class ComputeBaseline {
 		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date).");
 		options.addOption("e", "excludeDays", true, "A file containing a list of date to be excluded from historical data for computing baseline. One date per line with format yyyy-MM-dd");
 		options.addOption("h", "help", false, "Help. Print this message.");		
+		options.addOption("t", "timezone", true, "Use the specified time zone instead of local time zone. " +
+				"Example of format accepted: GMT+2, Europe/Zurich, CET. Any wrong format will be treated as GMT+0.");		
 		options.addOption("i", "inputhistory", false, "Historical data will always be taken from INPUT. " +
 				"Typically used to speed up next day baseline experiment for very long period. " +
 				"All historical data must be supplied up to for computing baseline for the last day");	
@@ -160,6 +175,8 @@ public class ComputeBaseline {
 		BufferedReader excIn = new BufferedReader(new FileReader(fileInput));
 		String line="";
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 		while ( (line = excIn.readLine()) != null ) {
 			exclDays.put(formatter.parse(line).getTime(), (byte) 0);				
 		}

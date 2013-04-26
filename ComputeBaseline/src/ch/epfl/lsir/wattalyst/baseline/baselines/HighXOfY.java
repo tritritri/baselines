@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
@@ -45,8 +46,8 @@ public class HighXOfY implements Baseline{
 	 */
 	public HighXOfY(){
 		
-		startCal = Calendar.getInstance();
-		endCal = Calendar.getInstance();
+		startCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));		
+		endCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		data = new SensorReadings[2];
 		data[0] = new SensorReadings();
 		data[1] = new SensorReadings();
@@ -70,6 +71,8 @@ public class HighXOfY implements Baseline{
 		
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			// set start and end time for calculating baseline
 			startCal.setTime(formatter.parse(startDate));
 			Util.setToTheBeginningOfTheDay(startCal);
@@ -89,11 +92,11 @@ public class HighXOfY implements Baseline{
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
-			Calendar lastNeeded = Calendar.getInstance();
+			Calendar lastNeeded = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			lastNeeded.setTime(startCal.getTime());
 			lastNeeded.add(Calendar.HOUR_OF_DAY, -1);
 
-			Calendar computeCal = Calendar.getInstance();
+			Calendar computeCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			
 			if ( data[0].getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
@@ -103,6 +106,8 @@ public class HighXOfY implements Baseline{
 				// compute from startDate, hour 0 until endDate hour 23
 				computeCal.setTimeInMillis(data[0].getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				formatOutput.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data[0].getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + input
 				+ " is not available. "  
@@ -142,7 +147,7 @@ public class HighXOfY implements Baseline{
 		
 		// compute the baseline for the day
 		// loop for hour 00 to hour 23
-		Calendar tempCal = Calendar.getInstance();
+		Calendar tempCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		Util.setToTheBeginningOfTheDay(tempCal);
 		for (int i=0;i<24; i++) {
@@ -163,8 +168,6 @@ public class HighXOfY implements Baseline{
 			if (count > 0) {
 				avg = total / count;
 			}
-			// round to 5 digit decimal
-			//.. avg =  Math.round(avg * 100000) / 100000.0;
 
 			// store
 			data[1].insert(tempCal.getTimeInMillis(), avg);
@@ -184,7 +187,7 @@ public class HighXOfY implements Baseline{
 		ArrayList<Double> avgs = new ArrayList<Double>(Y);
 		
 		// calendar for loop 
-		Calendar tempCal = Calendar.getInstance();
+		Calendar tempCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		int count = 0;
 		while (count < Y ){		
@@ -202,7 +205,7 @@ public class HighXOfY implements Baseline{
 				}
 					
 				// store the calendar
-				Calendar source = Calendar.getInstance();
+				Calendar source = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
 				result.add(source);	
 			

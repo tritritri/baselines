@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -55,7 +56,10 @@ public class TestDays {
 			
 			// determine end date
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			Calendar endCal = Calendar.getInstance();
+			endCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			endCal.setTime(formatter.parse(startDateStr));
 			endCal.add(Calendar.DAY_OF_MONTH, numOfDays-1);
 			String endDateStr = formatter.format(endCal.getTime());

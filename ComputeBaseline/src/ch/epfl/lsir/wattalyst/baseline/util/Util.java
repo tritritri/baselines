@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -30,16 +31,9 @@ public class Util {
 			else dateStr = date + " " + hour+":00:00";
 		
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-		//formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		Calendar cal = Calendar.getInstance();
-		//System.out.println("formatter date: "+formatter.parse(dateStr) + ": "+formatter.parse(date).getTime());
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		cal.setTimeInMillis(formatter.parse(dateStr).getTime());
-		//System.out.println(cal.getTimeInMillis());
-		
-		//System.out.println("resulting date: "+cal.getTime());
-		//System.out.println(cal.getTimeInMillis());
-		//System.out.println("resulting timezone: "+cal.getTimeZone());
-		//System.exit(1);
 		return cal;
 		
 	}
@@ -149,8 +143,17 @@ public class Util {
 			while ( (line=in.readLine()) != null ){
 				String[] lineArray = line.split(",");
 				
-				// first element is date, second element is hour
-				Calendar dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
+				Calendar dateCal;
+				if (lineArray.length>=4) {
+					// if (long) timestamp is provided, we use it
+					dateCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+					dateCal.setTimeInMillis(Long.parseLong(lineArray[3]));
+				} else {
+					// if timestamp is not provided, 
+					// first element is date, second element is hour
+					dateCal = Util.dateStrHourToCal(lineArray[0], Integer.parseInt(lineArray[1]));
+				}
+			
 				if (Constants.VERBOSE==1) {
 					System.out.println("[Util.hourlyCSVToSensorReadings] "+lineArray[0]+", "+lineArray[1] + 
 							" ["+dateCal.getTimeInMillis()+"]. ");
@@ -163,7 +166,6 @@ public class Util {
 			}
 			
 			in.close();
-			//.. System.out.println(data);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -208,11 +210,57 @@ public class Util {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return i+1;
-
 	}
 	
+	/**
+	 * Compare file text line by line against an array list of string element by element.
+	 * Because we introduce timestamps in the file result quite late, we take into account only the first three 
+	 * items: date, hour, and reading 
+	 * "Equal" if line i in the file is equal to element i in the array if their, for i=all lines in the file.
+	 *  
+	 * @param fileName
+	 * @param arrString
+	 * @return file size + 1 (the number of lines + 1, hence the size of the array + 1) if the file and the array is equal.
+	 * 1 up to file size denoted the mismatched line
+	 * -1 if the file and the array does not have the same size  
+	 */
+	public static int isEqualNew(String fileName, ArrayList<String> arrString){
+		
+		int i=0;
+		try {
+			// open the file
+			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			// compare the result with the reference
+			String line = null;
+			while ((line = in.readLine()) != null ){
+				if (i>=arrString.size()) {
+					in.close();
+					return -1;
+				}
+				String[] lineArr = line.split(",");
+				String[] stringArr = arrString.get(i).split(",");
+				if (!lineArr[0].equals(stringArr[0])){
+					in.close();
+					return i+1;
+				}
+				if (!lineArr[1].equals(stringArr[1])){
+					in.close();
+					return i+1;
+				}
+				if (!lineArr[2].equals(stringArr[2])){
+					in.close();
+					return i+1;
+				}
+				i++;
+			}
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return i+1;
+	}
+
 	public static boolean isInitialDay(Calendar cal){
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 0 && cal.get(Calendar.MINUTE) == 0 && 
 				cal.get(Calendar.SECOND) == 0 && cal.get(Calendar.MILLISECOND) == 0 ) {

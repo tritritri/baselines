@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -65,8 +66,8 @@ public class Supervised implements Baseline{
 	
 	public Supervised(){
 		
-		startCal = Calendar.getInstance();
-		endCal = Calendar.getInstance();
+		startCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		endCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		exclDays = null;
 		
 		context = new SensorReadings();
@@ -113,6 +114,8 @@ public class Supervised implements Baseline{
 			
 			// set start and end target date
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 			startCal.setTime(formatter.parse(startDate));
 			Util.setToTheBeginningOfTheDay(startCal);
 			endCal.setTime(formatter.parse(endDate));
@@ -131,11 +134,11 @@ public class Supervised implements Baseline{
 			
 			// process the baseline
 			// prevStartDate = startDate - 1, hour 23 (end of day) 
-			Calendar lastNeeded = Calendar.getInstance();
+			Calendar lastNeeded = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			lastNeeded.setTime(startCal.getTime());
 			lastNeeded.add(Calendar.HOUR_OF_DAY, -1);
 
-			Calendar computeCal = Calendar.getInstance();
+			Calendar computeCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			
 			if ( data[0].getMaxDate() >= lastNeeded.getTimeInMillis() ) {
 				// if prevStartDate is exist in database, then fine.
@@ -145,7 +148,8 @@ public class Supervised implements Baseline{
 				// compute from startDate, hour 0 until endDate hour 23
 				computeCal.setTimeInMillis(data[0].getMaxDate());
 				SimpleDateFormat formatOutput = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				
+				formatOutput.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 				System.err.println("[WARNING] Data from " + formatOutput.format(new Date(data[0].getMaxDate())) 
 				+ " to " + formatOutput.format(startCal.getTime()) + " in " + dataFileName 
 				+" is not available. " +
@@ -223,7 +227,7 @@ public class Supervised implements Baseline{
 		    if (this.contextFileName==null) numCols = numLag+1;
 			Instance newInst = new Instance(numCols);
 			for (int j=0; j<numLag; j++) {
-				Calendar cal = Calendar.getInstance(); 
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF)); 
 				cal.setTimeInMillis(trainingCals.get(numLag-j-1).getTimeInMillis());
 				cal.set(Calendar.HOUR_OF_DAY, targetH);
 
@@ -235,7 +239,7 @@ public class Supervised implements Baseline{
 					newInst.setValue((Attribute)fvWekaAttrs.elementAt(j+numLag), context.get(cal.getTimeInMillis()));
 			}
 
-			Calendar cal = Calendar.getInstance(); 
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF)); 
 			cal.setTimeInMillis(targetDay.getTimeInMillis());
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
 
@@ -243,6 +247,8 @@ public class Supervised implements Baseline{
 			if (this.contextFileName!=null) {
 				if (context.get(cal.getTimeInMillis()) == null){
 					SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+					formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
 					System.err.println("[ERROR] [Regression] There is no context data in "+this.contextFileName+ " for "+formatter.format(cal.getTime())+".");
 					System.exit(1);
 				}
@@ -319,7 +325,7 @@ public class Supervised implements Baseline{
 			
 		// put historical load and temperature
 		for (int j=0; j<numLag; j++) {
-			Calendar cal = Calendar.getInstance(); 
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF)); 
 			cal.setTimeInMillis(trainingCals.get(targetIdx+numLag-j).getTimeInMillis());
 			cal.set(Calendar.HOUR_OF_DAY, targetH);
 			
@@ -339,7 +345,7 @@ public class Supervised implements Baseline{
 			}
 		}
 
-		Calendar cal = Calendar.getInstance(); 
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF)); 
 		cal.setTimeInMillis(trainingCals.get(targetIdx).getTimeInMillis());
 		cal.set(Calendar.HOUR_OF_DAY, targetH);
 		
@@ -409,7 +415,7 @@ public class Supervised implements Baseline{
 		// 0 means we use all history available
 		if (Y==0){
 			
-			Calendar minCal = Calendar.getInstance();
+			Calendar minCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 			
 			minCal.setTimeInMillis(data[0].getMinDate());
 			long diff = targetCal.getTimeInMillis() - minCal.getTimeInMillis();			
@@ -418,7 +424,7 @@ public class Supervised implements Baseline{
 			// System.out.println("Target: "+targetCal.getTime()+", MinCal: "+minCal.getTime()+", diff: "+Y);
 		}
 		// calendar for loop 
-		Calendar tempCal = Calendar.getInstance();
+		Calendar tempCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		long count = 0;
 		while (count < Y ){			
@@ -435,7 +441,7 @@ public class Supervised implements Baseline{
 				}
 
 				// store the calendar
-				Calendar source = Calendar.getInstance();
+				Calendar source = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 				source.setTimeInMillis(tempCal.getTimeInMillis());	
 				result.add(source);	
 			

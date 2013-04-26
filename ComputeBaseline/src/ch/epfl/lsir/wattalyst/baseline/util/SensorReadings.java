@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
@@ -128,7 +129,9 @@ public class SensorReadings {
 		
 		// loop from minDate to maxDate
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
-		Calendar currCal = Calendar.getInstance();
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
+		Calendar currCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		currCal.setTimeInMillis(from);		
 		while (currCal.getTimeInMillis() <= to) {
 			
@@ -139,7 +142,7 @@ public class SensorReadings {
 			if (reading!=null){
 				// round to 5 digit decimal
 				reading =  Math.round(reading * 100000) / 100000.0;
-				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + reading);
+				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + reading + "," + currCal.getTimeInMillis());
 			}
 			
 			// advance one hour
@@ -155,21 +158,27 @@ public class SensorReadings {
 	 * @param destination target collection
 	 */	
 	public boolean copyHourly(long from, long to, SensorReadings destination) {
-		Calendar currCal = Calendar.getInstance();		
-		currCal.setTimeInMillis(from);
-		while (currCal.getTimeInMillis() <= to) {
-			// check if the data is exist
-			if (!data.containsKey(currCal.getTimeInMillis())) {
+		//... Calendar currCal = Calendar.getInstance();	
+		//.. currCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		//... currCal.setTimeInMillis(from);
+		//... while (currCal.getTimeInMillis() <= to) {
+		while (from <= to) {
+					// check if the data is exist
+			//... if (!data.containsKey(currCal.getTimeInMillis())) {
+			if (!data.containsKey(from)) {
 				
-				//SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
-				//System.err.println("[ERROR] [SensorReadings] There is no data for "+
-				//		currCal.getTimeInMillis() + " ["+formatter.format(currCal.getTime())+"].");
-				//return false;
+				//.... SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+				//.... System.err.println("[ERROR] [SensorReadings.copyHourly] There is no data for "+
+						//... currCal.getTimeInMillis() + " ["+formatter.format(currCal.getTime())+"].");
+						//.... from + " ["+formatter.format(new Date(from))+"].");
+				//.... return false;
 				
 			} else {
-				destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
+				//... destination.insert(currCal.getTimeInMillis(), data.get(currCal.getTimeInMillis()));
+				destination.insert(from, data.get(from));
 			}
-			currCal.add(Calendar.HOUR_OF_DAY, 1);
+			//... currCal.add(Calendar.HOUR_OF_DAY, 1);
+			from += 3600000;  // advance one hour
 		}		
 		return true;
 	}
@@ -183,6 +192,7 @@ public class SensorReadings {
 	public double getAvgOneDayHourly(Calendar targetCal) {
 		// initialize the counter 
 		Calendar tempCal = Calendar.getInstance();
+		//.. tempCal.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 		tempCal.setTimeInMillis(targetCal.getTimeInMillis());
 		Util.setToTheBeginningOfTheDay(tempCal);
 		
