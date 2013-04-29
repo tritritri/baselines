@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -135,11 +133,7 @@ public class DataBuilder {
 		DataTuple tuple = new DataTuple();
 							
 		// timestamp
-		String date = fields[1];
-		String time = fields[2];
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date datetime = formatter.parse(date + " " + time);
-		tuple.setTimestamp(datetime.getTime());
+		tuple.setTimestamp(Long.valueOf(fields[0]));
 		
 		// external temperature
 		tuple.setExtTemp(Double.valueOf(fields[4]));
