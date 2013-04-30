@@ -29,14 +29,12 @@ public class DataBuilder {
 	/**
 	 * 
 	 * @param selectedModes  if null, select all modes
-	 * @param selectedRooms if null, select all rooms
 	 * 
 	 * @return an Hashmap where the key is the room name and the value is
 	 * a list of tuples with the historical data
 	 * @throws java.text.ParseException 
 	 */
-	public static HashMap<String, List<DataTuple>> loadData(String file, 
-			AtomicReference<List<String>> selectedModes, List<String> selectedRooms) throws java.text.ParseException{
+	public static HashMap<String, List<DataTuple>> loadData(String file, AtomicReference<List<String>> selectedModes) throws java.text.ParseException{
 		
 		HashMap<String, List<DataTuple>> data = new HashMap<String, List<DataTuple>>();
 		
@@ -49,12 +47,12 @@ public class DataBuilder {
 			// Read and skip the first line
 			reader.readLine();
 			
-			// Retrieve the room names (if among the selected ones) and starting column indices
+			// Retrieve the room names and starting column indices
 			String[] fields = reader.readLine().split(",");
 			for(int i = 0; i < fields.length; i++){
 				if(fields[i].startsWith("R")){
 					String room = fields[i].split("_")[0];
-					if((selectedRooms == null || selectedRooms.contains(room)) && !roomIndices.keySet().contains(room)){
+					if(!roomIndices.keySet().contains(room)){
 						roomIndices.put(room, i);
 					}
 				}
@@ -138,202 +136,174 @@ public class DataBuilder {
 		// external temperature
 		tuple.setExtTemp(Double.valueOf(fields[4]));
 		
-		// room power;
+		// power;
 		tuple.setPower(Double.valueOf(fields[roomIndices.get(room)]));
 		
-		// room mode;
+		// mode;
 		tuple.setMode(fields[roomIndices.get(room) + 1]);
 		
-		// room setpoint temperature
+		// room;
+		tuple.setRoom(room);
+				
+		//  setpoint temperature
 		tuple.setSetpointTemp(Double.valueOf(fields[roomIndices.get(room) + 2]));
 		
-		// room indoor temperature
+		// indoor temperature
 		tuple.setIndTemp(Double.valueOf(fields[roomIndices.get(room) + 3]));
 	
 		return tuple;
 	}
 
 	/**
-	 * Create three arff files per room, one for the hvac power consumption, one for
+	 * Create three arff files, one for the hvac power consumption, one for
 	 * the indoor temperature dynamics and one for the hvac mode dynamics
 	 */
 	public static void createArffFiles(HashMap<String, List<DataTuple>> data, AtomicReference<List<String>> selectedModes){
 
-		for(String room : data.keySet()){
 		
-			// ***************************** //
-			// Power consumption
-			// ***************************** //
-			String powerArffFile = "./arff/" + room + "-power.arff";
-			
-			// Set up attributes
-			FastVector atts = new FastVector();
-			atts.addElement(new Attribute("external-temperature"));
-			
-			FastVector hvacModeValues = new FastVector();
-			for(String mode : selectedModes.get()){
-				hvacModeValues.addElement(mode);
-			}
-			atts.addElement(new Attribute("hvac-mode", hvacModeValues));
-		    
-			atts.addElement(new Attribute("indoor-temperature"));
-			atts.addElement(new Attribute("setpoint-temperature"));
-			atts.addElement(new Attribute("hvac-power"));
-			
-			// Create Instances object
-		    Instances dataSet = new Instances("PowerConsumption", atts, 0);
-		    
-		    // Fill with data
+		// ***************************** //
+		// Power consumption
+		// ***************************** //
+		String powerArffFile = "./arff/HVAC-power.arff";
+		
+		// Set up attributes
+		FastVector atts = new FastVector();
+		atts.addElement(new Attribute("external-temperature"));
+		
+		FastVector hvacModeValues = new FastVector();
+		for(String mode : selectedModes.get()){
+			hvacModeValues.addElement(mode);
+		}
+		atts.addElement(new Attribute("hvac-mode", hvacModeValues));
+		
+		FastVector roomValues = new FastVector();
+		for(String room : data.keySet()){
+			roomValues.addElement(room);
+		}
+		atts.addElement(new Attribute("room", roomValues));
+	    
+		atts.addElement(new Attribute("indoor-temperature"));
+		atts.addElement(new Attribute("setpoint-temperature"));
+		atts.addElement(new Attribute("hvac-power"));
+		
+		// Create Instances object
+	    Instances dataSet = new Instances("HVAC-power", atts, 0);
+	    
+	    // Fill with data
+	    for(String room : data.keySet()){
 		    for(DataTuple tuple : data.get(room)){
 		    	double[] vals = new double[dataSet.numAttributes()];
 		    	vals[0] = tuple.getExtTemp();
 		    	vals[1] = hvacModeValues.indexOf(tuple.getMode());
-		    	vals[2] = tuple.getIndTemp();
-		    	vals[3] = tuple.getSetpointTemp();
-		    	vals[4] = tuple.getPower();
+		    	vals[2] = roomValues.indexOf(room);
+		    	vals[3] = tuple.getIndTemp();
+		    	vals[4] = tuple.getSetpointTemp();
+		    	vals[5] = tuple.getPower();
 		    	dataSet.add(new Instance(1.0, vals));
 		    }
+	    }
+	    
+	    ArffSaver saver = new ArffSaver();
+	    saver.setInstances(dataSet);
+	    try {
+			saver.setFile(new File(powerArffFile));
+			saver.writeBatch();
+		} catch (IOException e) {
+			System.err.println("Cannot save file " + powerArffFile);
+		}		    
 		    
-		    ArffSaver saver = new ArffSaver();
-		    saver.setInstances(dataSet);
-		    try {
-				saver.setFile(new File(powerArffFile));
-				saver.writeBatch();
-			} catch (IOException e) {
-				System.err.println("Cannot save file " + powerArffFile);
-			}		    
-		    
-		    // ***************************** //
-		    // Mode dynamics
-		    // ***************************** //
-		   
-		    String modeDynamicsArffFile = "./arff/" + room + "-hvac-mode-dynamics.arff";
- 			
- 			// Set up attributes
- 			atts = new FastVector();
- 			atts.addElement(new Attribute("external-temperature"));
- 			atts.addElement(new Attribute("hvac-mode", hvacModeValues));
- 		    atts.addElement(new Attribute("indoor-temperature"));
- 			atts.addElement(new Attribute("setpoint-temperature"));
- 			atts.addElement(new Attribute("hvac-power"));
- 			atts.addElement(new Attribute("next-hvac-mode", hvacModeValues));
- 			
- 			// Create Instances object
- 		    dataSet = new Instances("ModeDynamics", atts, 0);
- 		    
- 		    // Fill with data
+	    // ***************************** //
+	    // Mode dynamics
+	    // ***************************** //
+	   
+	    String modeDynamicsArffFile = "./arff/HVAC-mode.arff";
+		
+		// Set up attributes
+		atts = new FastVector();
+		atts.addElement(new Attribute("external-temperature"));
+		atts.addElement(new Attribute("hvac-mode", hvacModeValues));
+		atts.addElement(new Attribute("room", roomValues));
+	    atts.addElement(new Attribute("indoor-temperature"));
+		atts.addElement(new Attribute("setpoint-temperature"));
+		atts.addElement(new Attribute("hvac-power"));
+		atts.addElement(new Attribute("next-hvac-mode", hvacModeValues));
+		
+		// Create Instances object
+	    dataSet = new Instances("HVAC-mode", atts, 0);
+	    
+	    // Fill with data
+	    for(String room : data.keySet()){
  		    for(int i = 0; i < data.get(room).size() - 1; i++){
  		    	// Check if the next tuple corresponds to the next 10 min time slot
  		    	if(data.get(room).get(i).getTimestamp() + 1000 * 60 * 10 == data.get(room).get(i+1).getTimestamp()){
  		    		double[] vals = new double[dataSet.numAttributes()];
 	 		    	vals[0] = data.get(room).get(i).getExtTemp();
 	 		    	vals[1] = hvacModeValues.indexOf(data.get(room).get(i).getMode());
-	 		    	vals[2] = data.get(room).get(i).getIndTemp();
-	 		    	vals[3] = data.get(room).get(i).getSetpointTemp();
-	 		    	vals[4] = data.get(room).get(i).getPower();
-	 		    	vals[5] = hvacModeValues.indexOf(data.get(room).get(i + 1).getMode());
+	 		    	vals[2] = roomValues.indexOf(room);
+	 		    	vals[3] = data.get(room).get(i).getIndTemp();
+	 		    	vals[4] = data.get(room).get(i).getSetpointTemp();
+	 		    	vals[5] = data.get(room).get(i).getPower();
+	 		    	vals[6] = hvacModeValues.indexOf(data.get(room).get(i + 1).getMode());
 	 		    	dataSet.add(new Instance(1.0, vals));
  		    	}
  		    }
- 		    
- 		    saver = new ArffSaver();
- 		    saver.setInstances(dataSet);
- 		    try {
- 				saver.setFile(new File(modeDynamicsArffFile));
- 				saver.writeBatch();
- 			} catch (IOException e) {
- 				System.err.println("Cannot save file " + modeDynamicsArffFile);
- 			}		    
+	    }
+	    
+	    saver = new ArffSaver();
+	    saver.setInstances(dataSet);
+	    try {
+			saver.setFile(new File(modeDynamicsArffFile));
+			saver.writeBatch();
+		} catch (IOException e) {
+			System.err.println("Cannot save file " + modeDynamicsArffFile);
+		}		    
 		
 		
-		    // ***************************** //
-		    // Indoor temperature dynamics
-		    // ***************************** //
-		   
-		    String indoorTempDynamicsArffFile = "./arff/" + room + "-indoor-temp-dynamics.arff";
-			
-			// Set up attributes
-			atts = new FastVector();
-			atts.addElement(new Attribute("external-temperature"));
-			atts.addElement(new Attribute("hvac-mode", hvacModeValues));
-		    atts.addElement(new Attribute("indoor-temperature"));
-			atts.addElement(new Attribute("setpoint-temperature"));
-			atts.addElement(new Attribute("hvac-power"));
-			atts.addElement(new Attribute("next-indoor-temp"));
-			
-			// Create Instances object
-		    dataSet = new Instances("IndoorTempDynamics", atts, 0);
-		    
-		    // Fill with data
+	    // ***************************** //
+	    // Indoor temperature dynamics
+	    // ***************************** //
+	   
+	    String indoorTempDynamicsArffFile = "./arff/HVAC-indoor-temperature.arff";
+		
+		// Set up attributes
+		atts = new FastVector();
+		atts.addElement(new Attribute("external-temperature"));
+		atts.addElement(new Attribute("hvac-mode", hvacModeValues));
+		atts.addElement(new Attribute("room", roomValues));
+	    atts.addElement(new Attribute("indoor-temperature"));
+		atts.addElement(new Attribute("setpoint-temperature"));
+		atts.addElement(new Attribute("hvac-power"));
+		atts.addElement(new Attribute("next-indoor-temp"));
+		
+		// Create Instances object
+	    dataSet = new Instances("HVAC-indoor-temperature", atts, 0);
+	    
+	    // Fill with data
+	    for(String room : data.keySet()){
 		    for(int i = 0; i < data.get(room).size() - 1; i++){
 		    	// Check if the next tuple corresponds to the next 10 min time slot
  		    	if(data.get(room).get(i).getTimestamp() + 1000 * 60 * 10 == data.get(room).get(i+1).getTimestamp()){
  		    		double[] vals = new double[dataSet.numAttributes()];
 			    	vals[0] = data.get(room).get(i).getExtTemp();
 			    	vals[1] = hvacModeValues.indexOf(data.get(room).get(i).getMode());
-			    	vals[2] = data.get(room).get(i).getIndTemp();
-			    	vals[3] = data.get(room).get(i).getSetpointTemp();
-			    	vals[4] = data.get(room).get(i).getPower();
-			    	vals[5] = data.get(room).get(i + 1).getIndTemp();
+			    	vals[2] = roomValues.indexOf(room);
+			    	vals[3] = data.get(room).get(i).getIndTemp();
+			    	vals[4] = data.get(room).get(i).getSetpointTemp();
+			    	vals[5] = data.get(room).get(i).getPower();
+			    	vals[6] = data.get(room).get(i + 1).getIndTemp();
 			    	dataSet.add(new Instance(1.0, vals));
 			    }
 		    }
-		    
-		    saver = new ArffSaver();
-		    saver.setInstances(dataSet);
-		    try {
-				saver.setFile(new File(indoorTempDynamicsArffFile));
-				saver.writeBatch();
-			} catch (IOException e) {
-				System.err.println("Cannot save file " + indoorTempDynamicsArffFile);
-			}		    
-		    
-		    // ***************************** //
-		    // Test
-		    // ***************************** //
-		   
-		    String testArffFile = "./arff/" + room + "-test.arff";
-			
-			// Set up attributes
-			atts = new FastVector();
-			atts.addElement(new Attribute("external-temperature"));
-			atts.addElement(new Attribute("hvac-mode", hvacModeValues));
-		    atts.addElement(new Attribute("indoor-temperature"));
-			atts.addElement(new Attribute("setpoint-temperature"));
-			atts.addElement(new Attribute("hvac-power"));
-			
-			// Create Instances object
-		    dataSet = new Instances("Test", atts, 0);
-		    
-		    // Select the starting index
-		    int index = (int) (Math.random() * data.get(room).size());
-		    
-		    // Fill with data
-		    for(int i = index; i < data.get(room).size() - 1; i++){
-		    	// Check if the next tuple corresponds to the next 10 min time slot
- 		    	if(data.get(room).get(i).getTimestamp() + 1000 * 60 * 10 == data.get(room).get(i+1).getTimestamp()){
- 		    		double[] vals = new double[dataSet.numAttributes()];
-			    	vals[0] = data.get(room).get(i).getExtTemp();
-			    	vals[1] = hvacModeValues.indexOf(data.get(room).get(i).getMode());
-			    	vals[2] = data.get(room).get(i).getIndTemp();
-			    	vals[3] = data.get(room).get(i).getSetpointTemp();
-			    	vals[4] = data.get(room).get(i).getPower();
-			    	dataSet.add(new Instance(1.0, vals));
-			    }
- 		    	else{
- 		    		break;
- 		    	}
-		    }
-		    
-		    saver = new ArffSaver();
-		    saver.setInstances(dataSet);
-		    try {
-				saver.setFile(new File(testArffFile));
-				saver.writeBatch();
-			} catch (IOException e) {
-				System.err.println("Cannot save file " + testArffFile);
-			}		    
-		}		
+	    }
+	    
+	    saver = new ArffSaver();
+	    saver.setInstances(dataSet);
+	    try {
+			saver.setFile(new File(indoorTempDynamicsArffFile));
+			saver.writeBatch();
+		} catch (IOException e) {
+			System.err.println("Cannot save file " + indoorTempDynamicsArffFile);
+		}
 		
 	}
 	
@@ -351,28 +321,14 @@ public class DataBuilder {
 		CommandLine cmd = parser.parse(opts, args);
 
 		// If help needed
-		if (cmd.hasOption("h") || args.length < 1 || args.length > 5 ||
-				(cmd.hasOption("r") && !cmd.hasOption("m") && args.length != 3) ||
-				(!cmd.hasOption("r") && cmd.hasOption("m") && args.length != 3) ||
-				(cmd.hasOption("r") && cmd.hasOption("m") && args.length != 5)) {
+		if (cmd.hasOption("h") || args.length < 1 || args.length > 3 ||
+				(!cmd.hasOption("m") && args.length != 1) ||
+				(cmd.hasOption("m") && args.length != 3)) {
 			printHelp(opts);
 			return;
 		} 
 				
 		int fileParamShift = 0;
-		
-		// Process -r option
-		List<String> selectedRooms = null;
-		if(cmd.hasOption("r")){
-			fileParamShift = fileParamShift + 2;
-			if(cmd.getOptionValues("r") != null){
-				selectedRooms = new ArrayList<String>(Arrays.asList(cmd.getOptionValue("r").split(":")));
-			}
-			else{
-				printHelp(opts);
-				return;
-			}
-		}
 		
 		// Process -m option
 		List<String> selectedModes = null;
@@ -388,8 +344,7 @@ public class DataBuilder {
 		}	
 		
 		AtomicReference<List<String>> refSelectedModes = new AtomicReference<List<String>>(selectedModes);
-		HashMap<String, List<DataTuple>> data = DataBuilder.loadData(args[fileParamShift], 
-				refSelectedModes, selectedRooms);
+		HashMap<String, List<DataTuple>> data = DataBuilder.loadData(args[fileParamShift], refSelectedModes);
 		DataBuilder.createArffFiles(data, refSelectedModes);
 	}
 	
@@ -401,7 +356,7 @@ public class DataBuilder {
 		HelpFormatter help = new HelpFormatter();
 		help.setWidth(90);
 		String helpString = "java -jar DataBuilder.jar [OPTIONS] CSVFILE\n" 
-				+ "Example: java -jar DataBuilder.jar -r R1A:R1C -m 40:41:42 hvac.csv\n"
+				+ "Example: java -jar DataBuilder.jar -m 40:41:42 hvac.csv\n"
 						+ "\n OPTIONS: \n";
 		help.printHelp(helpString, opts);
 	}
@@ -412,7 +367,6 @@ public class DataBuilder {
 	private static Options createOptions(){
 		Options options = new Options();
 		options.addOption("h", "help", false, "Help. Print this message.");
-		options.addOption("r", "room", true, "Selected rooms.");
 		options.addOption("m", "mode", true, "Selected HVAC modes. Available modes are: \n" +
 				"Off: 10 11 12 13 14\n" + 
 				"Air injection: 20\n" +

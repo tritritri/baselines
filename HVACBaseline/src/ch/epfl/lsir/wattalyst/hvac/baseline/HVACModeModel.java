@@ -7,6 +7,7 @@ public interface HVACModeModel {
 	 * 
 	 * @param externalTemperatureForecast
 	 * @param hvacMode
+	 * @param room 
 	 * @param indoorTemperature
 	 * @param setpointTemperature
 	 * @param hvacPower
@@ -14,5 +15,5 @@ public interface HVACModeModel {
 	 * @throws Exception 
 	 */
 	public String getNextHVACMode(double externalTemperatureForecast, String hvacMode, 
-			double indoorTemperature, double setpointTemperature, double hvacPower) throws Exception;
+			String room, double indoorTemperature, double setpointTemperature, double hvacPower) throws Exception;
 }

@@ -24,12 +24,13 @@ public class SupervisedIndoorTemperatureModel extends SupervisedModel implements
 	 */
 	@Override
 	public double getNextIndoorTemperature(double externalTemperatureForecast,
-			String hvacMode, double indoorTemperature, double setpointTemperature, double hvacPower) throws Exception {
+			String hvacMode, String room, double indoorTemperature, double setpointTemperature, double hvacPower) throws Exception {
 		
 		// Create a new instance to classify
-		Instance newInst = new Instance(6);
+		Instance newInst = new Instance(7);
 		newInst.setValue(structure.attribute("external-temperature"), externalTemperatureForecast);
 		newInst.setValue(structure.attribute("hvac-mode"), hvacMode);
+		newInst.setValue(structure.attribute("room"), room);
 		newInst.setValue(structure.attribute("indoor-temperature"), indoorTemperature);
 		newInst.setValue(structure.attribute("setpoint-temperature"), setpointTemperature);
 		newInst.setValue(structure.attribute("hvac-power"), hvacPower);

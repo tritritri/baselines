@@ -119,7 +119,7 @@ public class ModelBuilder {
 		HelpFormatter help = new HelpFormatter();
 		help.setWidth(90);
 		String helpString = "java -jar ModelBuilder.jar [OPTIONS] TRAININGSET CLASSIFIER OUTPUT\n" 
-				+ "Example: java -jar ModelBuilder.jar dataset.arff LinearRegression.txt LinearRegression.mod\n";
+				+ "Example: java -jar ModelBuilder.jar arff/dataset.arff classifier/config/LinearRegression.txt classifier/model/dataset-LinearRegression\n";
 		help.printHelp(helpString, opts);
 	}
 

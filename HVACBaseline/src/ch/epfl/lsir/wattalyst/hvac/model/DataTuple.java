@@ -6,6 +6,7 @@ public class DataTuple {
 	private double extTemp;
 	private double power;
 	private String mode;
+	private String room;
 	private double setpointTemp;
 	private double indTemp;
 
@@ -71,6 +72,22 @@ public class DataTuple {
 	 */
 	public void setMode(String mode) {
 		this.mode = mode;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getRoom() {
+		return room;
+	}
+	
+	/**
+	 * 
+	 * @param room
+	 */
+	public void setRoom(String room) {
+		this.room = room;
 	}
 	
 	/**

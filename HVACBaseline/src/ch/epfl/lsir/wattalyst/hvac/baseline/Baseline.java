@@ -22,7 +22,6 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import weka.core.Instances;
-import ch.epfl.lsir.wattalyst.hvac.baseline.impl.SupervisedHVACModeModel;
 import ch.epfl.lsir.wattalyst.hvac.baseline.impl.SupervisedHVACPowerConsumptionModel;
 import ch.epfl.lsir.wattalyst.hvac.baseline.impl.SupervisedIndoorTemperatureModel;
 
@@ -48,6 +47,7 @@ public class Baseline {
 	 * in the array of external temperature forecast
 	 * 
 	 * @param externalTemperatureForecast
+	 * @param room
 	 * @param setpointTemperature
 	 * @param initialIndoorTemperature
 	 * @param initialHvacMode
@@ -57,12 +57,9 @@ public class Baseline {
 	 * 		String[] hvacMode
 	 * @throws Exception
 	 */
-	public Object[] compute(double[] externalTemperatureForecast, double setpointTemperature,
+	public Object[] compute(double[] externalTemperatureForecast, String room, double setpointTemperature,
 			double initialIndoorTemperature, String initialHvacMode) throws Exception{
-		
-		// At the beginning, the indoor temperature is
-		// assumed to be at 24 degrees and the HVAC mode is
-		// 20 (cooling)
+				
 		double[] indoorTemperature = new double[externalTemperatureForecast.length];
 		indoorTemperature[0] = initialIndoorTemperature;
 		String[] hvacMode = new String[externalTemperatureForecast.length];
@@ -70,13 +67,13 @@ public class Baseline {
 		
 		double[] hvacPower = new double[externalTemperatureForecast.length];
 		for(int t = 0; t < externalTemperatureForecast.length; t++){
-			hvacPower[t] = hvacPowerModel.getPower(externalTemperatureForecast[t], hvacMode[t], 
+			hvacPower[t] = hvacPowerModel.getPower(externalTemperatureForecast[t], hvacMode[t], room,
 					indoorTemperature[t], setpointTemperature);
 			if(t < externalTemperatureForecast.length - 1){
-				indoorTemperature[t + 1] = indoorTemperatureModel.getNextIndoorTemperature(externalTemperatureForecast[t], hvacMode[t], 
-						indoorTemperature[t], setpointTemperature, hvacPower[t]);
-				hvacMode[t + 1] = hvacModeModel.getNextHVACMode(externalTemperatureForecast[t], hvacMode[t], 
-						indoorTemperature[t], setpointTemperature, hvacPower[t]);
+				indoorTemperature[t + 1] = indoorTemperatureModel.getNextIndoorTemperature(externalTemperatureForecast[t], 
+						hvacMode[t], room, indoorTemperature[t], setpointTemperature, hvacPower[t]);
+				hvacMode[t + 1] = hvacModeModel.getNextHVACMode(externalTemperatureForecast[t],  
+						hvacMode[t], room, indoorTemperature[t], setpointTemperature, hvacPower[t]);
 			}
 		}
 		return new Object[]{hvacPower, indoorTemperature, hvacMode};
@@ -89,20 +86,38 @@ public class Baseline {
 	 */
 	public static void main(String[] args) throws Exception{
 						
-		HVACPowerConsumptionModel hvacPowerModel = new SupervisedHVACPowerConsumptionModel("./classifier/model/R1A-power-Bagging", 
-				"./classifier/model/R1A-power-Bagging.h");
-		HVACModeModel hvacModeModel = new SupervisedHVACModeModel("./classifier/model/R1A-hvac-mode-dynamics-Bagging", 
-				"./classifier/model/R1A-hvac-mode-dynamics-Bagging.h");
-		IndoorTemperatureModel indoorTemperatureModel = new SupervisedIndoorTemperatureModel("./classifier/model/R1A-indoor-temp-dynamics-Bagging", 
-				"./classifier/model/R1A-indoor-temp-dynamics-Bagging.h");
+		HVACPowerConsumptionModel hvacPowerModel = 
+				new SupervisedHVACPowerConsumptionModel("./classifier/model/HVAC-power-IBk", 
+						"./classifier/model/HVAC-power-IBk.h");
+		
+		//HVACModeModel hvacModeModel = new SupervisedHVACModeModel("./classifier/model/R1A-hvac-mode-dynamics-Bagging", 
+		//		"./classifier/model/R1A-hvac-mode-dynamics-Bagging.h");
+		HVACModeModel hvacModeModel = new HVACModeModel(){
+			@Override
+			public String getNextHVACMode(double externalTemperatureForecast,
+					String hvacMode, String room, double indoorTemperature,
+					double setpointTemperature, double hvacPower)
+					throws Exception {
+				return "30";
+			}
+		};
+		
+		IndoorTemperatureModel indoorTemperatureModel = 
+				new SupervisedIndoorTemperatureModel("./classifier/model/HVAC-indoor-temperature-LinearRegression", 
+						"./classifier/model/HVAC-indoor-temperature-LinearRegression.h");
+		
 		Baseline baseline = new Baseline(hvacPowerModel, hvacModeModel, indoorTemperatureModel);
 		
-		// Read the training set and extract at random a test set
-		BufferedReader reader = new BufferedReader(new FileReader("./arff/R1A-test.arff"));
+		// Set the room
+		String room = "R4A"; // R1F R1G R1D R1L R4A
+		
+		// Read the test set
+		BufferedReader reader = new BufferedReader(new FileReader("./arff/HVAC-test-" + room + ".arff"));
 		Instances testSet = new Instances(reader);
 		reader.close();
 		
 		int timeWindow = testSet.numInstances(); 
+		
 		double[] externalTemperatureForecast = new double[timeWindow];
 		double[] trueHvacPower = new double[timeWindow];
 		double[] trueIndoorTemperature = new double[timeWindow];
@@ -118,7 +133,7 @@ public class Baseline {
 			trueHvacMode[i] = testSet.attribute("hvac-mode").value((int) testSet.instance(i).value(testSet.attribute("hvac-mode")));
 		}
 		
-		Object[] result = baseline.compute(externalTemperatureForecast, setpointTemperature,
+		Object[] result = baseline.compute(externalTemperatureForecast, room, setpointTemperature,
 				initialIndoorTemperature, initialHvacMode);
 		double[] hvacPower = (double[]) result[0];
 		double[] indoorTemperature = (double[]) result[1];
@@ -143,12 +158,15 @@ public class Baseline {
 		}
 		
 		double RMSE = 0;
+		double E = 0;
 		for(int i = 0; i < trueHvacPower.length; i++){
 			RMSE = RMSE + Math.pow(hvacPower[i] - trueHvacPower[i], 2);
+			E = E + hvacPower[i] - trueHvacPower[i];
 		}
 		RMSE = RMSE/trueHvacPower.length;
 		RMSE = Math.sqrt(RMSE);
-		System.out.print("\nRMSE: " + RMSE);
+		E = E / (trueHvacPower.length / 6); // :no. of time slots * 10 minutes / 60 minutes = hours
+		System.out.print("\nPower RMSE: " + RMSE + " Energy E: " + E);
 		
 		System.out.println();
 		System.out.println();

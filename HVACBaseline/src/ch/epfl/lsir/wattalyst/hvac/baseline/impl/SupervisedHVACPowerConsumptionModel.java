@@ -23,13 +23,14 @@ public class SupervisedHVACPowerConsumptionModel extends SupervisedModel impleme
 	 * @see ch.epfl.lsir.wattalyst.hvac.baseline.HVACPowerConsumptionModel#getPower(double, java.lang.String, double, double)
 	 */
 	@Override
-	public double getPower(double externalTemperatureForecast, String hvacMode,
+	public double getPower(double externalTemperatureForecast, String hvacMode, String room, 
 			double indoorTemperature, double setpointTemperature) throws Exception {
 		
 		// Create a new instance to classify
-		Instance newInst = new Instance(5);
+		Instance newInst = new Instance(6);
 		newInst.setValue(structure.attribute("external-temperature"), externalTemperatureForecast);
 		newInst.setValue(structure.attribute("hvac-mode"), hvacMode);
+		newInst.setValue(structure.attribute("room"), room);
 		newInst.setValue(structure.attribute("indoor-temperature"), indoorTemperature);
 		newInst.setValue(structure.attribute("setpoint-temperature"), setpointTemperature);
 				

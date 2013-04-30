@@ -7,12 +7,13 @@ public interface HVACPowerConsumptionModel {
 	 * 
 	 * @param externalTemperatureForecast
 	 * @param hvacMode
+	 * @param room 
 	 * @param indoorTemperature
 	 * @param setpointTemperature
 	 * @return
 	 * @throws Exception 
 	 */
 	public double getPower(double externalTemperatureForecast, String hvacMode, 
-			double indoorTemperature, double setpointTemperature) throws Exception;
+			String room, double indoorTemperature, double setpointTemperature) throws Exception;
 
 }
