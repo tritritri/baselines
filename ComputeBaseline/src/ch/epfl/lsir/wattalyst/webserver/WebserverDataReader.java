@@ -3,11 +3,17 @@ package ch.epfl.lsir.wattalyst.webserver;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.wattalyst.services.AValueDto;
+import org.wattalyst.services.BaselineDto;
+import org.wattalyst.services.BaselineListResultContainer;
+import org.wattalyst.services.DRSignalManagement;
+import org.wattalyst.services.DRSignalManagementService;
 import org.wattalyst.services.DataAccess;
 import org.wattalyst.services.DataAccessService;
 import org.wattalyst.services.NumericValueDto;
@@ -22,7 +28,7 @@ public class WebserverDataReader {
 	 * 
 	 * @param sensorName
 	 * @param startDate these dates are in executing machine time zone
-	 * @param endDate these dates are in executing these dates are in machine timethese dates are in machine timemachine time
+	 * @param endDate these dates are in executing machine time zone
 	 * @param useDifferenceMethod
 	 * @return
 	 * @throws RemoteException 
@@ -108,6 +114,55 @@ public class WebserverDataReader {
 		}
 		return lastValue;
 	}
+	
+	/**
+	 * 
+	 * @param sensor
+	 * @return
+	 */
+	List<String> getBaselines(String sensor){
+		// Invoke the web service and retrieve the result
+		DRSignalManagementService service = new DRSignalManagementService();
+		DRSignalManagement port = service.getDRSignalManagementPort();
+		
+		List<String> baselines = new ArrayList<String>();
+		BaselineListResultContainer result = port.getBaselines(sensor);
+		if("OK".equals(result.getStatus().value())){
+			for(BaselineDto r : result.getBaselines()){
+				baselines.add(r.getFullQualifiedName());
+			}
+		}
+		return baselines;
+	}
+	
+	/**
+	 * 
+	 * @param baselineID
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	SensorReadings getBaselineData(String baselineID, Date startDate, Date endDate){
+		// Invoke the web service and retrieve the result
+		DRSignalManagementService service = new DRSignalManagementService();
+		DRSignalManagement port = service.getDRSignalManagementPort();
+		
+		ValueListResultContainer result = port.getBaselineData(baselineID, startDate.getTime(),
+				endDate.getTime());
+		
+		SensorReadings readings = new SensorReadings();
+		// Put the result in sensor readingas
+		if("OK".equals(result.getStatus().value())){
+			for(AValueDto r : result.getValues()){
+				if(r instanceof NumericValueDto){
+					readings.insert(r.getTimestamp(), ((NumericValueDto)r).getValue());
+				}
+			}
+		}
+		
+		return readings;
+	}
+	
 
 	/**
 	 * 

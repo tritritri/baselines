@@ -14,13 +14,12 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="quantizationDto">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://services.wattalyst.org/}entityDto">
  *       &lt;sequence>
- *         &lt;element name="entityId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="base" type="{http://services.wattalyst.org/}quantizationBase" minOccurs="0"/>
  *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -29,39 +28,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "quantizationDto", propOrder = {
-    "entityId",
     "base",
     "value"
 })
-public class QuantizationDto {
+public class QuantizationDto
+    extends EntityDto
+{
 
-    protected Long entityId;
     protected QuantizationBase base;
     protected Integer value;
-
-    /**
-     * Gets the value of the entityId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Long }
-     *     
-     */
-    public Long getEntityId() {
-        return entityId;
-    }
-
-    /**
-     * Sets the value of the entityId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Long }
-     *     
-     */
-    public void setEntityId(Long value) {
-        this.entityId = value;
-    }
 
     /**
      * Gets the value of the base property.

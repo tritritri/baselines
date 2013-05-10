@@ -30,7 +30,7 @@ public class DataAccessService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://wattalyst.se.rwth-aachen.de:7070/DataAccessService/DataAccess?WSDL");
+            url = new URL("http://wattalyst-ci.se.rwth-aachen.de:7070/DataAccessService/DataAccess?WSDL");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

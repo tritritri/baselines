@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{http://services.wattalyst.org/}fullQualifiedEntityDto">
  *       &lt;sequence>
  *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="type" type="{http://services.wattalyst.org/}locationTypeDto" minOccurs="0"/>
+ *         &lt;element name="type" type="{http://services.wattalyst.org/}locationType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -36,7 +36,7 @@ public class LocationDto
 {
 
     protected String address;
-    protected LocationTypeDto type;
+    protected LocationType type;
 
     /**
      * Gets the value of the address property.
@@ -67,10 +67,10 @@ public class LocationDto
      * 
      * @return
      *     possible object is
-     *     {@link LocationTypeDto }
+     *     {@link LocationType }
      *     
      */
-    public LocationTypeDto getType() {
+    public LocationType getType() {
         return type;
     }
 
@@ -79,10 +79,10 @@ public class LocationDto
      * 
      * @param value
      *     allowed object is
-     *     {@link LocationTypeDto }
+     *     {@link LocationType }
      *     
      */
-    public void setType(LocationTypeDto value) {
+    public void setType(LocationType value) {
         this.type = value;
     }
 
