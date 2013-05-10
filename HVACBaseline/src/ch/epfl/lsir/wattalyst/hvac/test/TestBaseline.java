@@ -1,4 +1,4 @@
-package ch.epfl.lsir.wattalyst.hvac.baseline;
+package ch.epfl.lsir.wattalyst.hvac.test;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -20,6 +20,9 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
+
+import ch.epfl.lsir.wattalyst.hvac.baseline.Baseline;
+import ch.epfl.lsir.wattalyst.hvac.baseline.BaselineFactory;
 
 import weka.core.Instances;
 
