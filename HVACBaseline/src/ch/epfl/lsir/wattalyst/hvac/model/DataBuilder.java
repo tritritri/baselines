@@ -165,7 +165,7 @@ public class DataBuilder {
 		// Power consumption
 		// ***************************** //
 		String powerArffFile = "./arff/HVAC-power.arff";
-		
+				  
 		// Set up attributes
 		FastVector atts = new FastVector();
 		atts.addElement(new Attribute("external-temperature"));
