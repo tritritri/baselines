@@ -2,6 +2,7 @@ package ch.epfl.lsir.wattalyst.webserver;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.wattalyst.services.BooleanResultContainer;
 import org.wattalyst.services.DRSignalManagement;
@@ -33,13 +34,13 @@ public class WebserverDataWriter {
 	/**
 	 * 
 	 * @param baselineID
-	 * @param baseline
+	 * @param baselineData 
 	 * @return
 	 */
-	boolean updateBaselineData(String baselineID, SensorReadings baseline){
+	boolean updateBaselineData(String baselineID, SensorReadings baselineData){
 
 		// Prepare the string to write in the DB
-		String values = baseline.toStringAscDBFormat();
+		String values = baselineData.toStringAscDBFormat();
 		
 		// Invoke the web service 
 		DRSignalManagementService service = new DRSignalManagementService();
@@ -55,33 +56,38 @@ public class WebserverDataWriter {
 	 */
 	public static void main(String[] args){
 		WebserverDataWriter writer = new WebserverDataWriter();
-//		String bl = writer.addBaseline("CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_346");
-//		System.out.println("Added baseline " + bl);
+		//String bl = writer.addBaseline("CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_348");
+		//System.out.println("Added baseline " + bl);
 		
 		WebserverDataReader reader = new WebserverDataReader();
-//		List<String> baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_346");
-//		for(String s : baselines){
-//			System.out.println("Retrieved baseline " + s);
-//		}
+		List<String> baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_344");
+		for(String s : baselines){
+			System.out.println("Retrieved baseline " + s);
+		}
 		
 		SensorReadings baseline = new SensorReadings();
 		Calendar current = Calendar.getInstance();
 		Util.setToTheBeginningOfTheHour(current);
+		current.add(Calendar.HOUR_OF_DAY, -1);
 		Date startDate = current.getTime();
 		
+		current.add(Calendar.HOUR_OF_DAY, 1);
 		baseline.insert(current.getTime().getTime(), 3);
 		
 		current.add(Calendar.HOUR_OF_DAY, 1);
 		baseline.insert(current.getTime().getTime(), 2);
 		
 		current.add(Calendar.HOUR_OF_DAY, 1);
-		Date endDate = current.getTime();
 		baseline.insert(current.getTime().getTime(), 1);
 		
-		System.out.println(
-				writer.updateBaselineData("wattalyst.lulea.location_43.sensor_346.baseline_caiso", baseline));
+		current.add(Calendar.HOUR_OF_DAY, 1);
+		Date endDate = current.getTime();
+		
+//		System.out.println(
+//				writer.updateBaselineData("wattalyst.lulea.location_43.sensor_348.baseline_caiso", baseline));
+//		System.out.println(baseline.toStringAscDBFormat());
 		
 		System.out.println(
-				reader.getBaselineData("wattalyst.lulea.location_43.sensor_346.baseline_caiso", startDate, endDate));
+				reader.getBaselineData("wattalyst.lulea.location_43.sensor_344.baseline_caiso", startDate, endDate));
 	}
 }

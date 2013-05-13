@@ -191,7 +191,7 @@ public class SensorReadings {
 		ArrayList<String> result = new ArrayList<String>();
 		
 		// loop from minDate to maxDate
-		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DB_DATETIME_FORMAT);
 		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
 
 		Calendar currCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
@@ -205,7 +205,7 @@ public class SensorReadings {
 			if (reading!=null){
 				// round to 5 digit decimal
 				reading =  Math.round(reading * 100000) / 100000.0;
-				result.add(currCal.getTimeInMillis() + "," + reading);
+				result.add(formatter.format(currCal.getTime()) + ";" + reading);
 			}
 			
 			// advance one hour
