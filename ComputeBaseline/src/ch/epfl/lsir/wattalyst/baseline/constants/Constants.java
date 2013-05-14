@@ -18,5 +18,5 @@ public class Constants {
 	 * in ComputeBaseline, if option timezone is specified, then TIMEZONE_REF is changed
 	 * see in ComputeBaseline.java: if (cmd.hasOption("t")) ... 
 	 */
-	public static String TIMEZONE_REF = Calendar.getInstance().getTimeZone().getID();;
+	public static String TIMEZONE_REF = Calendar.getInstance().getTimeZone().getID();
 }
