@@ -15,9 +15,9 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="fullQualifiedEntityDto">
  *   &lt;complexContent>
- *     &lt;extension base="{http://services.wattalyst.org/}baseDtoDomain">
+ *     &lt;extension base="{http://services.wattalyst.org/}entityDto">
  *       &lt;sequence>
- *         &lt;element name="fullQualifiedName" type="{http://services.wattalyst.org/}fullQualifiedNameDto" minOccurs="0"/>
+ *         &lt;element name="fullQualifiedName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -31,24 +31,25 @@ import javax.xml.bind.annotation.XmlType;
     "fullQualifiedName"
 })
 @XmlSeeAlso({
+    DrSignalDto.class,
     SensorDto.class,
     LocationDto.class
 })
-public class FullQualifiedEntityDto
-    extends BaseDtoDomain
+public abstract class FullQualifiedEntityDto
+    extends EntityDto
 {
 
-    protected FullQualifiedNameDto fullQualifiedName;
+    protected String fullQualifiedName;
 
     /**
      * Gets the value of the fullQualifiedName property.
      * 
      * @return
      *     possible object is
-     *     {@link FullQualifiedNameDto }
+     *     {@link String }
      *     
      */
-    public FullQualifiedNameDto getFullQualifiedName() {
+    public String getFullQualifiedName() {
         return fullQualifiedName;
     }
 
@@ -57,10 +58,10 @@ public class FullQualifiedEntityDto
      * 
      * @param value
      *     allowed object is
-     *     {@link FullQualifiedNameDto }
+     *     {@link String }
      *     
      */
-    public void setFullQualifiedName(FullQualifiedNameDto value) {
+    public void setFullQualifiedName(String value) {
         this.fullQualifiedName = value;
     }
 

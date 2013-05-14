@@ -3,11 +3,17 @@ package ch.epfl.lsir.wattalyst.webserver;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.wattalyst.services.AValueDto;
+import org.wattalyst.services.BaselineDto;
+import org.wattalyst.services.BaselineListResultContainer;
+import org.wattalyst.services.DRSignalManagement;
+import org.wattalyst.services.DRSignalManagementService;
 import org.wattalyst.services.DataAccess;
 import org.wattalyst.services.DataAccessService;
 import org.wattalyst.services.NumericValueDto;
@@ -22,7 +28,7 @@ public class WebserverDataReader {
 	 * 
 	 * @param sensorName
 	 * @param startDate these dates are in executing machine time zone
-	 * @param endDate these dates are in executing these dates are in machine timethese dates are in machine timemachine time
+	 * @param endDate these dates are in executing machine time zone
 	 * @param useDifferenceMethod
 	 * @return
 	 * @throws RemoteException 
@@ -75,6 +81,7 @@ public class WebserverDataReader {
 						}
 						
 						current.add(Calendar.HOUR_OF_DAY, 1);
+						//current.add(Calendar.MINUTE, 10);
 					}
 				}
 				// Generate a sensor readings data set aggregating different readings in the same hour (e.g. for power)
@@ -107,6 +114,55 @@ public class WebserverDataReader {
 		}
 		return lastValue;
 	}
+	
+	/**
+	 * 
+	 * @param sensor
+	 * @return
+	 */
+	List<String> getBaselines(String sensor){
+		// Invoke the web service and retrieve the result
+		DRSignalManagementService service = new DRSignalManagementService();
+		DRSignalManagement port = service.getDRSignalManagementPort();
+		
+		List<String> baselines = new ArrayList<String>();
+		BaselineListResultContainer result = port.getBaselines(sensor);
+		if("OK".equals(result.getStatus().value())){
+			for(BaselineDto r : result.getBaselines()){
+				baselines.add(r.getFullQualifiedName());
+			}
+		}
+		return baselines;
+	}
+	
+	/**
+	 * 
+	 * @param baselineID
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	SensorReadings getBaselineData(String baselineID, Date startDate, Date endDate){
+		// Invoke the web service and retrieve the result
+		DRSignalManagementService service = new DRSignalManagementService();
+		DRSignalManagement port = service.getDRSignalManagementPort();
+		
+		ValueListResultContainer result = port.getBaselineData(baselineID, startDate.getTime(),
+				endDate.getTime());
+		
+		SensorReadings readings = new SensorReadings();
+		// Put the result in sensor readingas
+		if("OK".equals(result.getStatus().value())){
+			for(AValueDto r : result.getValues()){
+				if(r instanceof NumericValueDto){
+					readings.insert(r.getTimestamp(), ((NumericValueDto)r).getValue());
+				}
+			}
+		}
+		
+		return readings;
+	}
+	
 
 	/**
 	 * 
@@ -116,9 +172,21 @@ public class WebserverDataReader {
 	 */
 	public static void main(String[] args) throws RemoteException, ParseException{
 		WebserverDataReader reader = new WebserverDataReader();
-		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-14 00:00:00");
-		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-24 23:59:00");
-		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_43.sensor_346", startDate, endDate, true);
+		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-01 00:00:00");
+		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-31 23:59:00");
+		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_43.sensor_348", startDate, endDate, true);
 		System.out.println(readings.toStringAsc());
+//		try{
+//			java.io.BufferedWriter r = new java.io.BufferedWriter(new java.io.FileWriter("/tmp/out.txt"));
+//			for(long date = readings.getMinDate(); date <= readings.getMaxDate(); date = date + 10*60*1000){
+//				r.write("insert into daily_profile values(" + date + 
+//						", \'wattalyst.lulea.location_43.sensor_348\', " + (date/1000) + 
+//						", " + readings.get(date) + ");");
+//				r.newLine();
+//			}
+//			r.flush();
+//			r.close();
+//		}
+//		catch(Exception e){}
 	}
 }

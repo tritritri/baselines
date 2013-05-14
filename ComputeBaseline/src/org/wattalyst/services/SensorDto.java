@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -20,14 +20,15 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{http://services.wattalyst.org/}fullQualifiedEntityDto">
  *       &lt;sequence>
  *         &lt;element name="quantization" type="{http://services.wattalyst.org/}quantizationDto" minOccurs="0"/>
- *         &lt;element name="category" type="{http://services.wattalyst.org/}categoryDto" minOccurs="0"/>
+ *         &lt;element name="category" type="{http://services.wattalyst.org/}category" minOccurs="0"/>
  *         &lt;element name="maximum" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *         &lt;element name="minimum" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *         &lt;element name="firstValueTimestamp" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="lastValueTimestamp" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="unit" type="{http://services.wattalyst.org/}unitDto" minOccurs="0"/>
- *         &lt;element name="metaDatas" type="{http://services.wattalyst.org/}metaDatumDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="timezoneOffset" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
+ *         &lt;element name="metaData" type="{http://services.wattalyst.org/}metaDatumDto" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -46,22 +47,26 @@ import javax.xml.bind.annotation.XmlType;
     "lastValueTimestamp",
     "comment",
     "unit",
-    "metaDatas"
+    "timezoneOffset",
+    "metaData"
+})
+@XmlSeeAlso({
+    BaselineDto.class
 })
 public class SensorDto
     extends FullQualifiedEntityDto
 {
 
     protected QuantizationDto quantization;
-    protected CategoryDto category;
+    protected Category category;
     protected Double maximum;
     protected Double minimum;
     protected Long firstValueTimestamp;
     protected Long lastValueTimestamp;
     protected String comment;
     protected UnitDto unit;
-    @XmlElement(nillable = true)
-    protected List<MetaDatumDto> metaDatas;
+    protected Double timezoneOffset;
+    protected List<MetaDatumDto> metaData;
 
     /**
      * Gets the value of the quantization property.
@@ -92,10 +97,10 @@ public class SensorDto
      * 
      * @return
      *     possible object is
-     *     {@link CategoryDto }
+     *     {@link Category }
      *     
      */
-    public CategoryDto getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -104,10 +109,10 @@ public class SensorDto
      * 
      * @param value
      *     allowed object is
-     *     {@link CategoryDto }
+     *     {@link Category }
      *     
      */
-    public void setCategory(CategoryDto value) {
+    public void setCategory(Category value) {
         this.category = value;
     }
 
@@ -256,18 +261,42 @@ public class SensorDto
     }
 
     /**
-     * Gets the value of the metaDatas property.
+     * Gets the value of the timezoneOffset property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Double }
+     *     
+     */
+    public Double getTimezoneOffset() {
+        return timezoneOffset;
+    }
+
+    /**
+     * Sets the value of the timezoneOffset property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Double }
+     *     
+     */
+    public void setTimezoneOffset(Double value) {
+        this.timezoneOffset = value;
+    }
+
+    /**
+     * Gets the value of the metaData property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the metaDatas property.
+     * This is why there is not a <CODE>set</CODE> method for the metaData property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMetaDatas().add(newItem);
+     *    getMetaData().add(newItem);
      * </pre>
      * 
      * 
@@ -277,11 +306,11 @@ public class SensorDto
      * 
      * 
      */
-    public List<MetaDatumDto> getMetaDatas() {
-        if (metaDatas == null) {
-            metaDatas = new ArrayList<MetaDatumDto>();
+    public List<MetaDatumDto> getMetaData() {
+        if (metaData == null) {
+            metaData = new ArrayList<MetaDatumDto>();
         }
-        return this.metaDatas;
+        return this.metaData;
     }
 
 }

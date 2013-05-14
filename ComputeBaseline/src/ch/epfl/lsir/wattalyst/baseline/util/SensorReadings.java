@@ -97,9 +97,17 @@ public class SensorReadings {
 	}
 	
 	/**
-	 * Get the element sorted ascending between from and maxDate
+	 * @return String of elements, ordered by timing, ready to store in Wattalyst DB
+	 */
+	public String toStringAscDBFormat(){
+		return toStringAscDBFormat(minDate, maxDate);
+	}
+	
+	/**
+	 * Get the element sorted ascending between from and to
 	 * @param from start time
-	 * @return element from the start time (from) to the end time (maxDate) 
+	 * @param to end time
+	 * @return element from the start time (from) to the end time (to) 
 	 */
 	public String toStringAsc(long from, long to){
 	
@@ -107,6 +115,25 @@ public class SensorReadings {
 		String result = "";
 		
 		ArrayList<String> arrString = toArrStringAsc(from, to);
+		for (int i=0; i<arrString.size(); i++){
+			result = result + arrString.get(i) + "\n";
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Get the element sorted ascending between from and to
+	 * @param from start time
+	 * @param to end time
+	 * @return element from the start time (from) to the end time (to) 
+	 */
+	public String toStringAscDBFormat(long from, long to){
+	
+		
+		String result = "";
+		
+		ArrayList<String> arrString = toArrStringAscDBFormat(from, to);
 		for (int i=0; i<arrString.size(); i++){
 			result = result + arrString.get(i) + "\n";
 		}
@@ -143,6 +170,42 @@ public class SensorReadings {
 				// round to 5 digit decimal
 				reading =  Math.round(reading * 100000) / 100000.0;
 				result.add(formatter.format(currCal.getTime()) + "," + currCal.get(Calendar.HOUR_OF_DAY) + "," + reading + "," + currCal.getTimeInMillis());
+			}
+			
+			// advance one hour
+			currCal.add(Calendar.HOUR_OF_DAY, 1);
+		}		
+		return result;
+	}
+	
+	/**
+	 * Convert each element having key between from and to (inclusive) into string.
+	 * Value printed is rounded, up to 5 decimal point 
+	 * @param from starting key
+	 * @param to ending key
+	 * @return an array (list) of string representation the element
+	 */
+	public ArrayList<String> toArrStringAscDBFormat(long from, long to){
+		
+		// initialize the result structure
+		ArrayList<String> result = new ArrayList<String>();
+		
+		// loop from minDate to maxDate
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DB_DATETIME_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+
+		Calendar currCal = Calendar.getInstance(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		currCal.setTimeInMillis(from);		
+		while (currCal.getTimeInMillis() <= to) {
+			
+			// get the element
+			Double reading = data.get(currCal.getTimeInMillis());
+
+			// check if the reading for current time is exist
+			if (reading!=null){
+				// round to 5 digit decimal
+				reading =  Math.round(reading * 100000) / 100000.0;
+				result.add(formatter.format(currCal.getTime()) + ";" + reading);
 			}
 			
 			// advance one hour

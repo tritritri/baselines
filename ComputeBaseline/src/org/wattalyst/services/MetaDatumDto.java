@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="metaDatumDto">
  *   &lt;complexContent>
- *     &lt;extension base="{http://services.wattalyst.org/}baseDtoDomain">
+ *     &lt;extension base="{http://services.wattalyst.org/}entityDto">
  *       &lt;sequence>
  *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
     "value"
 })
 public class MetaDatumDto
-    extends BaseDtoDomain
+    extends EntityDto
 {
 
     protected String key;
