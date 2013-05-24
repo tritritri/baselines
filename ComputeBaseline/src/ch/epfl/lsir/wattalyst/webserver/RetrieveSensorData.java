@@ -13,11 +13,11 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
-import org.wattalyst.services.AValueDto;
-import org.wattalyst.services.DataAccess;
-import org.wattalyst.services.DataAccessService;
-import org.wattalyst.services.NumericValueDto;
-import org.wattalyst.services.ValueListResultContainer;
+import org.wattalyst.services.secured.AValueDto;
+import org.wattalyst.services.secured.NumericValueDto;
+import org.wattalyst.services.secured.SecuredDataAccess;
+import org.wattalyst.services.secured.SecuredDataAccessService;
+import org.wattalyst.services.secured.ValueListResultContainer;
 
 /**
  * 
@@ -45,10 +45,10 @@ public class RetrieveSensorData {
 		if (cmd.hasOption("h") || args.length==0) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
-			String helpString = "java -jar RetrieveSensorData.jar [OPTIONS] SENSORNAME STARTTIME ENDTIME \n" 
+			String helpString = "java -jar RetrieveSensorData.jar [OPTIONS] AUTHTOKEN SENSORNAME STARTTIME ENDTIME \n" 
 					+ "Display instantenous reading of sensor SENSORNAME from STARTTIME to ENDTIME\n"
 					+ "Local machine timezone is used to display the time\n"
-					+ "Example: java -jar RetrieveSensorData.jar wattalyst.lulea.location_43.sensor_345 2013-02-21--00:00 2013-02-26--23:59\n"
+					+ "Example: java -jar RetrieveSensorData.jar XXX wattalyst.lulea.location_43.sensor_345 2013-02-21--00:00 2013-02-26--23:59\n"
 					+ "STARTTIME and ENDTIME are of form yyyy-MM-dd--HH:mm\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
@@ -56,6 +56,7 @@ public class RetrieveSensorData {
 		} 
 
 		// process default operand
+		String authenticationToken = args[args.length-4];
 		String sensorName = args[args.length-3];
 		String startTimeString = args[args.length-2];
 		String endTimeString = args[args.length-1];
@@ -70,10 +71,10 @@ public class RetrieveSensorData {
 		}
 		
 		// Invoke the web service and retrieve the result
-		DataAccessService service = new DataAccessService();
-		DataAccess port = service.getDataAccessPort();
+		SecuredDataAccessService service = new SecuredDataAccessService();
+		SecuredDataAccess port = service.getSecuredDataAccessPort();
 
-		ValueListResultContainer result = port.getValuesForSensorByRange(sensorName, startDate.getTime(), endDate.getTime());
+		ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensorName, startDate.getTime(), endDate.getTime());
 		
 		// Put the result in a sorted set
 		

@@ -9,15 +9,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
-import org.wattalyst.services.AValueDto;
-import org.wattalyst.services.BaselineDto;
-import org.wattalyst.services.BaselineListResultContainer;
-import org.wattalyst.services.DRSignalManagement;
-import org.wattalyst.services.DRSignalManagementService;
-import org.wattalyst.services.DataAccess;
-import org.wattalyst.services.DataAccessService;
-import org.wattalyst.services.NumericValueDto;
-import org.wattalyst.services.ValueListResultContainer;
+import org.wattalyst.services.secured.AValueDto;
+import org.wattalyst.services.secured.BaselineDto;
+import org.wattalyst.services.secured.BaselineListResultContainer;
+import org.wattalyst.services.secured.NumericValueDto;
+import org.wattalyst.services.secured.SecuredDRSignalManagement;
+import org.wattalyst.services.secured.SecuredDRSignalManagementService;
+import org.wattalyst.services.secured.SecuredDataAccess;
+import org.wattalyst.services.secured.SecuredDataAccessService;
+import org.wattalyst.services.secured.ValueListResultContainer;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
@@ -27,24 +27,25 @@ public class WebserverDataReader {
 	/**
 	 * 
 	 * @param sensorName
+	 * @param authenticationToken
 	 * @param startDate these dates are in executing machine time zone
 	 * @param endDate these dates are in executing machine time zone
 	 * @param useDifferenceMethod
 	 * @return
 	 * @throws RemoteException 
 	 */
-	SensorReadings getValuesForSensorByRange(String sensorName, Date startDate, Date endDate, 
+	SensorReadings getValuesForSensorByRange(String authenticationToken, String sensorName, Date startDate, Date endDate, 
 			boolean useDifferenceMethod) {
 		
 		// Invoke the web service and retrieve the result
-		DataAccessService service = new DataAccessService();
-		DataAccess port = service.getDataAccessPort();
+		SecuredDataAccessService service = new SecuredDataAccessService();
+		SecuredDataAccess port = service.getSecuredDataAccessPort();
 		
 		// Create a sensor readings data structure 
 		SensorReadings readings = new SensorReadings();
 					
 		try{
-			ValueListResultContainer result = port.getValuesForSensorByRange(sensorName, startDate.getTime(), endDate.getTime());
+			ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensorName, startDate.getTime(), endDate.getTime());
 			
 			// Put the result in a sorted set
 			if("OK".equals(result.getStatus().value())){
@@ -117,16 +118,17 @@ public class WebserverDataReader {
 	
 	/**
 	 * 
+	 * @param authenticationToken
 	 * @param sensor
 	 * @return
 	 */
-	List<String> getBaselines(String sensor){
+	List<String> getBaselines(String authenticationToken, String sensor){
 		// Invoke the web service and retrieve the result
-		DRSignalManagementService service = new DRSignalManagementService();
-		DRSignalManagement port = service.getDRSignalManagementPort();
+		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
 		List<String> baselines = new ArrayList<String>();
-		BaselineListResultContainer result = port.getBaselines(sensor);
+		BaselineListResultContainer result = port.getBaselines(authenticationToken, sensor);
 		if("OK".equals(result.getStatus().value())){
 			for(BaselineDto r : result.getBaselines()){
 				baselines.add(r.getFullQualifiedName());
@@ -137,17 +139,18 @@ public class WebserverDataReader {
 	
 	/**
 	 * 
+	 * @param authenticationToken
 	 * @param baselineID
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
-	SensorReadings getBaselineData(String baselineID, Date startDate, Date endDate){
+	SensorReadings getBaselineData(String authenticationToken, String baselineID, Date startDate, Date endDate){
 		// Invoke the web service and retrieve the result
-		DRSignalManagementService service = new DRSignalManagementService();
-		DRSignalManagement port = service.getDRSignalManagementPort();
+		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
-		ValueListResultContainer result = port.getBaselineData(baselineID, startDate.getTime(),
+		ValueListResultContainer result = port.getBaselineData(authenticationToken, baselineID, startDate.getTime(),
 				endDate.getTime());
 		
 		SensorReadings readings = new SensorReadings();
@@ -174,7 +177,7 @@ public class WebserverDataReader {
 		WebserverDataReader reader = new WebserverDataReader();
 		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-01 00:00:00");
 		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-31 23:59:00");
-		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_43.sensor_348", startDate, endDate, true);
+		SensorReadings readings = reader.getValuesForSensorByRange("XXX", "wattalyst.lulea.location_43.sensor_348", startDate, endDate, true);
 		System.out.println(readings.toStringAsc());
 //		try{
 //			java.io.BufferedWriter r = new java.io.BufferedWriter(new java.io.FileWriter("/tmp/out.txt"));
