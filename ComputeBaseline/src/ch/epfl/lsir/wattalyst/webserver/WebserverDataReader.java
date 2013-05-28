@@ -12,11 +12,15 @@ import java.util.TreeSet;
 import org.wattalyst.services.secured.AValueDto;
 import org.wattalyst.services.secured.BaselineDto;
 import org.wattalyst.services.secured.BaselineListResultContainer;
+import org.wattalyst.services.secured.LocationDto;
+import org.wattalyst.services.secured.LocationListResultContainer;
 import org.wattalyst.services.secured.NumericValueDto;
 import org.wattalyst.services.secured.SecuredDRSignalManagement;
 import org.wattalyst.services.secured.SecuredDRSignalManagementService;
 import org.wattalyst.services.secured.SecuredDataAccess;
 import org.wattalyst.services.secured.SecuredDataAccessService;
+import org.wattalyst.services.secured.SensorDto;
+import org.wattalyst.services.secured.SensorListResultContainer;
 import org.wattalyst.services.secured.ValueListResultContainer;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
@@ -34,7 +38,7 @@ public class WebserverDataReader {
 	 * @return
 	 * @throws RemoteException 
 	 */
-	SensorReadings getValuesForSensorByRange(String authenticationToken, String sensorName, Date startDate, Date endDate, 
+	public SensorReadings getValuesForSensorByRange(String authenticationToken, String sensorName, Date startDate, Date endDate, 
 			boolean useDifferenceMethod) {
 		
 		// Invoke the web service and retrieve the result
@@ -122,7 +126,7 @@ public class WebserverDataReader {
 	 * @param sensor
 	 * @return
 	 */
-	List<String> getBaselines(String authenticationToken, String sensor){
+	public List<String> getBaselines(String authenticationToken, String sensor){
 		// Invoke the web service and retrieve the result
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
@@ -140,12 +144,37 @@ public class WebserverDataReader {
 	/**
 	 * 
 	 * @param authenticationToken
+	 * @return
+	 */
+	public List<String> getSensors(String authenticationToken){
+		// Invoke the web service and retrieve the result
+		SecuredDataAccessService service = new SecuredDataAccessService();
+		SecuredDataAccess port = service.getSecuredDataAccessPort();
+		
+		List<String> sensorList = new ArrayList<String>();
+		LocationListResultContainer locations = port.getAllLocations(authenticationToken);
+		if("OK".equals(locations.getStatus().value())){
+			for(LocationDto loc : locations.getLocations()){
+				SensorListResultContainer sensors = port.getLocationSensors(authenticationToken, loc.getFullQualifiedName());
+				if("OK".equals(sensors.getStatus().value())){
+					for(SensorDto s : sensors.getSensors()){
+						sensorList.add(s.getFullQualifiedName());
+					}
+				}
+			}
+		}
+		return sensorList;
+	}
+	
+	/**
+	 * 
+	 * @param authenticationToken
 	 * @param baselineID
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
-	SensorReadings getBaselineData(String authenticationToken, String baselineID, Date startDate, Date endDate){
+	public SensorReadings getBaselineData(String authenticationToken, String baselineID, Date startDate, Date endDate){
 		// Invoke the web service and retrieve the result
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();

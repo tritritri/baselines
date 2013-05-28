@@ -22,7 +22,7 @@ public class WebserverDataWriter {
 	 * @param sensor
 	 * @return
 	 */
-	String addBaseline(String authenticationToken, String description, String baselineType, String sensor) {
+	public String addBaseline(String authenticationToken, String description, String baselineType, String sensor) {
 		
 		// Invoke the web service 
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
@@ -39,7 +39,7 @@ public class WebserverDataWriter {
 	 * @param baselineData
 	 * @return
 	 */
-	boolean updateBaselineData(String authenticationToken, String baselineID, SensorReadings baselineData){
+	public boolean updateBaselineData(String authenticationToken, String baselineID, SensorReadings baselineData){
 
 		// Prepare the string to write in the DB
 		String values = baselineData.toStringAscDBFormat();
