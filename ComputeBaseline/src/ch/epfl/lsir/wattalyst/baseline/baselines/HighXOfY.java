@@ -14,6 +14,7 @@ import java.util.TimeZone;
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.webserver.WebserverDataWriter;
 
 /**
  * Basic class for Highest X out of Y days type of baseline.
@@ -282,7 +283,12 @@ public class HighXOfY implements Baseline{
 		}
 		
 	}
-
+	
+	@Override
+	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+		WebserverDataWriter writer = new WebserverDataWriter();
+		writer.updateBaselineData(authenticationToken, baselineID, data[1]);
+	}
 
 	@Override
 	public ArrayList<String> getResultString() {
@@ -310,4 +316,5 @@ public class HighXOfY implements Baseline{
 			historyAccess = 1;
 		}
 	}
+
 }

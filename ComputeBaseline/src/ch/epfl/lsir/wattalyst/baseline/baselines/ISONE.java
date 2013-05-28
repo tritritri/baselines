@@ -14,6 +14,7 @@ import java.util.TimeZone;
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.webserver.WebserverDataWriter;
 
 /**
  * Implementation of baseline ISONE
@@ -338,6 +339,12 @@ public class ISONE implements Baseline{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+		WebserverDataWriter writer = new WebserverDataWriter();
+		writer.updateBaselineData(authenticationToken, baselineID, baseline);
 	}
 
 	@Override

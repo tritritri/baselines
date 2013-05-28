@@ -205,7 +205,7 @@ public class SensorReadings {
 			if (reading!=null){
 				// round to 5 digit decimal
 				reading =  Math.round(reading * 100000) / 100000.0;
-				result.add(formatter.format(currCal.getTime()) + ";" + reading);
+				result.add(formatter.format(currCal.getTime()) + "," + reading);
 			}
 			
 			// advance one hour
