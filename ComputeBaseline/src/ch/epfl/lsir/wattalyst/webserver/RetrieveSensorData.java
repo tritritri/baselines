@@ -57,6 +57,9 @@ public class RetrieveSensorData {
 
 		// process default operand
 		String authenticationToken = args[args.length-4];
+		// TODO remove this
+		authenticationToken = "";
+				
 		String sensorName = args[args.length-3];
 		String startTimeString = args[args.length-2];
 		String endTimeString = args[args.length-1];

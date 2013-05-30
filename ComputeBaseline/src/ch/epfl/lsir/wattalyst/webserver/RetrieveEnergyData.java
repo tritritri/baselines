@@ -41,6 +41,9 @@ public class RetrieveEnergyData {
 
 		// process default operand
 		String authenticationToken = args[args.length-4];
+		// TODO remove this
+		authenticationToken = "";
+				
 		String sensorName = args[args.length-3];
 		String startDate = args[args.length-2];
 		String endDate = args[args.length-1];

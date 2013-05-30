@@ -20,12 +20,11 @@ public class BaselineTask {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		
-		// Parse parameters
-		String authenticationToken = args[0];
+		String authenticationToken = "";
 		
 		Calendar history = Calendar.getInstance();
 		Date endDate = history.getTime();
-		history.roll(Calendar.DAY_OF_YEAR, 30);
+		history.add(Calendar.DAY_OF_YEAR, -30);
 		Util.setToTheBeginningOfTheDay(history);
 		Date startDate = history.getTime();
 				
@@ -57,7 +56,10 @@ public class BaselineTask {
 						b.compute(sensor + ".txt", targetDate, targetDate);
 						
 						// 5. Store baseline
-						b.writeResultToWattalystDB(authenticationToken, baselineID);
+						//if("wattalyst.lulea.location_43.sensor_346".equals(sensor) || "wattalyst.lulea.location_43.sensor_344".equals(sensor)){
+							b.writeResultToWattalystDB(authenticationToken, baselineID);
+							b.writeResult(System.out);
+						//}
 						
 					} catch (InstantiationException e1) {
 						e1.printStackTrace();
@@ -78,13 +80,13 @@ public class BaselineTask {
 	 */
 	private static String getBaselineClass(String baselineID) {
 		String type = baselineID.split("baseline_")[1];
-		if(type.equals("caiso")){
+		if(type.equals("CAISO")){
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.CAISO";
 		}
-		else if(type.equals("pjmeco")){
+		else if(type.equals("PJMEco")){
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.PJMEco";
 		}
-		else if(type.equals("isone")){
+		else if(type.equals("ISONE")){
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.ISONE";
 		}
 		throw new RuntimeException("Type " + type + " not allowed");  

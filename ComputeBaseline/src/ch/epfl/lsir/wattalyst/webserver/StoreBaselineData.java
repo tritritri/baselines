@@ -49,6 +49,9 @@ public class StoreBaselineData {
 
 		// process default operand
 		String authenticationToken = args[0];
+		// TODO remove this
+		authenticationToken = "";
+		
 		String sensor = args[1];
 		String baseline = args[2];
 		String inputfile = args[3];

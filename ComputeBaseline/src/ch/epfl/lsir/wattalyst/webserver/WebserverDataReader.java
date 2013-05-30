@@ -206,7 +206,7 @@ public class WebserverDataReader {
 		WebserverDataReader reader = new WebserverDataReader();
 		Date startDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2012-12-01 00:00:00");
 		Date endDate = new SimpleDateFormat(Constants.DATETIME_FORMAT).parse("2013-03-31 23:59:00");
-		SensorReadings readings = reader.getValuesForSensorByRange("XXX", "wattalyst.lulea.location_43.sensor_348", startDate, endDate, true);
+		SensorReadings readings = reader.getValuesForSensorByRange("", "wattalyst.lulea.location_43.sensor_348", startDate, endDate, true);
 		System.out.println(readings.toStringAsc());
 //		try{
 //			java.io.BufferedWriter r = new java.io.BufferedWriter(new java.io.FileWriter("/tmp/out.txt"));
