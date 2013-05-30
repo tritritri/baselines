@@ -83,5 +83,85 @@ public class EnergyData {
 			e.printStackTrace();
 		}		
 	}
+
+	/**
+	 * @param sensor 
+	 * 
+	 */
+	public void removeOutliers(String sensor) {
+		double cap = getEnergyCap(sensor);
+		for(long timestamp = energy.getMinDate(); timestamp < energy.getMaxDate(); timestamp = timestamp + 3600000){
+			if(energy.get(timestamp) > cap){
+				energy.insert(timestamp, 0);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param sensor
+	 * @return
+	 */
+	private double getEnergyCap(String sensor) {
+		
+		// Cap based on Arne's power sensor values from Dec 01 2012 up to May 29 2013
+		// max(sensor)/1000. The power sensor value is one minute consumption
+		// so the assumption is that the maximum energy consumption in
+		// one hour is equal to the max 1 minute power consumption
+		// for the whole hour
+		
+		// Energy total DH
+		if("wattalyst.lulea.location_43.sensor_344".equals(sensor) ||
+				"wattalyst.lulea.location_76.sensor_820".equals(sensor) || 
+				"wattalyst.lulea.location_92.sensor_1062".equals(sensor) || 
+				"wattalyst.lulea.location_156.sensor_1942".equals(sensor) || 
+				"wattalyst.lulea.location_75.sensor_1460".equals(sensor) || 
+				"wattalyst.lulea.location_120.sensor_1460".equals(sensor) || 
+				"wattalyst.lulea.location_159.sensor_1978".equals(sensor) || 
+				"wattalyst.lulea.location_115.sensor_1390".equals(sensor) || 
+				"wattalyst.lulea.location_123.sensor_1502".equals(sensor) || 
+				"wattalyst.lulea.location_46.sensor_545".equals(sensor)){
+			return 59.2;
+		}
+		// Energy heating DH
+		else if("wattalyst.lulea.location_43.sensor_346".equals(sensor) ||
+				"wattalyst.lulea.location_76.sensor_822".equals(sensor) || 
+				"wattalyst.lulea.location_92.sensor_1064".equals(sensor) || 
+				"wattalyst.lulea.location_156.sensor_1944".equals(sensor) || 
+				"wattalyst.lulea.location_75.sensor_1462".equals(sensor) || 
+				"wattalyst.lulea.location_120.sensor_1462".equals(sensor) || 
+				"wattalyst.lulea.location_159.sensor_1980".equals(sensor) || 
+				"wattalyst.lulea.location_115.sensor_1392".equals(sensor) || 
+				"wattalyst.lulea.location_123.sensor_1504".equals(sensor) || 
+				"wattalyst.lulea.location_46.sensor_560".equals(sensor)){
+			return 9.4;
+		}
+		// Energy water DH
+		else if("wattalyst.lulea.location_43.sensor_348".equals(sensor) ||
+				"wattalyst.lulea.location_76.sensor_824".equals(sensor) || 
+				"wattalyst.lulea.location_92.sensor_1066".equals(sensor) || 
+				"wattalyst.lulea.location_156.sensor_1946".equals(sensor) || 
+				"wattalyst.lulea.location_75.sensor_1464".equals(sensor) || 
+				"wattalyst.lulea.location_120.sensor_1464".equals(sensor) || 
+				"wattalyst.lulea.location_159.sensor_1982".equals(sensor) || 
+				"wattalyst.lulea.location_115.sensor_1394".equals(sensor) || 
+				"wattalyst.lulea.location_123.sensor_1506".equals(sensor) || 
+				"wattalyst.lulea.location_46.sensor_562".equals(sensor)){
+			return 56.2;
+		}
+		// Energy EL
+		else if("wattalyst.lulea.location_43.sensor_590".equals(sensor) ||
+				"wattalyst.lulea.location_76.sensor_826".equals(sensor) || 
+				"wattalyst.lulea.location_92.sensor_1068".equals(sensor) || 
+				"wattalyst.lulea.location_156.sensor_1948".equals(sensor) || 
+				"wattalyst.lulea.location_75.sensor_1466".equals(sensor) || 
+				"wattalyst.lulea.location_120.sensor_1466".equals(sensor) || 
+				"wattalyst.lulea.location_159.sensor_1984".equals(sensor) || 
+				"wattalyst.lulea.location_115.sensor_1396".equals(sensor) || 
+				"wattalyst.lulea.location_123.sensor_1508".equals(sensor)){
+			return 12.3;
+		}		
+		return Double.POSITIVE_INFINITY;
+	}
 	
 }

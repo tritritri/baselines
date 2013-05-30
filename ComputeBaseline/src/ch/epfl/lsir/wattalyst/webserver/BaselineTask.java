@@ -44,6 +44,7 @@ public class BaselineTask {
 				// 3. Retrieve sensor historic data and write to file
 				EnergyData e = new EnergyData();
 				e.compute(authenticationToken, sensor, startDate, endDate);
+				e.removeOutliers(sensor);
 				e.writeResultToFile(sensor + ".txt");
 				// 4. Cycle over baselines
 				for(String baselineID : baselines){
@@ -56,10 +57,8 @@ public class BaselineTask {
 						b.compute(sensor + ".txt", targetDate, targetDate);
 						
 						// 5. Store baseline
-						//if("wattalyst.lulea.location_43.sensor_346".equals(sensor) || "wattalyst.lulea.location_43.sensor_344".equals(sensor)){
-							b.writeResultToWattalystDB(authenticationToken, baselineID);
-							b.writeResult(System.out);
-						//}
+						b.writeResultToWattalystDB(authenticationToken, baselineID);
+						b.writeResult(System.out);
 						
 					} catch (InstantiationException e1) {
 						e1.printStackTrace();
