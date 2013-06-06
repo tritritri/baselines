@@ -58,52 +58,52 @@ public class WebserverDataWriter {
 	 */
 	public static void main(String[] args){
 //		WebserverDataWriter writer = new WebserverDataWriter();
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_344");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_346");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_348");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_590");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_1083");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_820");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_822");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_824");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_826");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1062");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1064");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1066");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1068");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1618");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1956");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1942");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1944");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1946");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1948");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1460");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1462");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1464");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1466");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1460");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1462");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1464");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1466");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1978");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1980");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1982");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1984");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lula.location_115.sensor_1390");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lula.location_115.sensor_1392");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lula.location_115.sensor_1394");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lula.location_115.sensor_1396");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1502");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1504");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1506");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1508");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_515");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_546");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_560");
-//		writer.addBaseline("", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_562");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_344");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_346");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_348");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_590");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_1083");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_820");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_822");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_824");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_76.sensor_826");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1062");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1064");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1066");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1068");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1618");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_92.sensor_1956");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1942");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1944");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1946");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_156.sensor_1948");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1460");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1462");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1464");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_75.sensor_1466");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1460");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1462");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1464");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_120.sensor_1466");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1978");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1980");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1982");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_159.sensor_1984");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_115.sensor_1390");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_115.sensor_1392");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_115.sensor_1394");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_115.sensor_1396");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1502");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1504");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1506");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_123.sensor_1508");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_515");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_546");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_560");
+//		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_46.sensor_562");
 				
 		WebserverDataReader reader = new WebserverDataReader();
-		List<String> baselines = reader.getBaselines("", "wattalyst.lulea.location_159.sensor_1984");
+		List<String> baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_159.sensor_1984");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
@@ -131,6 +131,6 @@ public class WebserverDataWriter {
 //		System.out.println(baseline.toStringAscDBFormat());
 		
 		System.out.println(
-				reader.getBaselineData("", "wattalyst.lulea.location_43.sensor_344.baseline_CAISO", startDate, endDate));
+				reader.getBaselineData("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_344.baseline_CAISO", startDate, endDate));
 	}
 }

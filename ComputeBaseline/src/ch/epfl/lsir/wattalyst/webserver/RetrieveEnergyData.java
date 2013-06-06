@@ -30,9 +30,9 @@ public class RetrieveEnergyData {
 		if (cmd.hasOption("h") || args.length==0) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
-			String helpString = "java -jar RetrieveEnergyData.jar [OPTIONS] AUTHTOKEN SENSORNAME STARTDATE ENDDATE \n" 
+			String helpString = "java -jar RetrieveEnergyData.jar [OPTIONS] SENSORNAME STARTDATE ENDDATE \n" 
 					+ "Compute hourly energy consumption read by (accumulative) energy sensor SENSORNAME \n"
-					+ "Example: java -jar RetrieveEnergyData.jar XXX wattalyst.lulea.location_43.sensor_346 2013-02-21--00:00 2013-02-26--23:59\n"
+					+ "Example: java -jar RetrieveEnergyData.jar wattalyst.lulea.location_43.sensor_346 2013-02-21--00:00 2013-02-26--23:59\n"
 					+ "STARTDATE and ENDDATE are of form yyyy-MM-dd--HH:mm\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
@@ -40,10 +40,7 @@ public class RetrieveEnergyData {
 		} 
 
 		// process default operand
-		String authenticationToken = args[args.length-4];
-		// TODO remove this
-		authenticationToken = "";
-				
+		String authenticationToken = "mheqzghwnhh+";
 		String sensorName = args[args.length-3];
 		String startDate = args[args.length-2];
 		String endDate = args[args.length-1];

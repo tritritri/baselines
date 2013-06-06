@@ -20,16 +20,16 @@ public class BaselineTask {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		
-		String authenticationToken = "";
+		String authenticationToken = "mheqzghwnhh+";
 		
 		Calendar history = Calendar.getInstance();
 		Date endDate = history.getTime();
-		history.add(Calendar.DAY_OF_YEAR, -30);
+		history.add(Calendar.DAY_OF_YEAR, -60);
 		Util.setToTheBeginningOfTheDay(history);
 		Date startDate = history.getTime();
 				
 		Calendar target = Calendar.getInstance();
-		target.add(Calendar.DAY_OF_YEAR, 1);
+		target.add(Calendar.DAY_OF_YEAR, 2);
 		Util.setToTheEndOfTheDay(history);
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		String targetDate = formatter.format(target.getTime());
@@ -58,6 +58,7 @@ public class BaselineTask {
 						
 						// 5. Store baseline
 						b.writeResultToWattalystDB(authenticationToken, baselineID);
+						System.out.println("Computed baseline " + baselineID);
 						b.writeResult(System.out);
 						
 					} catch (InstantiationException e1) {
