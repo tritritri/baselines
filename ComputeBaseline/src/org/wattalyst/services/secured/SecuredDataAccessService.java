@@ -30,7 +30,7 @@ public class SecuredDataAccessService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://wattalyst-ci.se.rwth-aachen.de:7070/SecuredDataAccessService/SecuredDataAccess?wsdl");
+            url = new URL("http://wattalyst-ci.se.rwth-aachen.de/SecuredDataAccessService/SecuredDataAccess?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

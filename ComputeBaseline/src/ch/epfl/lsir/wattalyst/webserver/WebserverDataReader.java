@@ -57,18 +57,6 @@ public class WebserverDataReader {
 				for(AValueDto r : result.getValues()){
 					sortedSet.add(r);
 				}
-	// TODO comment this part	
-//					if(r instanceof NumericValueDto){
-//						Calendar c = Calendar.getInstance();
-//						c.setTimeInMillis(r.getTimestamp());
-//						System.out.println(r.getTimestamp() + "," + ((NumericValueDto) r).getValue()); 
-//						System.out.println(c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH) +
-//							"," + c.get(Calendar.HOUR_OF_DAY) + "," + c.get(Calendar.MINUTE) + "," +
-//							((NumericValueDto)r).getValue());
-//					}
-//				}
-//				System.out.println();
-	// TODO end comment	
 				
 				// Generate a sensor readings data set using the difference method (e.g. for energy)
 				if(useDifferenceMethod){
