@@ -54,6 +54,26 @@ public class WebserverDataWriter {
 	
 	/**
 	 * 
+	 * @param authenticationToken
+	 * @param drSignalID
+	 * @param username
+	 * @param kpiValue
+	 * @param description
+	 * @param successStatus
+	 */
+	public boolean setPerformanceIndicator(String authenticationToken, String drSignalID, String username,	double kpiValue, 
+			String description, String successStatus) {
+		
+		// Invoke the web service 
+		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+		
+		BooleanResultContainer result = port.setPerformanceIndicator(authenticationToken, drSignalID, username, kpiValue, description, successStatus);
+		return result.isResult();
+	}
+	
+	/**
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args){
@@ -133,4 +153,5 @@ public class WebserverDataWriter {
 		System.out.println(
 				reader.getBaselineData("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_344.baseline_CAISO", startDate, endDate));
 	}
+
 }

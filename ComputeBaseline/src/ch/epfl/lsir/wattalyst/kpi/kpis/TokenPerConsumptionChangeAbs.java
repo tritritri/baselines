@@ -29,10 +29,18 @@ public class TokenPerConsumptionChangeAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public String getResult(){
+	public String getResultDescription(){
 		return this.getClass().getSimpleName() + "," + dayFormatter.format(startCal.getTime()) + "," + 
 				hourFormatter.format(startCal.getTime()) + "," + hourFormatter.format(endCal.getTime()) + "," +
 				tokensPerConsumptionChange + "\n";
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
+	 */
+	public double getResult(){
+		return tokensPerConsumptionChange;
 	}
 	
 	/*

@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import org.wattalyst.services.secured.AValueDto;
 import org.wattalyst.services.secured.BaselineDto;
 import org.wattalyst.services.secured.BaselineListResultContainer;
+import org.wattalyst.services.secured.DrSignalDto;
 import org.wattalyst.services.secured.LocationDto;
 import org.wattalyst.services.secured.LocationListResultContainer;
 import org.wattalyst.services.secured.NumericValueDto;
@@ -84,7 +85,7 @@ public class WebserverDataReader {
 			}
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 		
 		return readings;
@@ -208,5 +209,14 @@ public class WebserverDataReader {
 //			r.close();
 //		}
 //		catch(Exception e){}
+	}
+
+	/**
+	 * 
+	 * @param authenticationToken
+	 * @return
+	 */
+	public List<DrSignalDto> getNotEvaluatedDRSignals(String authenticationToken) {
+		throw new RuntimeException("Not implemented yet");
 	}
 }

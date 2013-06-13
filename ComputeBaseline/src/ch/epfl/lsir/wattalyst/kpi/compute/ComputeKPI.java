@@ -105,9 +105,9 @@ public class ComputeKPI {
 		
 		// output the result
 		if (cmd.hasOption("o")){
-			k.writeResultToFile(cmd.getOptionValue("o"));
+			k.writeResultDescriptionToFile(cmd.getOptionValue("o"));
 		} else {
-			k.writeResult(System.out);
+			k.writeResultDescription(System.out);
 		}
 		
 	}

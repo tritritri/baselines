@@ -43,10 +43,18 @@ public class ConsumptionChangeAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public String getResult(){
+	public String getResultDescription(){
 		return this.getClass().getSimpleName() + "," + dayFormatter.format(startCal.getTime()) + "," + 
 				hourFormatter.format(startCal.getTime()) + "," + hourFormatter.format(endCal.getTime()) + "," +
 				consumptionChange + "\n";
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
+	 */
+	public double getResult(){
+		return consumptionChange;
 	}
 
 }

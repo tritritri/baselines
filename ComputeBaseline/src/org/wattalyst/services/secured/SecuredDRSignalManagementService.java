@@ -30,7 +30,7 @@ public class SecuredDRSignalManagementService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement?wsdl");
+            url = new URL("https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
