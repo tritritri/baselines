@@ -1,9 +1,11 @@
 package ch.epfl.lsir.wattalyst.hvac.model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -308,6 +310,42 @@ public class DataBuilder {
 	}
 	
 	/**
+	 * Create a csv file for DB import
+	 * @throws IOException 
+	 */
+	public static void createCSVFile(HashMap<String, List<DataTuple>> data, AtomicReference<List<String>> selectedModes) {
+		
+		String dbfile = "./db.csv";
+		
+		BufferedWriter writer;
+		try {
+			
+			writer = new BufferedWriter(new FileWriter(dbfile));
+		
+		
+		    // Fill with data
+		    for(String room : data.keySet()){
+			    for(DataTuple tuple : data.get(room)){
+			    	writer.write(tuple.getTimestamp() + "," +
+			    			room + "," + (tuple.getTimestamp()/1000) + "," +
+			    			tuple.getSetpointTemp() + "," + 
+			    			tuple.getIndTemp() + "," +
+			    			tuple.getExtTemp() + "," +
+			    			tuple.getMode() + "," +
+			    			tuple.getPower());
+			    	writer.write("\n");
+			    }
+		    }
+		    writer.flush();
+		    writer.close();
+		
+		} catch (IOException e) {
+			System.err.println("Cannot write file " + dbfile);
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 
 	 * @param args
 	 * @throws ParseException 
@@ -346,6 +384,7 @@ public class DataBuilder {
 		AtomicReference<List<String>> refSelectedModes = new AtomicReference<List<String>>(selectedModes);
 		HashMap<String, List<DataTuple>> data = DataBuilder.loadData(args[fileParamShift], refSelectedModes);
 		DataBuilder.createArffFiles(data, refSelectedModes);
+		DataBuilder.createCSVFile(data, refSelectedModes);
 	}
 	
 	/*

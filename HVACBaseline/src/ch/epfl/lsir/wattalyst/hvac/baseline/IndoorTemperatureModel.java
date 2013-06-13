@@ -3,17 +3,18 @@ package ch.epfl.lsir.wattalyst.hvac.baseline;
 public interface IndoorTemperatureModel {
 
 	/**
+	 * 
 	 * Implement the indoor temperature dynamic model
 	 * 
-	 * @param externalTemperatureForecast
-	 * @param hvacMode
-	 * @param room 
-	 * @param indoorTemperature
-	 * @param setpointTemperature
-	 * @param hvacPower
+	 * @param set_temp
+	 * @param ind_temp
+	 * @param ext_temp
+	 * @param mode
+	 * @param power
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public double getNextIndoorTemperature(double externalTemperatureForecast, String hvacMode, 
-			String room, double indoorTemperature, double setpointTemperature, double hvacPower) throws Exception;
+	public double getNextIndoorTemperature(double[] set_temp, double[] ind_temp, double[] ext_temp,
+			String[] mode, double[] power) throws Exception;
+	
 }
