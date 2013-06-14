@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.xml.ws.BindingProvider;
+
 import org.wattalyst.services.secured.AValueDto;
 import org.wattalyst.services.secured.BaselineDto;
 import org.wattalyst.services.secured.BaselineListResultContainer;
@@ -45,6 +47,10 @@ public class WebserverDataReader {
 		// Invoke the web service and retrieve the result
 		SecuredDataAccessService service = new SecuredDataAccessService();
 		SecuredDataAccess port = service.getSecuredDataAccessPort();
+		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDataAccessService/SecuredDataAccess";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
 		
 		// Create a sensor readings data structure 
 		SensorReadings readings = new SensorReadings();
@@ -120,6 +126,10 @@ public class WebserverDataReader {
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+		
 		List<String> baselines = new ArrayList<String>();
 		BaselineListResultContainer result = port.getBaselines(authenticationToken, sensor);
 		if("OK".equals(result.getStatus().value())){
@@ -139,6 +149,10 @@ public class WebserverDataReader {
 		// Invoke the web service and retrieve the result
 		SecuredDataAccessService service = new SecuredDataAccessService();
 		SecuredDataAccess port = service.getSecuredDataAccessPort();
+		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDataAccessService/SecuredDataAccess";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
 		
 		List<String> sensorList = new ArrayList<String>();
 		LocationListResultContainer locations = port.getAllLocations(authenticationToken);
@@ -168,6 +182,10 @@ public class WebserverDataReader {
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+				
 		ValueListResultContainer result = port.getBaselineData(authenticationToken, baselineID, startDate.getTime(),
 				endDate.getTime());
 		

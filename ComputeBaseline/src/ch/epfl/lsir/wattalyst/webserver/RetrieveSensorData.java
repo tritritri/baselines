@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeSet;
 
+import javax.xml.ws.BindingProvider;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -73,6 +75,10 @@ public class RetrieveSensorData {
 		// Invoke the web service and retrieve the result
 		SecuredDataAccessService service = new SecuredDataAccessService();
 		SecuredDataAccess port = service.getSecuredDataAccessPort();
+		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDataAccessService/SecuredDataAccess";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
 
 		ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensorName, startDate.getTime(), endDate.getTime());
 		

@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.ws.BindingProvider;
+
 import org.wattalyst.services.secured.BooleanResultContainer;
 import org.wattalyst.services.secured.SecuredDRSignalManagement;
 import org.wattalyst.services.secured.SecuredDRSignalManagementService;
@@ -28,6 +30,10 @@ public class WebserverDataWriter {
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+				
 		StringResultContainer result = port.addBaseline(authenticationToken, description, baselineType, sensor);
 		return result.getResult();
 	}
@@ -48,6 +54,10 @@ public class WebserverDataWriter {
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 				
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+		
 		BooleanResultContainer result = port.uploadBaselineData(authenticationToken, baselineID, values);
 		return result.isResult();
 	}
@@ -68,6 +78,10 @@ public class WebserverDataWriter {
 		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
 		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
 		
+		String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDRSignalManagementService/SecuredDRSignalManagement";
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
+				
 		BooleanResultContainer result = port.setPerformanceIndicator(authenticationToken, drSignalID, username, kpiValue, description, successStatus);
 		return result.isResult();
 	}
