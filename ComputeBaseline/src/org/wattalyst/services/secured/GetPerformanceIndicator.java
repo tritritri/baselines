@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="authenticationToken" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="signalId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="locationname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,13 +31,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "getPerformanceIndicator", propOrder = {
     "authenticationToken",
     "signalId",
-    "username"
+    "locationname"
 })
 public class GetPerformanceIndicator {
 
     protected String authenticationToken;
     protected String signalId;
-    protected String username;
+    protected String locationname;
 
     /**
      * Gets the value of the authenticationToken property.
@@ -88,27 +88,27 @@ public class GetPerformanceIndicator {
     }
 
     /**
-     * Gets the value of the username property.
+     * Gets the value of the locationname property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUsername() {
-        return username;
+    public String getLocationname() {
+        return locationname;
     }
 
     /**
-     * Sets the value of the username property.
+     * Sets the value of the locationname property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUsername(String value) {
-        this.username = value;
+    public void setLocationname(String value) {
+        this.locationname = value;
     }
 
 }

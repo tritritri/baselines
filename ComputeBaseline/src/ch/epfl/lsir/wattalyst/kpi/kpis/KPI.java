@@ -20,6 +20,7 @@ public abstract class KPI {
 	protected Calendar startCal;
 	protected Calendar endCal;
 	protected double numTokens;
+	protected double consumptionLimit;
 	
 	/**
 	 * 
@@ -36,9 +37,10 @@ public abstract class KPI {
 	 * @param startCal
 	 * @param endCal
 	 * @param numTokens
+	 * @param consumptionLimit
 	 */
 	public final void compute(String baselineFileInput, String consumptionFileInput, 
-			Calendar startCal, Calendar endCal, double numTokens){
+			Calendar startCal, Calendar endCal, double numTokens, double consumptionLimit){
 		
 		// read the baseline file input
 		Util.hourlyCSVToSensorReadings(baselineFileInput, baseline);
@@ -49,6 +51,7 @@ public abstract class KPI {
 		this.startCal = startCal;
 		this.endCal = endCal;
 		this.numTokens = numTokens;
+		this.consumptionLimit = consumptionLimit;
 		
 		doCompute();
 	}
@@ -60,8 +63,10 @@ public abstract class KPI {
 	 * @param startCal
 	 * @param endCal
 	 * @param numTokens
+	 * @param consumptionLimit
 	 */
-	public void compute(SensorReadings baselineConsumption, SensorReadings realConsumption, Calendar startCal, Calendar endCal, double numTokens) {
+	public void compute(SensorReadings baselineConsumption, SensorReadings realConsumption, 
+			Calendar startCal, Calendar endCal, double numTokens, double consumptionLimit) {
 		
 		baselineConsumption.copyHourly(baselineConsumption.getMinDate(), baselineConsumption.getMaxDate(), baseline);
 		realConsumption.copyHourly(realConsumption.getMinDate(), realConsumption.getMaxDate(), consumption);
@@ -69,6 +74,7 @@ public abstract class KPI {
 		this.startCal = startCal;
 		this.endCal = endCal;
 		this.numTokens = numTokens;
+		this.consumptionLimit = consumptionLimit;
 		
 		doCompute();
 	}

@@ -20,9 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{http://secured.services.wattalyst.org/}entityDto">
  *       &lt;sequence>
  *         &lt;element name="earnedTokens" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="feedback" type="{http://secured.services.wattalyst.org/}userResponseDto" minOccurs="0"/>
- *         &lt;element name="goalAttainment" type="{http://secured.services.wattalyst.org/}performanceIndicatorDto" minOccurs="0"/>
- *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="feedbacks" type="{http://secured.services.wattalyst.org/}feedbackDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="goalAttainment" type="{http://secured.services.wattalyst.org/}kpiPerformanceDto" minOccurs="0"/>
+ *         &lt;element name="locationname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="currentStatus" type="{http://secured.services.wattalyst.org/}signalStatus" minOccurs="0"/>
  *         &lt;element name="history">
  *           &lt;complexType>
@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="acceptance" type="{http://secured.services.wattalyst.org/}acceptanceStatus" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -57,23 +58,26 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "drStatusDto", propOrder = {
     "earnedTokens",
-    "feedback",
+    "feedbacks",
     "goalAttainment",
-    "username",
+    "locationname",
     "currentStatus",
-    "history"
+    "history",
+    "acceptance"
 })
 public class DrStatusDto
     extends EntityDto
 {
 
     protected Integer earnedTokens;
-    protected UserResponseDto feedback;
-    protected PerformanceIndicatorDto goalAttainment;
-    protected String username;
+    @XmlElement(nillable = true)
+    protected List<FeedbackDto> feedbacks;
+    protected KpiPerformanceDto goalAttainment;
+    protected String locationname;
     protected SignalStatus currentStatus;
     @XmlElement(required = true)
     protected DrStatusDto.History history;
+    protected AcceptanceStatus acceptance;
 
     /**
      * Gets the value of the earnedTokens property.
@@ -100,27 +104,32 @@ public class DrStatusDto
     }
 
     /**
-     * Gets the value of the feedback property.
+     * Gets the value of the feedbacks property.
      * 
-     * @return
-     *     possible object is
-     *     {@link UserResponseDto }
-     *     
-     */
-    public UserResponseDto getFeedback() {
-        return feedback;
-    }
-
-    /**
-     * Sets the value of the feedback property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the feedbacks property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link UserResponseDto }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFeedbacks().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link FeedbackDto }
+     * 
+     * 
      */
-    public void setFeedback(UserResponseDto value) {
-        this.feedback = value;
+    public List<FeedbackDto> getFeedbacks() {
+        if (feedbacks == null) {
+            feedbacks = new ArrayList<FeedbackDto>();
+        }
+        return this.feedbacks;
     }
 
     /**
@@ -128,10 +137,10 @@ public class DrStatusDto
      * 
      * @return
      *     possible object is
-     *     {@link PerformanceIndicatorDto }
+     *     {@link KpiPerformanceDto }
      *     
      */
-    public PerformanceIndicatorDto getGoalAttainment() {
+    public KpiPerformanceDto getGoalAttainment() {
         return goalAttainment;
     }
 
@@ -140,35 +149,35 @@ public class DrStatusDto
      * 
      * @param value
      *     allowed object is
-     *     {@link PerformanceIndicatorDto }
+     *     {@link KpiPerformanceDto }
      *     
      */
-    public void setGoalAttainment(PerformanceIndicatorDto value) {
+    public void setGoalAttainment(KpiPerformanceDto value) {
         this.goalAttainment = value;
     }
 
     /**
-     * Gets the value of the username property.
+     * Gets the value of the locationname property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUsername() {
-        return username;
+    public String getLocationname() {
+        return locationname;
     }
 
     /**
-     * Sets the value of the username property.
+     * Sets the value of the locationname property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUsername(String value) {
-        this.username = value;
+    public void setLocationname(String value) {
+        this.locationname = value;
     }
 
     /**
@@ -217,6 +226,30 @@ public class DrStatusDto
      */
     public void setHistory(DrStatusDto.History value) {
         this.history = value;
+    }
+
+    /**
+     * Gets the value of the acceptance property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AcceptanceStatus }
+     *     
+     */
+    public AcceptanceStatus getAcceptance() {
+        return acceptance;
+    }
+
+    /**
+     * Sets the value of the acceptance property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AcceptanceStatus }
+     *     
+     */
+    public void setAcceptance(AcceptanceStatus value) {
+        this.acceptance = value;
     }
 
 

@@ -6,17 +6,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for signalStatus.
+ * <p>Java class for drEventStatus.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="signalStatus">
+ * &lt;simpleType name="drEventStatus">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="PLANNED"/>
- *     &lt;enumeration value="ISSUED"/>
- *     &lt;enumeration value="RECEIVED"/>
- *     &lt;enumeration value="EXPIRED"/>
+ *     &lt;enumeration value="SCHEDULED"/>
+ *     &lt;enumeration value="ACTIVE"/>
+ *     &lt;enumeration value="TERMINATED"/>
  *     &lt;enumeration value="EVALUATED"/>
  *     &lt;enumeration value="CANCELED"/>
  *   &lt;/restriction>
@@ -24,14 +23,13 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "signalStatus")
+@XmlType(name = "drEventStatus")
 @XmlEnum
-public enum SignalStatus {
+public enum DrEventStatus {
 
-    PLANNED,
-    ISSUED,
-    RECEIVED,
-    EXPIRED,
+    SCHEDULED,
+    ACTIVE,
+    TERMINATED,
     EVALUATED,
     CANCELED;
 
@@ -39,7 +37,7 @@ public enum SignalStatus {
         return name();
     }
 
-    public static SignalStatus fromValue(String v) {
+    public static DrEventStatus fromValue(String v) {
         return valueOf(v);
     }
 

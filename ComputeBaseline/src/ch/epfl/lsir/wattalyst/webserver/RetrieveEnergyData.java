@@ -57,6 +57,7 @@ public class RetrieveEnergyData {
 		// retrieve the energy data
 		EnergyData e = new EnergyData();
 		e.compute(authenticationToken, sensorName, start, end);
+		e.removeOutliers(sensorName);
 		
 		// output the result
 		if (cmd.hasOption("o")){

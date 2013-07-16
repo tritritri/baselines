@@ -1,8 +1,6 @@
 
 package org.wattalyst.services.secured;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -18,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://secured.services.wattalyst.org/}entityDto">
  *       &lt;sequence>
- *         &lt;element name="source" type="{http://secured.services.wattalyst.org/}timeframeDto" minOccurs="0"/>
- *         &lt;element name="target" type="{http://secured.services.wattalyst.org/}timeframeDto" minOccurs="0"/>
- *         &lt;element name="constraints" type="{http://secured.services.wattalyst.org/}constraintDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="source" type="{http://secured.services.wattalyst.org/}scheduleDto" minOccurs="0"/>
+ *         &lt;element name="target" type="{http://secured.services.wattalyst.org/}scheduleDto" minOccurs="0"/>
+ *         &lt;element name="constraint" type="{http://secured.services.wattalyst.org/}constraintDto" minOccurs="0"/>
  *         &lt;element name="action" type="{http://secured.services.wattalyst.org/}action" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -34,16 +32,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "taskDto", propOrder = {
     "source",
     "target",
-    "constraints",
+    "constraint",
     "action"
 })
 public class TaskDto
     extends EntityDto
 {
 
-    protected TimeframeDto source;
-    protected TimeframeDto target;
-    protected List<ConstraintDto> constraints;
+    protected ScheduleDto source;
+    protected ScheduleDto target;
+    protected ConstraintDto constraint;
     protected Action action;
 
     /**
@@ -51,10 +49,10 @@ public class TaskDto
      * 
      * @return
      *     possible object is
-     *     {@link TimeframeDto }
+     *     {@link ScheduleDto }
      *     
      */
-    public TimeframeDto getSource() {
+    public ScheduleDto getSource() {
         return source;
     }
 
@@ -63,10 +61,10 @@ public class TaskDto
      * 
      * @param value
      *     allowed object is
-     *     {@link TimeframeDto }
+     *     {@link ScheduleDto }
      *     
      */
-    public void setSource(TimeframeDto value) {
+    public void setSource(ScheduleDto value) {
         this.source = value;
     }
 
@@ -75,10 +73,10 @@ public class TaskDto
      * 
      * @return
      *     possible object is
-     *     {@link TimeframeDto }
+     *     {@link ScheduleDto }
      *     
      */
-    public TimeframeDto getTarget() {
+    public ScheduleDto getTarget() {
         return target;
     }
 
@@ -87,40 +85,35 @@ public class TaskDto
      * 
      * @param value
      *     allowed object is
-     *     {@link TimeframeDto }
+     *     {@link ScheduleDto }
      *     
      */
-    public void setTarget(TimeframeDto value) {
+    public void setTarget(ScheduleDto value) {
         this.target = value;
     }
 
     /**
-     * Gets the value of the constraints property.
+     * Gets the value of the constraint property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the constraints property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getConstraints().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ConstraintDto }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link ConstraintDto }
+     *     
      */
-    public List<ConstraintDto> getConstraints() {
-        if (constraints == null) {
-            constraints = new ArrayList<ConstraintDto>();
-        }
-        return this.constraints;
+    public ConstraintDto getConstraint() {
+        return constraint;
+    }
+
+    /**
+     * Sets the value of the constraint property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ConstraintDto }
+     *     
+     */
+    public void setConstraint(ConstraintDto value) {
+        this.constraint = value;
     }
 
     /**

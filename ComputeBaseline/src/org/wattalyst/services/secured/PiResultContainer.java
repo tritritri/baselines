@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://secured.services.wattalyst.org/}wsResultContainer">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://secured.services.wattalyst.org/}performanceIndicatorDto" minOccurs="0"/>
+ *         &lt;element name="result" type="{http://secured.services.wattalyst.org/}kpiPerformanceDto" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ public class PiResultContainer
     extends WsResultContainer
 {
 
-    protected PerformanceIndicatorDto result;
+    protected KpiPerformanceDto result;
 
     /**
      * Gets the value of the result property.
      * 
      * @return
      *     possible object is
-     *     {@link PerformanceIndicatorDto }
+     *     {@link KpiPerformanceDto }
      *     
      */
-    public PerformanceIndicatorDto getResult() {
+    public KpiPerformanceDto getResult() {
         return result;
     }
 
@@ -52,10 +52,10 @@ public class PiResultContainer
      * 
      * @param value
      *     allowed object is
-     *     {@link PerformanceIndicatorDto }
+     *     {@link KpiPerformanceDto }
      *     
      */
-    public void setResult(PerformanceIndicatorDto value) {
+    public void setResult(KpiPerformanceDto value) {
         this.result = value;
     }
 

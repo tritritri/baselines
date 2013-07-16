@@ -34,7 +34,7 @@ public class StoreBaselineData {
 		CommandLine cmd = parser.parse(opts, args);
 		
 		// if help needed
-		if (cmd.hasOption("h") || args.length!=4) {
+		if (cmd.hasOption("h") || args.length!=3) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
 			String helpString = "java -jar StoreBaselineData.jar [OPTIONS] SENSOR BASELINE INPUTFILE \n" 

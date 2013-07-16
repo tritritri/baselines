@@ -23,8 +23,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="plannedDelivery" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="plannedExpiry" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="recipients" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="states" type="{http://secured.services.wattalyst.org/}drStatusDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="eventStatus" type="{http://secured.services.wattalyst.org/}drEventStatus" minOccurs="0"/>
  *         &lt;element name="tasks" type="{http://secured.services.wattalyst.org/}taskDto" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="states" type="{http://secured.services.wattalyst.org/}drStatusDto" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -39,8 +40,9 @@ import javax.xml.bind.annotation.XmlType;
     "plannedDelivery",
     "plannedExpiry",
     "recipients",
-    "states",
-    "tasks"
+    "eventStatus",
+    "tasks",
+    "states"
 })
 public class DrSignalDto
     extends FullQualifiedEntityDto
@@ -51,10 +53,11 @@ public class DrSignalDto
     protected Long plannedExpiry;
     @XmlElement(nillable = true)
     protected List<String> recipients;
-    @XmlElement(nillable = true)
-    protected List<DrStatusDto> states;
+    protected DrEventStatus eventStatus;
     @XmlElement(nillable = true)
     protected List<TaskDto> tasks;
+    @XmlElement(nillable = true)
+    protected List<DrStatusDto> states;
 
     /**
      * Gets the value of the message property.
@@ -158,32 +161,27 @@ public class DrSignalDto
     }
 
     /**
-     * Gets the value of the states property.
+     * Gets the value of the eventStatus property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the states property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getStates().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link DrStatusDto }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link DrEventStatus }
+     *     
      */
-    public List<DrStatusDto> getStates() {
-        if (states == null) {
-            states = new ArrayList<DrStatusDto>();
-        }
-        return this.states;
+    public DrEventStatus getEventStatus() {
+        return eventStatus;
+    }
+
+    /**
+     * Sets the value of the eventStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DrEventStatus }
+     *     
+     */
+    public void setEventStatus(DrEventStatus value) {
+        this.eventStatus = value;
     }
 
     /**
@@ -213,6 +211,35 @@ public class DrSignalDto
             tasks = new ArrayList<TaskDto>();
         }
         return this.tasks;
+    }
+
+    /**
+     * Gets the value of the states property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the states property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getStates().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DrStatusDto }
+     * 
+     * 
+     */
+    public List<DrStatusDto> getStates() {
+        if (states == null) {
+            states = new ArrayList<DrStatusDto>();
+        }
+        return this.states;
     }
 
 }

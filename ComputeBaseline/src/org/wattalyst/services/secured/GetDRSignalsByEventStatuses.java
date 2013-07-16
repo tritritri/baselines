@@ -10,18 +10,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getSignalIdsBySignalStatus complex type.
+ * <p>Java class for getDRSignalsByEventStatuses complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getSignalIdsBySignalStatus">
+ * &lt;complexType name="getDRSignalsByEventStatuses">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="authenticationToken" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="locationname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="signalStatuses" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="eventStatuses" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,17 +30,15 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getSignalIdsBySignalStatus", propOrder = {
+@XmlType(name = "getDRSignalsByEventStatuses", propOrder = {
     "authenticationToken",
-    "locationname",
-    "signalStatuses"
+    "eventStatuses"
 })
-public class GetSignalIdsBySignalStatus {
+public class GetDRSignalsByEventStatuses {
 
     protected String authenticationToken;
-    protected String locationname;
     @XmlElement(nillable = true)
-    protected List<String> signalStatuses;
+    protected List<String> eventStatuses;
 
     /**
      * Gets the value of the authenticationToken property.
@@ -68,42 +65,18 @@ public class GetSignalIdsBySignalStatus {
     }
 
     /**
-     * Gets the value of the locationname property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLocationname() {
-        return locationname;
-    }
-
-    /**
-     * Sets the value of the locationname property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setLocationname(String value) {
-        this.locationname = value;
-    }
-
-    /**
-     * Gets the value of the signalStatuses property.
+     * Gets the value of the eventStatuses property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the signalStatuses property.
+     * This is why there is not a <CODE>set</CODE> method for the eventStatuses property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSignalStatuses().add(newItem);
+     *    getEventStatuses().add(newItem);
      * </pre>
      * 
      * 
@@ -113,11 +86,11 @@ public class GetSignalIdsBySignalStatus {
      * 
      * 
      */
-    public List<String> getSignalStatuses() {
-        if (signalStatuses == null) {
-            signalStatuses = new ArrayList<String>();
+    public List<String> getEventStatuses() {
+        if (eventStatuses == null) {
+            eventStatuses = new ArrayList<String>();
         }
-        return this.signalStatuses;
+        return this.eventStatuses;
     }
 
 }
