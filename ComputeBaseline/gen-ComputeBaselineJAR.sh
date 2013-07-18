@@ -2,8 +2,12 @@
 
 # note
 # 
-# for org/apache, extract lib/commons-cli-1.2.jar
-# for weka, extract lib.jar
+# for org/apache, 
+#	- unzip lib/commons-cli-1.2.jar
+#	- mv lib/commons-cli-1.2/org/apache bin/org 
+# for weka, 
+#	- unzip lib/weka.jar
+#	- mv lib/weka/weka bin/weka
 # put them in bin directory
 
 # go to bin directory

@@ -194,7 +194,7 @@ public class ISONE implements Baseline{
 	 * @param yesterday
 	 */
 	private void baselineRunHourlyUpTo(int dowType, Calendar yesterday) {
-		System.out.println(yesterday.getTime());
+		
 		while ( lastComputedCal[dowType].before(yesterday) ) {
 			lastComputedCal[dowType].add(Calendar.DAY_OF_MONTH, 1);
 			Util.setToTheBeginningOfTheDay(lastComputedCal[dowType]);
