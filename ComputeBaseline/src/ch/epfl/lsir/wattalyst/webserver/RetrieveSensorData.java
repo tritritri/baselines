@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeSet;
 
+import javax.xml.ws.BindingProvider;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -45,10 +47,10 @@ public class RetrieveSensorData {
 		if (cmd.hasOption("h") || args.length==0) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
-			String helpString = "java -jar RetrieveSensorData.jar [OPTIONS] AUTHTOKEN SENSORNAME STARTTIME ENDTIME \n" 
+			String helpString = "java -jar RetrieveSensorData.jar [OPTIONS] SENSORNAME STARTTIME ENDTIME \n" 
 					+ "Display instantenous reading of sensor SENSORNAME from STARTTIME to ENDTIME\n"
 					+ "Local machine timezone is used to display the time\n"
-					+ "Example: java -jar RetrieveSensorData.jar XXX wattalyst.lulea.location_43.sensor_345 2013-02-21--00:00 2013-02-26--23:59\n"
+					+ "Example: java -jar RetrieveSensorData.jar wattalyst.lulea.location_43.sensor_345 2013-02-21--00:00 2013-02-26--23:59\n"
 					+ "STARTTIME and ENDTIME are of form yyyy-MM-dd--HH:mm\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
@@ -56,7 +58,7 @@ public class RetrieveSensorData {
 		} 
 
 		// process default operand
-		String authenticationToken = args[args.length-4];
+		String authenticationToken = "mheqzghwnhh+";
 		String sensorName = args[args.length-3];
 		String startTimeString = args[args.length-2];
 		String endTimeString = args[args.length-1];
@@ -73,7 +75,10 @@ public class RetrieveSensorData {
 		// Invoke the web service and retrieve the result
 		SecuredDataAccessService service = new SecuredDataAccessService();
 		SecuredDataAccess port = service.getSecuredDataAccessPort();
-
+				
+		BindingProvider bp = (BindingProvider) port;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ch.epfl.lsir.wattalyst.webserver.Constants.DATA_ENDPOINT_URL);
+		
 		ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensorName, startDate.getTime(), endDate.getTime());
 		
 		// Put the result in a sorted set

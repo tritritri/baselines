@@ -45,29 +45,8 @@ public interface SecuredDRSignalManagement {
 
     /**
      * 
-     * @param username
      * @param authenticationToken
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.PiResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "piResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getPerformanceIndicator", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetPerformanceIndicator")
-    @ResponseWrapper(localName = "getPerformanceIndicatorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetPerformanceIndicatorResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getPerformanceIndicatorRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getPerformanceIndicatorResponse")
-    public PiResultContainer getPerformanceIndicator(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
+     * @param locationname
      * @param acceptanceStatus
      * @param signalId
      * @return
@@ -83,17 +62,17 @@ public interface SecuredDRSignalManagement {
         String authenticationToken,
         @WebParam(name = "signalId", targetNamespace = "")
         String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
         @WebParam(name = "acceptanceStatus", targetNamespace = "")
         String acceptanceStatus);
 
     /**
      * 
-     * @param username
      * @param description
      * @param value
      * @param authenticationToken
+     * @param locationname
      * @param successStatus
      * @param signalId
      * @return
@@ -109,8 +88,8 @@ public interface SecuredDRSignalManagement {
         String authenticationToken,
         @WebParam(name = "signalId", targetNamespace = "")
         String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
         @WebParam(name = "value", targetNamespace = "")
         Double value,
         @WebParam(name = "description", targetNamespace = "")
@@ -120,33 +99,42 @@ public interface SecuredDRSignalManagement {
 
     /**
      * 
-     * @param message
-     * @param username
-     * @param convenience
-     * @param usefullness
+     * @param eventStatuses
      * @param authenticationToken
-     * @param signalId
      * @return
-     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     *     returns org.wattalyst.services.secured.DrSignalListResultContainer
      */
     @WebMethod
-    @WebResult(name = "booleanResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "setUserFeedback", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetUserFeedback")
-    @ResponseWrapper(localName = "setUserFeedbackResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetUserFeedbackResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setUserFeedbackRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setUserFeedbackResponse")
-    public BooleanResultContainer setUserFeedback(
+    @WebResult(name = "drSignalListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getDRSignalsByEventStatuses", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByEventStatuses")
+    @ResponseWrapper(localName = "getDRSignalsByEventStatusesResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByEventStatusesResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByEventStatusesRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByEventStatusesResponse")
+    public DrSignalListResultContainer getDRSignalsByEventStatuses(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "eventStatuses", targetNamespace = "")
+        List<String> eventStatuses);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.FeedbackResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "feedbackResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getUserFeedbackForLocation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetUserFeedbackForLocation")
+    @ResponseWrapper(localName = "getUserFeedbackForLocationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetUserFeedbackForLocationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getUserFeedbackForLocationRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getUserFeedbackForLocationResponse")
+    public FeedbackResultContainer getUserFeedbackForLocation(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken,
         @WebParam(name = "signalId", targetNamespace = "")
         String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
-        @WebParam(name = "usefullness", targetNamespace = "")
-        Integer usefullness,
-        @WebParam(name = "convenience", targetNamespace = "")
-        Integer convenience,
-        @WebParam(name = "message", targetNamespace = "")
-        String message);
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
 
     /**
      * 
@@ -195,186 +183,6 @@ public interface SecuredDRSignalManagement {
 
     /**
      * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.StringResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "stringResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "storeAndActivateSignal", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.StoreAndActivateSignal")
-    @ResponseWrapper(localName = "storeAndActivateSignalResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.StoreAndActivateSignalResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/storeAndActivateSignalRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/storeAndActivateSignalResponse")
-    public StringResultContainer storeAndActivateSignal(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @param acceptanceStatus
-     * @return
-     *     returns org.wattalyst.services.secured.StringListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "stringListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getSignalIdsByAcceptanceStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsByAcceptanceStatus")
-    @ResponseWrapper(localName = "getSignalIdsByAcceptanceStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsByAcceptanceStatusResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsByAcceptanceStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsByAcceptanceStatusResponse")
-    public StringListResultContainer getSignalIdsByAcceptanceStatus(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
-        @WebParam(name = "acceptanceStatus", targetNamespace = "")
-        List<String> acceptanceStatus);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @param signalStatuses
-     * @return
-     *     returns org.wattalyst.services.secured.StringListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "stringListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getSignalIdsBySignalStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsBySignalStatus")
-    @ResponseWrapper(localName = "getSignalIdsBySignalStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsBySignalStatusResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsBySignalStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsBySignalStatusResponse")
-    public StringListResultContainer getSignalIdsBySignalStatus(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
-        @WebParam(name = "signalStatuses", targetNamespace = "")
-        List<String> signalStatuses);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.DrSignalResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "drSignalResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getDetailsByUsernameAndDRSignalId", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDetailsByUsernameAndDRSignalId")
-    @ResponseWrapper(localName = "getDetailsByUsernameAndDRSignalIdResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDetailsByUsernameAndDRSignalIdResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDetailsByUsernameAndDRSignalIdRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDetailsByUsernameAndDRSignalIdResponse")
-    public DrSignalResultContainer getDetailsByUsernameAndDRSignalId(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.DrSignalListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "drSignalListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getNewDRSignalByUsername", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetNewDRSignalByUsername")
-    @ResponseWrapper(localName = "getNewDRSignalByUsernameResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetNewDRSignalByUsernameResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getNewDRSignalByUsernameRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getNewDRSignalByUsernameResponse")
-    public DrSignalListResultContainer getNewDRSignalByUsername(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @param signalStatus
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.BooleanResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "booleanResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "setDRSignalStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetDRSignalStatus")
-    @ResponseWrapper(localName = "setDRSignalStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetDRSignalStatusResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setDRSignalStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setDRSignalStatusResponse")
-    public BooleanResultContainer setDRSignalStatus(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
-        @WebParam(name = "signalStatus", targetNamespace = "")
-        String signalStatus);
-
-    /**
-     * 
-     * @param authenticationToken
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.BooleanResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "booleanResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "cancelSignal", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignal")
-    @ResponseWrapper(localName = "cancelSignalResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalResponse")
-    public BooleanResultContainer cancelSignal(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId);
-
-    /**
-     * 
-     * @param username
-     * @param authenticationToken
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.BooleanResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "booleanResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "cancelSignalByUser", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalByUser")
-    @ResponseWrapper(localName = "cancelSignalByUserResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalByUserResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalByUserRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalByUserResponse")
-    public BooleanResultContainer cancelSignalByUser(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username);
-
-    /**
-     * 
-     * @param authenticationToken
-     * @param signalId
-     * @return
-     *     returns org.wattalyst.services.secured.TaskListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "taskListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getTaskDefinitions", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTaskDefinitions")
-    @ResponseWrapper(localName = "getTaskDefinitionsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTaskDefinitionsResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTaskDefinitionsRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTaskDefinitionsResponse")
-    public TaskListResultContainer getTaskDefinitions(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "signalId", targetNamespace = "")
-        String signalId);
-
-    /**
-     * 
      * @param sensorReference
      * @param description
      * @param authenticationToken
@@ -396,6 +204,219 @@ public interface SecuredDRSignalManagement {
         String baselineType,
         @WebParam(name = "sensorReference", targetNamespace = "")
         String sensorReference);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.StringResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "stringResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "storeAndActivateSignal", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.StoreAndActivateSignal")
+    @ResponseWrapper(localName = "storeAndActivateSignalResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.StoreAndActivateSignalResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/storeAndActivateSignalRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/storeAndActivateSignalResponse")
+    public StringResultContainer storeAndActivateSignal(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param acceptanceStatus
+     * @return
+     *     returns org.wattalyst.services.secured.StringListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "stringListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getSignalIdsByAcceptanceStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsByAcceptanceStatus")
+    @ResponseWrapper(localName = "getSignalIdsByAcceptanceStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsByAcceptanceStatusResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsByAcceptanceStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsByAcceptanceStatusResponse")
+    public StringListResultContainer getSignalIdsByAcceptanceStatus(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
+        @WebParam(name = "acceptanceStatus", targetNamespace = "")
+        List<String> acceptanceStatus);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param signalStatuses
+     * @return
+     *     returns org.wattalyst.services.secured.StringListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "stringListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getSignalIdsBySignalStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsBySignalStatus")
+    @ResponseWrapper(localName = "getSignalIdsBySignalStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSignalIdsBySignalStatusResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsBySignalStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getSignalIdsBySignalStatusResponse")
+    public StringListResultContainer getSignalIdsBySignalStatus(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
+        @WebParam(name = "signalStatuses", targetNamespace = "")
+        List<String> signalStatuses);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.DrSignalResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "drSignalResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getDetailsByLocationAndDRSignalId", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDetailsByLocationAndDRSignalId")
+    @ResponseWrapper(localName = "getDetailsByLocationAndDRSignalIdResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDetailsByLocationAndDRSignalIdResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDetailsByLocationAndDRSignalIdRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDetailsByLocationAndDRSignalIdResponse")
+    public DrSignalResultContainer getDetailsByLocationAndDRSignalId(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @return
+     *     returns org.wattalyst.services.secured.DrSignalListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "drSignalListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getNewDRSignalByLocation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetNewDRSignalByLocation")
+    @ResponseWrapper(localName = "getNewDRSignalByLocationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetNewDRSignalByLocationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getNewDRSignalByLocationRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getNewDRSignalByLocationResponse")
+    public DrSignalListResultContainer getNewDRSignalByLocation(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param signalStatus
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "booleanResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "setDRSignalStatus", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetDRSignalStatus")
+    @ResponseWrapper(localName = "setDRSignalStatusResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetDRSignalStatusResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setDRSignalStatusRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setDRSignalStatusResponse")
+    public BooleanResultContainer setDRSignalStatus(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
+        @WebParam(name = "signalStatus", targetNamespace = "")
+        String signalStatus);
+
+    /**
+     * 
+     * @param message
+     * @param usefulness
+     * @param username
+     * @param convenience
+     * @param authenticationToken
+     * @param locationname
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "booleanResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "setUserFeedback", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetUserFeedback")
+    @ResponseWrapper(localName = "setUserFeedbackResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.SetUserFeedbackResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setUserFeedbackRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/setUserFeedbackResponse")
+    public BooleanResultContainer setUserFeedback(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
+        @WebParam(name = "username", targetNamespace = "")
+        String username,
+        @WebParam(name = "usefulness", targetNamespace = "")
+        Integer usefulness,
+        @WebParam(name = "convenience", targetNamespace = "")
+        Integer convenience,
+        @WebParam(name = "message", targetNamespace = "")
+        String message);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "booleanResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "cancelSignal", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignal")
+    @ResponseWrapper(localName = "cancelSignalResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalResponse")
+    public BooleanResultContainer cancelSignal(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "booleanResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "cancelSignalForLocation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalForLocation")
+    @ResponseWrapper(localName = "cancelSignalForLocationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.CancelSignalForLocationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalForLocationRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/cancelSignalForLocationResponse")
+    public BooleanResultContainer cancelSignalForLocation(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.TaskListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "taskListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getTaskDefinitions", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTaskDefinitions")
+    @ResponseWrapper(localName = "getTaskDefinitionsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTaskDefinitionsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTaskDefinitionsRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTaskDefinitionsResponse")
+    public TaskListResultContainer getTaskDefinitions(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId);
 
     /**
      * 
@@ -423,62 +444,116 @@ public interface SecuredDRSignalManagement {
 
     /**
      * 
-     * @param username
      * @param authenticationToken
+     * @param locationname
      * @return
      *     returns org.wattalyst.services.secured.IntegerResultContainer
      */
     @WebMethod
     @WebResult(name = "integerResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getTotalEarnedCoinsByUsername", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTotalEarnedCoinsByUsername")
-    @ResponseWrapper(localName = "getTotalEarnedCoinsByUsernameResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTotalEarnedCoinsByUsernameResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTotalEarnedCoinsByUsernameRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTotalEarnedCoinsByUsernameResponse")
-    public IntegerResultContainer getTotalEarnedCoinsByUsername(
+    @RequestWrapper(localName = "getTotalEarnedCoinsByLocation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTotalEarnedCoinsByLocation")
+    @ResponseWrapper(localName = "getTotalEarnedCoinsByLocationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetTotalEarnedCoinsByLocationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTotalEarnedCoinsByLocationRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getTotalEarnedCoinsByLocationResponse")
+    public IntegerResultContainer getTotalEarnedCoinsByLocation(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username);
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
 
     /**
      * 
-     * @param username
      * @param authenticationToken
+     * @param locationname
      * @param signalId
      * @return
      *     returns org.wattalyst.services.secured.IntegerResultContainer
      */
     @WebMethod
     @WebResult(name = "integerResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getCoinsForSignalByUsername", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetCoinsForSignalByUsername")
-    @ResponseWrapper(localName = "getCoinsForSignalByUsernameResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetCoinsForSignalByUsernameResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getCoinsForSignalByUsernameRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getCoinsForSignalByUsernameResponse")
-    public IntegerResultContainer getCoinsForSignalByUsername(
+    @RequestWrapper(localName = "getCoinsForSignalByLocation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetCoinsForSignalByLocation")
+    @ResponseWrapper(localName = "getCoinsForSignalByLocationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetCoinsForSignalByLocationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getCoinsForSignalByLocationRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getCoinsForSignalByLocationResponse")
+    public IntegerResultContainer getCoinsForSignalByLocation(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken,
         @WebParam(name = "signalId", targetNamespace = "")
         String signalId,
-        @WebParam(name = "username", targetNamespace = "")
-        String username);
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
 
     /**
      * 
-     * @param username
      * @param authenticationToken
+     * @param locationname
+     * @param signalId
+     * @return
+     *     returns org.wattalyst.services.secured.PiResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "piResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getPerformanceIndicator", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetPerformanceIndicator")
+    @ResponseWrapper(localName = "getPerformanceIndicatorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetPerformanceIndicatorResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getPerformanceIndicatorRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getPerformanceIndicatorResponse")
+    public PiResultContainer getPerformanceIndicator(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "signalId", targetNamespace = "")
+        String signalId,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param locationname
      * @param signalStatuses
      * @return
      *     returns org.wattalyst.services.secured.DrSignalListResultContainer
      */
     @WebMethod
     @WebResult(name = "drSignalListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getDRSignalsByUsernameAndStatuses", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByUsernameAndStatuses")
-    @ResponseWrapper(localName = "getDRSignalsByUsernameAndStatusesResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByUsernameAndStatusesResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByUsernameAndStatusesRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByUsernameAndStatusesResponse")
-    public DrSignalListResultContainer getDRSignalsByUsernameAndStatuses(
+    @RequestWrapper(localName = "getDRSignalsByLocationAndStatuses", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByLocationAndStatuses")
+    @ResponseWrapper(localName = "getDRSignalsByLocationAndStatusesResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetDRSignalsByLocationAndStatusesResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByLocationAndStatusesRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getDRSignalsByLocationAndStatusesResponse")
+    public DrSignalListResultContainer getDRSignalsByLocationAndStatuses(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken,
-        @WebParam(name = "username", targetNamespace = "")
-        String username,
+        @WebParam(name = "locationname", targetNamespace = "")
+        String locationname,
         @WebParam(name = "signalStatuses", targetNamespace = "")
         List<String> signalStatuses);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.LocationListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "locationListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAccessibleLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAccessibleLocations")
+    @ResponseWrapper(localName = "getAccessibleLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAccessibleLocationsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAccessibleLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAccessibleLocationsResponse")
+    public LocationListResultContainer getAccessibleLocations(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken);
+
+    /**
+     * 
+     * @param username
+     * @param passwordHash
+     * @return
+     *     returns org.wattalyst.services.secured.StringResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "authenticationToken", targetNamespace = "")
+    @RequestWrapper(localName = "login", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.Login")
+    @ResponseWrapper(localName = "loginResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.LoginResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/loginRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/loginResponse")
+    public StringResultContainer login(
+        @WebParam(name = "username", targetNamespace = "")
+        String username,
+        @WebParam(name = "passwordHash", targetNamespace = "")
+        String passwordHash);
 
 }

@@ -14,6 +14,7 @@ import java.util.TimeZone;
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.webserver.WebserverDataWriter;
 
 /**
  * Implementation of baseline ISONE
@@ -202,11 +203,15 @@ public class ISONE implements Baseline{
 				if ((exclDays==null) || !exclDays.containsKey(lastComputedCal[dowType].getTimeInMillis())) {
 					for (int i=0; i<24; i++) {
 						lastComputedCal[dowType].set(Calendar.HOUR_OF_DAY, i);
-						double newValue = 0.9 *baselineRun[dowType][i] + 0.1*data.get(lastComputedCal[dowType].getTimeInMillis());
+						double newValue;
+						// if missing value, the we do not compute this
+						if ( data.get(lastComputedCal[dowType].getTimeInMillis())==null )
+							newValue = baselineRun[dowType][i];
+						else 
+							newValue = 0.9 *baselineRun[dowType][i] + 0.1*data.get(lastComputedCal[dowType].getTimeInMillis());
 						newValue =  Math.round(newValue * 100000) / 100000.0;
 						baselineRun[dowType][i] = newValue;
 						// round to 5 digit decimal
-						
 					}				
 				}
 			}
@@ -338,6 +343,12 @@ public class ISONE implements Baseline{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+		WebserverDataWriter writer = new WebserverDataWriter();
+		writer.updateBaselineData(authenticationToken, baselineID, baseline);
 	}
 
 	@Override

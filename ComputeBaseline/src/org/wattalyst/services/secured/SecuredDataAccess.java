@@ -116,6 +116,21 @@ public interface SecuredDataAccess {
 
     /**
      * 
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.LocationListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "locationListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAllLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocations")
+    @ResponseWrapper(localName = "getAllLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocationsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsResponse")
+    public LocationListResultContainer getAllLocations(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken);
+
+    /**
+     * 
      * @param fullQualifiedName
      * @param authenticationToken
      * @return
@@ -149,21 +164,6 @@ public interface SecuredDataAccess {
         String authenticationToken,
         @WebParam(name = "fullQualifiedName", targetNamespace = "")
         String fullQualifiedName);
-
-    /**
-     * 
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.LocationListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "locationListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getAllLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocations")
-    @ResponseWrapper(localName = "getAllLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocationsResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsResponse")
-    public LocationListResultContainer getAllLocations(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken);
 
     /**
      * 
@@ -233,5 +233,23 @@ public interface SecuredDataAccess {
         long start,
         @WebParam(name = "end", targetNamespace = "")
         long end);
+
+    /**
+     * 
+     * @param username
+     * @param passwordHash
+     * @return
+     *     returns org.wattalyst.services.secured.StringResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "authenticationToken", targetNamespace = "")
+    @RequestWrapper(localName = "login", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.Login")
+    @ResponseWrapper(localName = "loginResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.LoginResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/loginRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/loginResponse")
+    public StringResultContainer login(
+        @WebParam(name = "username", targetNamespace = "")
+        String username,
+        @WebParam(name = "passwordHash", targetNamespace = "")
+        String passwordHash);
 
 }

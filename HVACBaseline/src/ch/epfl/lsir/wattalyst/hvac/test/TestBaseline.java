@@ -35,66 +35,85 @@ public class TestBaseline {
 	 */
 	public static void main(String[] args) throws Exception{
 		
-		Baseline baseline = BaselineFactory.createBaseline();
+		Baseline baseline = BaselineFactory.createBaseline("./classifier/model/R1D-power-SMOReg.model", "./classifier/model/R1D-ind_temp-SMOReg.model");
 		
-		// Set the room
-		String room = "R5D"; // R1F R1G R1D R1L R4A
+		// Read the test sets
+		BufferedReader indoorTemperatureReader = new BufferedReader(new FileReader("./arff/R1D-ind_temp-test-2.arff"));
+		BufferedReader powerReader = new BufferedReader(new FileReader("./arff/R1D-power-test-2.arff"));
 		
-		// Read the test set
-		BufferedReader reader = new BufferedReader(new FileReader("./arff/HVAC-test-" + room + ".arff"));
-		Instances testSet = new Instances(reader);
-		reader.close();
+		Instances indoorTemperatureTestSet = new Instances(indoorTemperatureReader);
+		indoorTemperatureReader.close();
+		Instances powerTestSet = new Instances(powerReader);
+		powerReader.close();
 		
-		int timeWindow = testSet.numInstances(); 
+		int timeWindow = powerTestSet.numInstances(); 
 		
-		double[] externalTemperatureForecast = new double[timeWindow];
-		double[] trueHvacPower = new double[timeWindow];
+		double[] ext_temp_future = new double[timeWindow];
+		double[] set_temp_future = new double[timeWindow];
+		
+		double[] set_temp = new double[6];
+		double[] ind_temp = new double[6]; 
+		double[] ext_temp = new double[6]; 
+		String[] mode = new String[6]; 
+		double[] power = new double[6];
+				
+		double[] truePower = new double[timeWindow];
 		double[] trueIndoorTemperature = new double[timeWindow];
-		String[] trueHvacMode = new String[timeWindow];
-		double setpointTemperature = testSet.instance(0).value(testSet.attribute("setpoint-temperature"));
-		double initialIndoorTemperature = testSet.instance(0).value(testSet.attribute("indoor-temperature"));
-		String initialHvacMode = testSet.attribute("hvac-mode").value((int) testSet.instance(0).value(testSet.attribute("hvac-mode")));
+		String[] trueMode = new String[timeWindow];
 		
-		for(int i = 0; i < timeWindow; i++){
-			externalTemperatureForecast[i] = testSet.instance(i).value(testSet.attribute("external-temperature"));
-			trueHvacPower[i] = testSet.instance(i).value(testSet.attribute("hvac-power"));
-			trueIndoorTemperature[i] = testSet.instance(i).value(testSet.attribute("indoor-temperature"));
-			trueHvacMode[i] = testSet.attribute("hvac-mode").value((int) testSet.instance(i).value(testSet.attribute("hvac-mode")));
+		for(int i = 0; i < set_temp.length; i++){
+			set_temp[i] = powerTestSet.instance(0).value(powerTestSet.attribute("set_temp_t_" + (set_temp.length-i) ));
+			ind_temp[i] = powerTestSet.instance(0).value(powerTestSet.attribute("ind_temp_t_" + (ind_temp.length-i) ));
+			ext_temp[i] = powerTestSet.instance(0).value(powerTestSet.attribute("ext_temp_t_" + (ext_temp.length-i) ));
+			mode[i] = powerTestSet.attribute("mode_t_" + (mode.length-i)).value( (int) powerTestSet.instance(0).value(powerTestSet.attribute("mode_t_" + (mode.length-i) )));
+			power[i] = powerTestSet.instance(0).value(powerTestSet.attribute("power_t_" + (power.length-i) ));
 		}
 		
-		Object[] result = baseline.compute(externalTemperatureForecast, room, setpointTemperature,
-				initialIndoorTemperature, initialHvacMode);
-		double[] hvacPower = (double[]) result[0];
-		double[] indoorTemperature = (double[]) result[1];
-		String[] hvacMode = (String[]) result[2];
+		for(int i = 0; i < timeWindow; i++){
+			truePower[i] = powerTestSet.instance(i).value(powerTestSet.attribute("power_t"));
+			trueIndoorTemperature[i] = indoorTemperatureTestSet.instance(i).value(indoorTemperatureTestSet.attribute("ind_temp_t"));
+			trueMode[i] = "30";
+		}
+		
+		for(int i = 0; i < timeWindow-1; i++){
+			ext_temp_future[i] = powerTestSet.instance(1 + i).value(powerTestSet.attribute("ext_temp_t_1"));
+			set_temp_future[i] = 24;
+		}
+		ext_temp_future[ext_temp_future.length-1] = 0;
+		set_temp_future[set_temp_future.length-1] = 0;
+		
+		Object[] result = baseline.compute(ext_temp_future, set_temp_future, set_temp, ind_temp, ext_temp, mode, power);
+		double[] resultPower = (double[]) result[0];
+		double[] resultIndoorTemperature = (double[]) result[1];
+		String[] resultMode = (String[]) result[2];
 
-		plotResults(hvacPower, trueHvacPower, indoorTemperature, trueIndoorTemperature, hvacMode, trueHvacMode);
-		printResults(hvacPower, trueHvacPower, indoorTemperature, trueIndoorTemperature, hvacMode, trueHvacMode);
+		plotResults(resultPower, truePower, resultIndoorTemperature, trueIndoorTemperature, resultMode, trueMode);
+		printResults(resultPower, truePower, resultIndoorTemperature, trueIndoorTemperature, resultMode, trueMode);
 	}
 		
 	/*
 	 * 
 	 */
-	private static void printResults(double[] hvacPower, double[] trueHvacPower, double[] indoorTemperature, double[] trueIndoorTemperature, String[] hvacMode, String[] trueHvacMode){
+	private static void printResults(double[] power, double[] truePower, double[] indoorTemperature, double[] trueIndoorTemperature, String[] mode, String[] trueMode){
 		System.out.print("Predicted hvac power,");
-		for(double power : hvacPower){
-			System.out.print(power + ",");
+		for(double p : power){
+			System.out.print(p + ",");
 		}
 		System.out.println();
 		System.out.print("True hvac power,");
-		for(double power : trueHvacPower){
-			System.out.print(power + ",");
+		for(double p : truePower){
+			System.out.print(p + ",");
 		}
 		
 		double RMSE = 0;
 		double E = 0;
-		for(int i = 0; i < trueHvacPower.length; i++){
-			RMSE = RMSE + Math.pow(hvacPower[i] - trueHvacPower[i], 2);
-			E = E + hvacPower[i] - trueHvacPower[i];
+		for(int i = 0; i < truePower.length; i++){
+			RMSE = RMSE + Math.pow(power[i] - truePower[i], 2);
+			E = E + power[i] - truePower[i];
 		}
-		RMSE = RMSE/trueHvacPower.length;
+		RMSE = RMSE/truePower.length;
 		RMSE = Math.sqrt(RMSE);
-		E = E / (trueHvacPower.length / 6); // :no. of time slots * 10 minutes / 60 minutes = hours
+		E = E / (truePower.length / 6); // :no. of time slots * 10 minutes / 60 minutes = hours
 		System.out.print("\nPower RMSE: " + RMSE + " Energy E: " + E);
 		
 		System.out.println();
@@ -112,13 +131,13 @@ public class TestBaseline {
 		System.out.println();
 		System.out.println();
 		System.out.print("Predicted hvac mode,");
-		for(String mode : hvacMode){
-			System.out.print(mode + ",");
+		for(String m : mode){
+			System.out.print(m + ",");
 		}
 		System.out.println();
 		System.out.print("True hvac mode,");
-		for(String mode : trueHvacMode){
-			System.out.print(mode + ",");
+		for(String m : trueMode){
+			System.out.print(m + ",");
 		}
 		System.out.println();
 	}
@@ -127,13 +146,13 @@ public class TestBaseline {
 	 * 
 	 */
 	private static void plotResults(double[] hvacPower, double[] trueHvacPower, double[] indoorTemperature, double[] trueIndoorTemperature, String[] hvacMode, String[] trueHvacMode) {
-		XYSeriesCollection powerDataset = createDataset(hvacPower, "Predicted HVAC power", trueHvacPower, "True HVAC power");
+		XYSeriesCollection powerDataset = createDataset(hvacPower, "Predicted power", trueHvacPower, "True power");
 		JFreeChart powerChart = createChart(powerDataset, "Power", "Time", "kW");
         
 		XYSeriesCollection indoorTempDataset = createDataset(indoorTemperature, "Predicted indoor temperature", trueIndoorTemperature, "True indoor temperature");
         JFreeChart indoorTempChart = createChart(indoorTempDataset, "Temperature", "Time", "\u2103");
         
-        XYSeriesCollection modeDataset = createDataset(hvacMode, "Predicted HVAC mode", trueHvacMode, "True HVAC mode");
+        XYSeriesCollection modeDataset = createDataset(hvacMode, "Predicted mode", trueHvacMode, "True mode");
         JFreeChart modeChart = createChart(modeDataset, "Mode", "Time", "# mode");
         
         createChartFrame(powerChart, indoorTempChart, modeChart);

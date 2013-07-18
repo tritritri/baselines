@@ -1,3 +1,4 @@
+
 package org.wattalyst.services.secured;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;complexType name="aValueDto">
  *   &lt;complexContent>
- *     &lt;extension base="{http://services.wattalyst.org/}entityDto">
+ *     &lt;extension base="{http://secured.services.wattalyst.org/}entityDto">
  *       &lt;sequence>
  *         &lt;element name="timestamp" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *       &lt;/sequence>
@@ -30,12 +31,12 @@ import javax.xml.bind.annotation.XmlType;
     "timestamp"
 })
 @XmlSeeAlso({
-    MissingValueDto.class,
     BooleanValueDto.class,
-    TextValueDto.class,
-    NumericValueDto.class
+    NumericValueDto.class,
+    MissingValueDto.class,
+    TextValueDto.class
 })
-public abstract class AValueDto 
+public abstract class AValueDto
     extends EntityDto implements Comparable<AValueDto>
 {
 
@@ -80,4 +81,6 @@ public abstract class AValueDto
     		return 0;
     	}
     }
+
+
 }

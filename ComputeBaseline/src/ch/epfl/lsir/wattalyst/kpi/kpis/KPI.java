@@ -19,7 +19,8 @@ public abstract class KPI {
 	protected SensorReadings baseline;
 	protected Calendar startCal;
 	protected Calendar endCal;
-	protected int numTokens;
+	protected double numTokens;
+	protected double consumptionLimit;
 	
 	/**
 	 * 
@@ -36,9 +37,10 @@ public abstract class KPI {
 	 * @param startCal
 	 * @param endCal
 	 * @param numTokens
+	 * @param consumptionLimit
 	 */
 	public final void compute(String baselineFileInput, String consumptionFileInput, 
-			Calendar startCal, Calendar endCal, int numTokens){
+			Calendar startCal, Calendar endCal, double numTokens, double consumptionLimit){
 		
 		// read the baseline file input
 		Util.hourlyCSVToSensorReadings(baselineFileInput, baseline);
@@ -49,6 +51,30 @@ public abstract class KPI {
 		this.startCal = startCal;
 		this.endCal = endCal;
 		this.numTokens = numTokens;
+		this.consumptionLimit = consumptionLimit;
+		
+		doCompute();
+	}
+	
+	/**
+	 * 
+	 * @param baselineConsumption
+	 * @param realConsumption
+	 * @param startCal
+	 * @param endCal
+	 * @param numTokens
+	 * @param consumptionLimit
+	 */
+	public void compute(SensorReadings baselineConsumption, SensorReadings realConsumption, 
+			Calendar startCal, Calendar endCal, double numTokens, double consumptionLimit) {
+		
+		baselineConsumption.copyHourly(baselineConsumption.getMinDate(), baselineConsumption.getMaxDate(), baseline);
+		realConsumption.copyHourly(realConsumption.getMinDate(), realConsumption.getMaxDate(), consumption);
+		
+		this.startCal = startCal;
+		this.endCal = endCal;
+		this.numTokens = numTokens;
+		this.consumptionLimit = consumptionLimit;
 		
 		doCompute();
 	}
@@ -58,35 +84,39 @@ public abstract class KPI {
 	 */
 	protected abstract void doCompute();
 	
-
-	/*
-	 * (non-Javadoc)
-	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#writeResult(java.io.PrintStream)
-	 */
-	public void writeResult(PrintStream out) {
-		out.print(getResult());
-	}
-
 	/**
 	 * 
 	 * @return
 	 */
-	protected abstract String getResult();
+	public abstract String getResultDescription();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public abstract double getResult();
 
 	/*
 	 * (non-Javadoc)
-	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#writeResultToFile(java.lang.String)
+	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#writeResultDescription(java.io.PrintStream)
 	 */
-	public void writeResultToFile(String fileName) {
+	public void writeResultDescription(PrintStream out) {
+		out.print(getResultDescription());
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#writeResultDescriptionToFile(java.lang.String)
+	 */
+	public void writeResultDescriptionToFile(String fileName) {
 		PrintWriter fileOut;
 		try {
 			fileOut = new PrintWriter(fileName);
-			fileOut.print(getResult());
+			fileOut.print(getResultDescription());
 			fileOut.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 	}
-
+	
 }

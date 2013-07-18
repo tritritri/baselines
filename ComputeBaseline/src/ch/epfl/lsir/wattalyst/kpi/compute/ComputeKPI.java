@@ -32,10 +32,10 @@ public class ComputeKPI {
 		CommandLine cmd = parser.parse(opts, args);
 		
 		// if help needed
-		if (cmd.hasOption("h") || args.length==0 || (cmd.hasOption("o") && args.length != 8) || (!cmd.hasOption("o") && args.length != 6)) {
+		if (cmd.hasOption("h") || args.length==0 || (cmd.hasOption("o") && args.length != 9) || (!cmd.hasOption("o") && args.length != 7)) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(90);
-			String helpString = "java -jar ComputeKPI.jar [OPTIONS] BASELINE CONSUMPTION KPI STARTTIME ENDTIME TOKENS \n" 
+			String helpString = "java -jar ComputeKPI.jar [OPTIONS] BASELINE CONSUMPTION KPI STARTTIME ENDTIME TOKENS CONSUMPTIONLIMIT \n" 
 					+ "Example: java -jar ComputeKPI.jar baseline.txt real.txt ConsumptionChangeAbs 2013-02-15:03 2013-02-15:06 4\n"
 					+ "KPI is RMSE | ConsumptionChangeAbs | ConsumptionChangePerc | ConsumptionChangePerTokenAbs \n"
 					+ "... ConsumptionChangePerTokenPerc | TokenPerConsumptionChangeAbs"
@@ -52,6 +52,7 @@ public class ComputeKPI {
 					+ "STARTTIME and ENDTIME are of form yyyy-MM-dd:hh \n"  
 					+ "... where yyyy-MM-dd is the same date. \n"	
 					+ "TOKENS is the number of tokens in the DR signal \n" 
+					+ "CONSUMPTIONLIMIT is the consumption limit of the DR signal \n" 
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
@@ -69,6 +70,7 @@ public class ComputeKPI {
 		String startTime = args[shift + 3];
 		String endTime = args[shift + 4];
 		String tokens = args[shift + 5];
+		String limit = args[shift + 6];
 		
 		// check if startTime >= endTime
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd:HH");
@@ -98,16 +100,27 @@ public class ComputeKPI {
 			System.err.println("[Error] TOKENS should be a positive integer");
 			System.exit(0);
 		}
+		// check if limit is a positive real number
+		double consumptionLimit = 0;
+		try{
+			consumptionLimit = Double.parseDouble(limit);
+			if(consumptionLimit < 0)
+				throw new NumberFormatException();
+		}
+		catch(NumberFormatException e){
+			System.err.println("[Error] CONSUMPTIONLIMIT should be a positive real");
+			System.exit(0);
+		}
 		
 		// initialize and compute the KPI
 		KPI k = (KPI) Class.forName(kpi).newInstance(); 
-		k.compute(baselineFileInput, consumptionFileInput, startCal, endCal, numTokens);
+		k.compute(baselineFileInput, consumptionFileInput, startCal, endCal, numTokens, consumptionLimit);
 		
 		// output the result
 		if (cmd.hasOption("o")){
-			k.writeResultToFile(cmd.getOptionValue("o"));
+			k.writeResultDescriptionToFile(cmd.getOptionValue("o"));
 		} else {
-			k.writeResult(System.out);
+			k.writeResultDescription(System.out);
 		}
 		
 	}

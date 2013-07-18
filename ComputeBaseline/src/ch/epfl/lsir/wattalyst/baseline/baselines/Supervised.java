@@ -26,6 +26,7 @@ import weka.core.Utils;
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
+import ch.epfl.lsir.wattalyst.webserver.WebserverDataWriter;
 
 /**
  * 
@@ -495,6 +496,11 @@ public class Supervised implements Baseline{
 		
 	}
 
+	@Override
+	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+		WebserverDataWriter writer = new WebserverDataWriter();
+		writer.updateBaselineData(authenticationToken, baselineID, data[1]);
+	}
 
 	@Override
 	public ArrayList<String> getResultString() {

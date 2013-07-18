@@ -40,16 +40,24 @@ public class ConsumptionChangePerc extends KPI {
 			current.add(Calendar.HOUR_OF_DAY, 1);
 		}
 		
-		consumptionChange = consumptionChange/totalBaseline;
+		consumptionChange = 100.0*consumptionChange/totalBaseline;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public String getResult(){
+	public String getResultDescription(){
 		return this.getClass().getSimpleName() + "," + dayFormatter.format(startCal.getTime()) + "," + 
 				hourFormatter.format(startCal.getTime()) + "," + hourFormatter.format(endCal.getTime()) + "," +
 				consumptionChange + "\n";
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
+	 */
+	public double getResult(){
+		return consumptionChange;
 	}
 }

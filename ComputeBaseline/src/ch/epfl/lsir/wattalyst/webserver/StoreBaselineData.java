@@ -34,12 +34,12 @@ public class StoreBaselineData {
 		CommandLine cmd = parser.parse(opts, args);
 		
 		// if help needed
-		if (cmd.hasOption("h") || args.length!=4) {
+		if (cmd.hasOption("h") || args.length!=3) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
-			String helpString = "java -jar StoreBaselineData.jar [OPTIONS] AUTHTOKEN SENSOR BASELINE INPUTFILE \n" 
+			String helpString = "java -jar StoreBaselineData.jar [OPTIONS] SENSOR BASELINE INPUTFILE \n" 
 					+ "Store the baselien data contained in INPUTFILE and referring to BASELINEID\n"
-					+ "Example: java -jar StoreBaselineData.jar XXXX wattalyst.lulea.location_43.sensor_344 wattalyst.lulea.location_43.sensor_344.baseline_caiso data.txt\n"
+					+ "Example: java -jar StoreBaselineData.jar wattalyst.lulea.location_43.sensor_344 wattalyst.lulea.location_43.sensor_344.baseline_caiso data.txt\n"
 					+ "The data in INPUTFILE are in baseline output format \"date,hour,value,timestamp\"\n"
 					+ "and are converted in DB format \"date;hour:min;value\"\n"
 					+ "\n OPTIONS: \n";
@@ -48,10 +48,10 @@ public class StoreBaselineData {
 		} 
 
 		// process default operand
-		String authenticationToken = args[0];
-		String sensor = args[1];
-		String baseline = args[2];
-		String inputfile = args[3];
+		String authenticationToken = "mheqzghwnhh+";
+		String sensor = args[args.length-3];
+		String baseline = args[args.length-2];
+		String inputfile = args[args.length-1];
 		
 		// Check if the baseline ID exists
 		WebserverDataReader reader = new WebserverDataReader();

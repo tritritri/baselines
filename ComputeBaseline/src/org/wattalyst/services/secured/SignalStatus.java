@@ -18,8 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="RECEIVED"/>
  *     &lt;enumeration value="EXPIRED"/>
  *     &lt;enumeration value="EVALUATED"/>
- *     &lt;enumeration value="COMPLETED"/>
- *     &lt;enumeration value="REVOKED"/>
+ *     &lt;enumeration value="CANCELED"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -34,8 +33,7 @@ public enum SignalStatus {
     RECEIVED,
     EXPIRED,
     EVALUATED,
-    COMPLETED,
-    REVOKED;
+    CANCELED;
 
     public String value() {
         return name();

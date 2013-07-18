@@ -18,8 +18,9 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="authenticationToken" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="signalId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="locationname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="usefullness" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="usefulness" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="convenience" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -34,8 +35,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "setUserFeedback", propOrder = {
     "authenticationToken",
     "signalId",
+    "locationname",
     "username",
-    "usefullness",
+    "usefulness",
     "convenience",
     "message"
 })
@@ -43,8 +45,9 @@ public class SetUserFeedback {
 
     protected String authenticationToken;
     protected String signalId;
+    protected String locationname;
     protected String username;
-    protected Integer usefullness;
+    protected Integer usefulness;
     protected Integer convenience;
     protected String message;
 
@@ -97,6 +100,30 @@ public class SetUserFeedback {
     }
 
     /**
+     * Gets the value of the locationname property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLocationname() {
+        return locationname;
+    }
+
+    /**
+     * Sets the value of the locationname property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLocationname(String value) {
+        this.locationname = value;
+    }
+
+    /**
      * Gets the value of the username property.
      * 
      * @return
@@ -121,27 +148,27 @@ public class SetUserFeedback {
     }
 
     /**
-     * Gets the value of the usefullness property.
+     * Gets the value of the usefulness property.
      * 
      * @return
      *     possible object is
      *     {@link Integer }
      *     
      */
-    public Integer getUsefullness() {
-        return usefullness;
+    public Integer getUsefulness() {
+        return usefulness;
     }
 
     /**
-     * Sets the value of the usefullness property.
+     * Sets the value of the usefulness property.
      * 
      * @param value
      *     allowed object is
      *     {@link Integer }
      *     
      */
-    public void setUsefullness(Integer value) {
-        this.usefullness = value;
+    public void setUsefulness(Integer value) {
+        this.usefulness = value;
     }
 
     /**
