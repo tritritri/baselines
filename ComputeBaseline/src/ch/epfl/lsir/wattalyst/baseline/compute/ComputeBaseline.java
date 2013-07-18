@@ -70,7 +70,7 @@ public class ComputeBaseline {
 					  "... TIMESTAMP is UNIX timestamp in milliseconds. \n" +
 					  "..... For example, energy consumed during DATE,HOUR in kWh.\n" +
 					  ". Except when BASELINE is Supervised, INPUT is a configuration file \n" +
-					  ". Example: java -jar ComputeBaseline.jar Supervised config-reg.txt 2013-02-21\n"+
+					  ". Example: java -jar ComputeBaseline.jar Supervised config-reg.txt 2013-02-15\n"+
 					  "Output is DATE,HOUR,READINGS,TIMESTAMP\n"
 					  /*
 					  ". Except when BASELINE is Regression, INPUT is of form \n" +
