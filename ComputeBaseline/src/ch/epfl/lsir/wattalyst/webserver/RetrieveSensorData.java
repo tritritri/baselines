@@ -12,6 +12,9 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 
+import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
+import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
+
 /**
  * 
  * @author Tri Kurniawan Wijaya <tri-kurniawan.wijaya@epfl.ch>
@@ -41,7 +44,7 @@ public class RetrieveSensorData {
 			String helpString = "java -jar RetrieveSensorData.jar [OPTIONS] SENSORNAME STARTTIME ENDTIME \n" 
 					+ "Display instantenous reading of sensor SENSORNAME from STARTTIME to ENDTIME\n"
 					+ "Local machine timezone is used to display the time\n"
-					+ "Example: java -jar RetrieveSensorData.jar wattalyst.lulea.location_43.sensor_345 2013-02-21--00:00 2013-02-26--23:59\n"
+					+ "Example: java -jar RetrieveSensorData.jar wattalyst.lulea.location_43.sensor_346 2013-02-21--00:00 2013-02-26--23:59\n"
 					+ "STARTTIME and ENDTIME are of form yyyy-MM-dd--HH:mm\n"
 					+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
@@ -62,17 +65,26 @@ public class RetrieveSensorData {
 			System.exit(1);
 		}
 		
+		// if timezone is set
+		if (cmd.hasOption("t")){
+			Constants.TIMEZONE_REF = cmd.getOptionValue("t");
+		}
+		
 		// retrieve the energy data
 		EnergyData e = new EnergyData();
 		e.compute(sensorName, startDate, endDate, false);
-			
+		SensorReadings data = e.getData();
+		System.out.println(data.toStringRawAsc());
+		
 		// output the result
+		/*
 		if (cmd.hasOption("o")){
 			e.writeResultToFile(cmd.getOptionValue("o"));
 		} else {
+			System.out.println();
 			e.writeResult(System.out);
 		}		
-		
+		*/
 	}
 	
 	/*
@@ -80,8 +92,10 @@ public class RetrieveSensorData {
 	 */
 	private static Options createOptions(){
 		Options options = new Options();
-		options.addOption("o", "output", true, "Write the energy data into a file.");
-		options.addOption("h", "help", false, "Help. Print this message.");		
+		//options.addOption("o", "output", true, "Write the energy data into a file.");
+		options.addOption("h", "help", false, "Help. Print this message.");	
+		options.addOption("t", "timezone", true, "Use the specified time zone instead of local time zone. " +
+				"Example of format accepted: GMT+2, Europe/Zurich, CET. Any wrong format will be treated as GMT+0.");		
 		return options;	
 	}
 }

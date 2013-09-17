@@ -25,6 +25,10 @@ public class EnergyData {
 		endCal = Calendar.getInstance();
 	}
 	
+	public SensorReadings getData(){
+		return energy;
+	}
+	
 	/**
 	 * 
 	 * @param sensorName
@@ -50,8 +54,7 @@ public class EnergyData {
 		
 		// Invoke Aachen webservice
 		WebserverDataReader webserverDataReader = new WebserverDataReader();
-		SensorReadings e = webserverDataReader.getValuesForSensorByRange(sensorName, startDate, endDate, useDifferenceMethod);
-		e.copyHourly(e.getMinDate(), e.getMaxDate(), energy);
+		energy = webserverDataReader.getValuesForSensorByRange(sensorName, startDate, endDate, useDifferenceMethod);
 	}
 	
 	/**

@@ -106,7 +106,7 @@ public class WebserverDataReader {
 					current.setTime(startDate);
 					while(!current.getTime().after(endDate)){
 						Double lower = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime());
-						Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000 - 1); //3600000 = 1*60*60*1000: 1 hour shift
+						Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000); //3600000 = 1*60*60*1000: 1 hour shift
 
 						if(lower.isNaN() || upper.isNaN()){
 							readings.insert(current.getTimeInMillis(), Double.NaN);

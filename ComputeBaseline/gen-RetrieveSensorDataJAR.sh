@@ -3,10 +3,10 @@
 # go to bin directory
 cd bin
 
-# create jar for ComputeError
+# create jar for RetrieveSensor
 rm -f RetrieveSensorData.jar
 echo Main-class: ch.epfl.lsir.wattalyst.webserver.RetrieveSensorData > manifest.txt
-jar cvfm RetrieveSensorData.jar manifest.txt ch/epfl/lsir/wattalyst/webserver org/apache org/wattalyst
+jar cvfm RetrieveSensorData.jar manifest.txt ch/epfl/lsir/wattalyst org/apache org/wattalyst
 
 # go to main project directory
 cd ..

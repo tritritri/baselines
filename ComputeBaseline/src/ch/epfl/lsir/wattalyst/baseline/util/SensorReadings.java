@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.TimeZone;
 
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
@@ -111,7 +112,6 @@ public class SensorReadings {
 	 */
 	public String toStringAsc(long from, long to){
 	
-		
 		String result = "";
 		
 		ArrayList<String> arrString = toArrStringAsc(from, to);
@@ -308,4 +308,22 @@ public class SensorReadings {
 		return true;
 	}
 	
+	public String toStringRawAsc(){
+		SortedOutput so = new SortedOutput();
+		for (Map.Entry<Long, Double> e : data.entrySet()) {
+			so.add(e.getKey(), e.getValue());
+		}
+		so.sortAsc();
+		String res = "";
+		
+		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATETIME_FORMAT);
+		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
+		for (int i=0; i<so.size(); i++) {
+			long ts = so.getKey(i);
+			Date dt = new Date(ts);
+			double value = (double) so.getContent(i);	
+			res = res + formatter.format(dt) + "," + value + "\n";
+		}
+		return res;		
+	}
 }
