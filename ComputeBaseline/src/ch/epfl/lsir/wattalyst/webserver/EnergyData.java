@@ -27,12 +27,13 @@ public class EnergyData {
 	
 	/**
 	 * 
-	 * @param sensor
+	 * @param sensorName
 	 * @param startDate
 	 * @param endDate
+	 * @param useDifferenceMethod
 	 * @throws RemoteException
 	 */
-	public void compute(String authenticationToken, String sensorName, Date startDate, Date endDate) throws RemoteException{
+	public void compute(String sensorName, Date startDate, Date endDate, boolean useDifferenceMethod) throws RemoteException{
 		
 		// Check dates
 		if(startDate.after(endDate)){
@@ -49,7 +50,7 @@ public class EnergyData {
 		
 		// Invoke Aachen webservice
 		WebserverDataReader webserverDataReader = new WebserverDataReader();
-		SensorReadings e = webserverDataReader.getValuesForSensorByRange(authenticationToken, sensorName, startDate, endDate, true);
+		SensorReadings e = webserverDataReader.getValuesForSensorByRange(sensorName, startDate, endDate, useDifferenceMethod);
 		e.copyHourly(e.getMinDate(), e.getMaxDate(), energy);
 	}
 	

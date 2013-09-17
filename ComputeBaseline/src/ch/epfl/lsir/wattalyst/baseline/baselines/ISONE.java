@@ -346,9 +346,9 @@ public class ISONE implements Baseline{
 	}
 	
 	@Override
-	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+	public void writeResultToWattalystDB(String baselineID) {
 		WebserverDataWriter writer = new WebserverDataWriter();
-		writer.updateBaselineData(authenticationToken, baselineID, baseline);
+		writer.updateBaselineData(baselineID, baseline);
 	}
 
 	@Override

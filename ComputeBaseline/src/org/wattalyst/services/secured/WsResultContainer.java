@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlType;
     FeedbackResultContainer.class,
     DrSignalListResultContainer.class,
     StringResultContainer.class,
+    DrUseCaseListResultContainer.class,
     BooleanResultContainer.class,
     DrSignalResultContainer.class,
     TaskListResultContainer.class,

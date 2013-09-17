@@ -40,7 +40,6 @@ public class RetrieveEnergyData {
 		} 
 
 		// process default operand
-		String authenticationToken = "mheqzghwnhh+";
 		String sensorName = args[args.length-3];
 		String startDate = args[args.length-2];
 		String endDate = args[args.length-1];
@@ -56,7 +55,7 @@ public class RetrieveEnergyData {
 		
 		// retrieve the energy data
 		EnergyData e = new EnergyData();
-		e.compute(authenticationToken, sensorName, start, end);
+		e.compute(sensorName, start, end, true);
 		e.removeOutliers(sensorName);
 		
 		// output the result

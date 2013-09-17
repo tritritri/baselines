@@ -1,9 +1,13 @@
 package ch.epfl.lsir.wattalyst.webserver;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.ws.BindingProvider;
 
@@ -16,54 +20,100 @@ import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
 
 public class WebserverDataWriter {
-		
+	
 	/**
 	 * 
-	 * @param authenticationToken
+	 * @param port
+	 * @return the authentication token
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private String setConfigBinding(SecuredDRSignalManagement port) throws FileNotFoundException, IOException{
+		BindingProvider bp = (BindingProvider) port;
+		Properties prop = new Properties();
+    	prop.load(new FileInputStream("webserver.config"));
+		String drSignalEndpointUrl = prop.getProperty("drSignalEndpointUrl");
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, drSignalEndpointUrl);
+		String authenticationToken = prop.getProperty("authenticationToken");
+		return authenticationToken;
+	}
+	
+	/**
+	 * 
 	 * @param description
 	 * @param baselineType
 	 * @param sensor
 	 * @return
 	 */
-	public String addBaseline(String authenticationToken, String description, String baselineType, String sensor) {
+	public boolean addBaseline(String description, String baselineType, String sensor) {
 		
-		// Invoke the web service 
-		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
-		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+		boolean ok = false;
 		
-		BindingProvider bp = (BindingProvider) port;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ch.epfl.lsir.wattalyst.webserver.Constants.DRSIGNAL_ENDPOINT_URL);
-				
-		StringResultContainer result = port.addBaseline(authenticationToken, description, baselineType, sensor);
-		return result.getResult();
+		try{
+			
+			// Invoke the web service 
+			SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+			SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+			
+			String authenticationToken = setConfigBinding(port);
+					
+			StringResultContainer result = port.addBaseline(authenticationToken, description, baselineType, sensor);
+			if("OK".equals(result.getStatus().value())){
+				ok = true;
+			}
+			else{
+				ok = false;
+				System.err.println("Error when storing baseline ID. \n +" +
+						"Method addBaseline() returned message " + result.getStatusMessage());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return ok;
 	}
 
 	/**
 	 * 
-	 * @param authenticationToken
 	 * @param baselineID
 	 * @param baselineData
 	 * @return
 	 */
-	public boolean updateBaselineData(String authenticationToken, String baselineID, SensorReadings baselineData){
+	public boolean updateBaselineData(String baselineID, SensorReadings baselineData){
 
-		// Prepare the string to write in the DB
-		String values = baselineData.toStringAscDBFormat();
+		boolean ok = false;
 		
-		// Invoke the web service 
-		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
-		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
-				
-		BindingProvider bp = (BindingProvider) port;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ch.epfl.lsir.wattalyst.webserver.Constants.DRSIGNAL_ENDPOINT_URL);
+		try{
 		
-		BooleanResultContainer result = port.uploadBaselineData(authenticationToken, baselineID, values);
-		return result.isResult();
+			// Prepare the string to write in the DB
+			String values = baselineData.toStringAscDBFormat();
+			
+			// Invoke the web service 
+			SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+			SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+					
+			String authenticationToken = setConfigBinding(port);
+			
+			BooleanResultContainer result = port.uploadBaselineData(authenticationToken, baselineID, values);
+			if("OK".equals(result.getStatus().value())){
+				ok = true;
+			}
+			else{
+				ok = false;
+				System.err.println("Error when storing baseline data. \n +" +
+						"Method uploadBaselineData() returned message " + result.getStatusMessage());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return ok;
 	}
 	
 	/**
 	 * 
-	 * @param authenticationToken
 	 * @param drSignalID
 	 * @param location
 	 * @param kpiValue
@@ -71,18 +121,70 @@ public class WebserverDataWriter {
 	 * @param successStatus
 	 * @return
 	 */
-	public boolean setPerformanceIndicator(String authenticationToken, String drSignalID, String location, double kpiValue, 
+	public boolean setPerformanceIndicator(String drSignalID, String location, double kpiValue, 
 			String description, String successStatus) {
 		
-		// Invoke the web service 
-		SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
-		SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+		boolean ok = false;
 		
-		BindingProvider bp = (BindingProvider) port;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ch.epfl.lsir.wattalyst.webserver.Constants.DRSIGNAL_ENDPOINT_URL);
-				
-		BooleanResultContainer result = port.setPerformanceIndicator(authenticationToken, drSignalID, location, kpiValue, description, successStatus);
-		return result.isResult();
+		try{
+		
+			// Invoke the web service 
+			SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+			SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+			
+			String authenticationToken = setConfigBinding(port);
+					
+			BooleanResultContainer result = port.setPerformanceIndicator(authenticationToken, drSignalID, location, kpiValue, description, successStatus);
+			if("OK".equals(result.getStatus().value())){
+				ok = true;
+			}
+			else{
+				ok = false;
+				System.err.println("Error when storing KPI. \n +" +
+						"Method setPerformanceIndicator() returned message " + result.getStatusMessage());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return ok;
+	}
+	
+	/**
+	 * 
+	 * @param signalID
+	 * @param location
+	 * @param status
+	 * @return
+	 */
+	public boolean setDRSignalStatus(String signalID, String location, String status) {
+		
+		boolean ok = false;
+		
+		try{
+		
+			// Invoke the web service 
+			SecuredDRSignalManagementService service = new SecuredDRSignalManagementService();
+			SecuredDRSignalManagement port = service.getSecuredDRSignalManagementPort();
+			
+			String authenticationToken = setConfigBinding(port);
+					
+			BooleanResultContainer result = port.setDRSignalStatus(authenticationToken, signalID, location, status);
+			if("OK".equals(result.getStatus().value())){
+				ok = true;
+			}
+			else{
+				ok = false;
+				System.err.println("Error when set DR signal status. \n +" +
+						"Method setDRSignalStatus() returned message " + result.getStatusMessage());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return ok;
 	}
 	
 	/**
@@ -91,7 +193,21 @@ public class WebserverDataWriter {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws InterruptedException{
+		
 //		WebserverDataWriter writer = new WebserverDataWriter();
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_3.signal_1", "wattalyst.lulea.location_43", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4_1.signal_1", "wattalyst.lulea.location_43", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_3.signal_1", "wattalyst.lulea.location_46", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4.signal_1", "wattalyst.lulea.location_46", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4_2.signal_2", "wattalyst.lulea.location_46", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_3.signal_1", "wattalyst.lulea.location_76", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4.signal_1", "wattalyst.lulea.location_76", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4_4.signal_4", "wattalyst.lulea.location_76", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_3.signal_1", "wattalyst.lulea.location_160", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_4.signal_1", "wattalyst.lulea.location_160", SignalStatus.EXPIRED.name());
+//		writer.setDRSignalStatus("mheqzghwnhh+", "wattalyst.lulea.campaign_6.signal_6", "wattalyst.lulea.location_160", SignalStatus.EXPIRED.name());
+//		System.exit(0);
+		
 //		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_344");
 //		Thread.sleep(2000);
 //		writer.addBaseline("mheqzghwnhh+", "CAISO baseline", "CAISO", "wattalyst.lulea.location_43.sensor_346");
@@ -175,202 +291,202 @@ public class WebserverDataWriter {
 		WebserverDataReader reader = new WebserverDataReader();
 		List<String> baselines = new ArrayList<String>();
 		
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_344");
+		baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_344");
 		System.out.println("Sensor wattalyst.lulea.location_43.sensor_344");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_346");
+		baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_346");
 		System.out.println("Sensor wattalyst.lulea.location_43.sensor_346");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_348");
+		baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_348");
 		System.out.println("Sensor wattalyst.lulea.location_43.sensor_348");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_43.sensor_590");
+		baselines = reader.getBaselines("wattalyst.lulea.location_43.sensor_590");
 		System.out.println("Sensor wattalyst.lulea.location_43.sensor_590");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_46.sensor_545");
+		baselines = reader.getBaselines("wattalyst.lulea.location_46.sensor_545");
 		System.out.println("Sensor wattalyst.lulea.location_46.sensor_545");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_46.sensor_560");
+		baselines = reader.getBaselines("wattalyst.lulea.location_46.sensor_560");
 		System.out.println("Sensor wattalyst.lulea.location_46.sensor_560");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_46.sensor_562");
+		baselines = reader.getBaselines("wattalyst.lulea.location_46.sensor_562");
 		System.out.println("Sensor wattalyst.lulea.location_46.sensor_562");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_46.sensor_514");
+		baselines = reader.getBaselines("wattalyst.lulea.location_46.sensor_514");
 		System.out.println("Sensor wattalyst.lulea.location_46.sensor_514");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_76.sensor_820");
+		baselines = reader.getBaselines("wattalyst.lulea.location_76.sensor_820");
 		System.out.println("Sensor wattalyst.lulea.location_76.sensor_820");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_76.sensor_822");
+		baselines = reader.getBaselines("wattalyst.lulea.location_76.sensor_822");
 		System.out.println("Sensor wattalyst.lulea.location_76.sensor_822");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_76.sensor_824");
+		baselines = reader.getBaselines("wattalyst.lulea.location_76.sensor_824");
 		System.out.println("Sensor wattalyst.lulea.location_76.sensor_824");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_76.sensor_826");
+		baselines = reader.getBaselines("wattalyst.lulea.location_76.sensor_826");
 		System.out.println("Sensor wattalyst.lulea.location_76.sensor_826");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_160.sensor_1992");
+		baselines = reader.getBaselines("wattalyst.lulea.location_160.sensor_1992");
 		System.out.println("Sensor wattalyst.lulea.location_160.sensor_1992");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_160.sensor_1994");
+		baselines = reader.getBaselines("wattalyst.lulea.location_160.sensor_1994");
 		System.out.println("Sensor wattalyst.lulea.location_160.sensor_1994");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_160.sensor_1996");
+		baselines = reader.getBaselines("wattalyst.lulea.location_160.sensor_1996");
 		System.out.println("Sensor wattalyst.lulea.location_160.sensor_1996");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_160.sensor_1998");
+		baselines = reader.getBaselines("wattalyst.lulea.location_160.sensor_1998");
 		System.out.println("Sensor wattalyst.lulea.location_160.sensor_1998");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_156.sensor_1942");
+		baselines = reader.getBaselines("wattalyst.lulea.location_156.sensor_1942");
 		System.out.println("Sensor wattalyst.lulea.location_156.sensor_1942");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_156.sensor_1944");
+		baselines = reader.getBaselines("wattalyst.lulea.location_156.sensor_1944");
 		System.out.println("Sensor wattalyst.lulea.location_156.sensor_1944");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_156.sensor_1946");
+		baselines = reader.getBaselines("wattalyst.lulea.location_156.sensor_1946");
 		System.out.println("Sensor wattalyst.lulea.location_156.sensor_1946");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_156.sensor_1948");
+		baselines = reader.getBaselines("wattalyst.lulea.location_156.sensor_1948");
 		System.out.println("Sensor wattalyst.lulea.location_156.sensor_1948");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_75.sensor_1460");
+		baselines = reader.getBaselines("wattalyst.lulea.location_75.sensor_1460");
 		System.out.println("Sensor wattalyst.lulea.location_75.sensor_1460");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_75.sensor_1462");
+		baselines = reader.getBaselines("wattalyst.lulea.location_75.sensor_1462");
 		System.out.println("Sensor wattalyst.lulea.location_75.sensor_1462");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_75.sensor_1464");
+		baselines = reader.getBaselines("wattalyst.lulea.location_75.sensor_1464");
 		System.out.println("Sensor wattalyst.lulea.location_75.sensor_1464");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_75.sensor_1466");
+		baselines = reader.getBaselines("wattalyst.lulea.location_75.sensor_1466");
 		System.out.println("Sensor wattalyst.lulea.location_75.sensor_1466");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_120.sensor_1460");
+		baselines = reader.getBaselines("wattalyst.lulea.location_120.sensor_1460");
 		System.out.println("Sensor wattalyst.lulea.location_120.sensor_1460");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_120.sensor_1462");
+		baselines = reader.getBaselines("wattalyst.lulea.location_120.sensor_1462");
 		System.out.println("Sensor wattalyst.lulea.location_120.sensor_1462");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_120.sensor_1464");
+		baselines = reader.getBaselines("wattalyst.lulea.location_120.sensor_1464");
 		System.out.println("Sensor wattalyst.lulea.location_120.sensor_1464");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_120.sensor_1466");
+		baselines = reader.getBaselines("wattalyst.lulea.location_120.sensor_1466");
 		System.out.println("Sensor wattalyst.lulea.location_120.sensor_1466");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_159.sensor_1978");
+		baselines = reader.getBaselines("wattalyst.lulea.location_159.sensor_1978");
 		System.out.println("Sensor wattalyst.lulea.location_159.sensor_1978");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_159.sensor_1980");
+		baselines = reader.getBaselines("wattalyst.lulea.location_159.sensor_1980");
 		System.out.println("Sensor wattalyst.lulea.location_159.sensor_1980");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_159.sensor_1982");
+		baselines = reader.getBaselines("wattalyst.lulea.location_159.sensor_1982");
 		System.out.println("Sensor wattalyst.lulea.location_159.sensor_1982");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_159.sensor_1984");
+		baselines = reader.getBaselines("wattalyst.lulea.location_159.sensor_1984");
 		System.out.println("Sensor wattalyst.lulea.location_159.sensor_1984");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_115.sensor_1390");
+		baselines = reader.getBaselines("wattalyst.lulea.location_115.sensor_1390");
 		System.out.println("Sensor wattalyst.lulea.location_115.sensor_1390");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_115.sensor_1392");
+		baselines = reader.getBaselines("wattalyst.lulea.location_115.sensor_1392");
 		System.out.println("Sensor wattalyst.lulea.location_115.sensor_1392");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_115.sensor_1394");
+		baselines = reader.getBaselines("wattalyst.lulea.location_115.sensor_1394");
 		System.out.println("Sensor wattalyst.lulea.location_115.sensor_1394");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_115.sensor_1396");
+		baselines = reader.getBaselines("wattalyst.lulea.location_115.sensor_1396");
 		System.out.println("Sensor wattalyst.lulea.location_115.sensor_1396");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_123.sensor_1502");
+		baselines = reader.getBaselines("wattalyst.lulea.location_123.sensor_1502");
 		System.out.println("Sensor wattalyst.lulea.location_123.sensor_1502");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_123.sensor_1504");
+		baselines = reader.getBaselines("wattalyst.lulea.location_123.sensor_1504");
 		System.out.println("Sensor wattalyst.lulea.location_123.sensor_1504");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_123.sensor_1506");
+		baselines = reader.getBaselines("wattalyst.lulea.location_123.sensor_1506");
 		System.out.println("Sensor wattalyst.lulea.location_123.sensor_1506");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);
 		}
-		baselines = reader.getBaselines("mheqzghwnhh+", "wattalyst.lulea.location_123.sensor_1508");
+		baselines = reader.getBaselines("wattalyst.lulea.location_123.sensor_1508");
 		System.out.println("Sensor wattalyst.lulea.location_123.sensor_1508");
 		for(String s : baselines){
 			System.out.println("Retrieved baseline " + s);

@@ -1,25 +1,16 @@
 package ch.epfl.lsir.wattalyst.webserver;
 
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TreeSet;
-
-import javax.xml.ws.BindingProvider;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
-import org.wattalyst.services.secured.AValueDto;
-import org.wattalyst.services.secured.NumericValueDto;
-import org.wattalyst.services.secured.SecuredDataAccess;
-import org.wattalyst.services.secured.SecuredDataAccessService;
-import org.wattalyst.services.secured.ValueListResultContainer;
 
 /**
  * 
@@ -58,7 +49,6 @@ public class RetrieveSensorData {
 		} 
 
 		// process default operand
-		String authenticationToken = "mheqzghwnhh+";
 		String sensorName = args[args.length-3];
 		String startTimeString = args[args.length-2];
 		String endTimeString = args[args.length-1];
@@ -72,45 +62,16 @@ public class RetrieveSensorData {
 			System.exit(1);
 		}
 		
-		// Invoke the web service and retrieve the result
-		SecuredDataAccessService service = new SecuredDataAccessService();
-		SecuredDataAccess port = service.getSecuredDataAccessPort();
-				
-		BindingProvider bp = (BindingProvider) port;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ch.epfl.lsir.wattalyst.webserver.Constants.DATA_ENDPOINT_URL);
-		
-		ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensorName, startDate.getTime(), endDate.getTime());
-		
-		// Put the result in a sorted set
-		
-		if("OK".equals(result.getStatus().value())){
-			TreeSet<AValueDto> sortedSet = new TreeSet<AValueDto>();
-			for(AValueDto r : result.getValues()){
-				sortedSet.add(r);
-			}
-			PrintWriter fOut=null;
-			boolean writeToFile=false;
-			if (cmd.hasOption("o")){
-				fOut = new PrintWriter(cmd.getOptionValue("o"));
-				writeToFile=true;
-			}
+		// retrieve the energy data
+		EnergyData e = new EnergyData();
+		e.compute(sensorName, startDate, endDate, false);
 			
-			for(AValueDto v : sortedSet){
-				if(v instanceof NumericValueDto){
-					Date dateRead = new Date(v.getTimestamp());
-					double valueRead = ((NumericValueDto)v).getValue();
-					if (writeToFile==true){
-						fOut.println(dateRead + "," + valueRead);
-					} else {
-						System.out.println(dateRead + "," + valueRead);
-					}
-				}
-			}		
-			if (writeToFile==true) {
-				fOut.close();
-			}
-		}
-				
+		// output the result
+		if (cmd.hasOption("o")){
+			e.writeResultToFile(cmd.getOptionValue("o"));
+		} else {
+			e.writeResult(System.out);
+		}		
 		
 	}
 	

@@ -20,8 +20,6 @@ public class BaselineTask {
 	 */
 	public static void main(String[] args) throws RemoteException {
 		
-		String authenticationToken = "mheqzghwnhh+";
-		
 		Calendar history = Calendar.getInstance();
 		Date endDate = history.getTime();
 		history.add(Calendar.DAY_OF_YEAR, -60);
@@ -37,13 +35,13 @@ public class BaselineTask {
 		WebserverDataReader reader = new WebserverDataReader();
 		
 		// 1. Retrieve all sensors
-		for(String sensor : reader.getSensors(authenticationToken)){
+		for(String sensor : reader.getSensors()){
 			// 2. Retrieve baselines for the sensor
-			List<String> baselines = reader.getBaselines(authenticationToken, sensor);
+			List<String> baselines = reader.getBaselines(sensor);
 			if(!baselines.isEmpty()){
 				// 3. Retrieve sensor historic data and write to file
 				EnergyData e = new EnergyData();
-				e.compute(authenticationToken, sensor, startDate, endDate);
+				e.compute(sensor, startDate, endDate, true);
 				e.removeOutliers(sensor);
 				e.writeResultToFile(sensor + ".txt");
 				// 4. Cycle over baselines
@@ -57,7 +55,7 @@ public class BaselineTask {
 						b.compute(sensor + ".txt", targetDate, targetDate);
 						
 						// 5. Store baseline
-						b.writeResultToWattalystDB(authenticationToken, baselineID);
+						b.writeResultToWattalystDB(baselineID);
 						System.out.println("Computed baseline " + baselineID);
 						b.writeResult(System.out);
 						

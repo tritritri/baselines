@@ -1,1 +1,0 @@
-java -jar RetrieveEnergyData.jar -o 346.txt XXX wattalyst.lulea.location_43.sensor_346 2013-03-01--00:00 2013-05-24--23:59 | java -jar ComputeBaseline.jar -o 346-CAISO.txt CAISO 346.txt 2013-05-25 | java -jar StoreBaselineData.jar XXX wattalyst.lulea.location_43.sensor_344 wattalyst.lulea.location_43.sensor_344.baseline_caiso 346-CAISO.txt

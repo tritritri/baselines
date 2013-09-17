@@ -24,56 +24,60 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _LoginResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "loginResponse");
+    private final static QName _GetAllDRUseCasesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllDRUseCasesResponse");
     private final static QName _SetPerformanceIndicatorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setPerformanceIndicatorResponse");
-    private final static QName _GetDRSignalsByEventStatuses_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByEventStatuses");
-    private final static QName _GetBaselineDataAsCSV_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSV");
     private final static QName _GetTotalEarnedCoinsByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getTotalEarnedCoinsByLocationResponse");
-    private final static QName _SetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "setPerformanceIndicator");
     private final static QName _GetSignalIdsByAcceptanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsByAcceptanceStatus");
     private final static QName _GetNewDRSignalByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getNewDRSignalByLocation");
-    private final static QName _GetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "getPerformanceIndicator");
-    private final static QName _SetDRSignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setDRSignalStatusResponse");
     private final static QName _CancelSignalResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalResponse");
     private final static QName _GetCoinsForSignalByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getCoinsForSignalByLocation");
     private final static QName _GetDRSignalsByLocationAndStatusesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByLocationAndStatusesResponse");
     private final static QName _AddBaselineResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "addBaselineResponse");
-    private final static QName _GetSignalIdsBySignalStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatus");
-    private final static QName _GetBaselineDataAsCSVResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSVResponse");
-    private final static QName _SetUserFeedback_QNAME = new QName("http://secured.services.wattalyst.org/", "setUserFeedback");
     private final static QName _GetCoinsForSignalByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getCoinsForSignalByLocationResponse");
-    private final static QName _UploadBaselineData_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineData");
-    private final static QName _UploadBaselineDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineDataResponse");
     private final static QName _GetBaselinesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselinesResponse");
     private final static QName _CancelSignal_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignal");
+    private final static QName _GetSignalIdsBySignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatusResponse");
+    private final static QName _GetSignalIdsByAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsByAcceptanceStatusResponse");
+    private final static QName _GetAccessibleLocations_QNAME = new QName("http://secured.services.wattalyst.org/", "getAccessibleLocations");
+    private final static QName _GetNewDRSignalByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getNewDRSignalByLocationResponse");
+    private final static QName _SetAcceptanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatus");
+    private final static QName _CancelSignalForLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalForLocation");
+    private final static QName _Login_QNAME = new QName("http://secured.services.wattalyst.org/", "login");
+    private final static QName _GetTotalEarnedCoinsByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getTotalEarnedCoinsByLocation");
+    private final static QName _LoginResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "loginResponse");
+    private final static QName _GetDRSignalsByEventStatuses_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByEventStatuses");
+    private final static QName _GetBaselineDataAsCSV_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSV");
+    private final static QName _SetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "setPerformanceIndicator");
+    private final static QName _GetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "getPerformanceIndicator");
+    private final static QName _SetDRSignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setDRSignalStatusResponse");
+    private final static QName _GetAllSignalsForUseCaseResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllSignalsForUseCaseResponse");
+    private final static QName _GetSignalIdsBySignalStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatus");
+    private final static QName _GetAllSignalsForUseCase_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllSignalsForUseCase");
+    private final static QName _GetBaselineDataAsCSVResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSVResponse");
+    private final static QName _GetAllDRUseCases_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllDRUseCases");
+    private final static QName _SetUserFeedback_QNAME = new QName("http://secured.services.wattalyst.org/", "setUserFeedback");
+    private final static QName _UploadBaselineDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineDataResponse");
+    private final static QName _UploadBaselineData_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineData");
     private final static QName _CancelSignalForLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalForLocationResponse");
     private final static QName _GetDetailsByLocationAndDRSignalIdResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDetailsByLocationAndDRSignalIdResponse");
     private final static QName _GetPerformanceIndicatorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getPerformanceIndicatorResponse");
     private final static QName _GetTaskDefinitions_QNAME = new QName("http://secured.services.wattalyst.org/", "getTaskDefinitions");
     private final static QName _GetAccessibleLocationsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAccessibleLocationsResponse");
-    private final static QName _GetSignalIdsBySignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatusResponse");
-    private final static QName _GetSignalIdsByAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsByAcceptanceStatusResponse");
     private final static QName _GetDRSignalsByEventStatusesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByEventStatusesResponse");
     private final static QName _GetUserFeedbackForLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getUserFeedbackForLocation");
     private final static QName _GetDRSignalsByLocationAndStatuses_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByLocationAndStatuses");
     private final static QName _GetUserFeedbackForLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getUserFeedbackForLocationResponse");
-    private final static QName _GetAccessibleLocations_QNAME = new QName("http://secured.services.wattalyst.org/", "getAccessibleLocations");
     private final static QName _StoreAndActivateSignal_QNAME = new QName("http://secured.services.wattalyst.org/", "storeAndActivateSignal");
     private final static QName _SetDRSignalStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "setDRSignalStatus");
     private final static QName _GetBaselineDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataResponse");
-    private final static QName _SetAcceptanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatus");
-    private final static QName _GetNewDRSignalByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getNewDRSignalByLocationResponse");
     private final static QName _SetUserFeedbackResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setUserFeedbackResponse");
     private final static QName _StoreAndActivateSignalResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "storeAndActivateSignalResponse");
-    private final static QName _CancelSignalForLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalForLocation");
     private final static QName _AddBaseline_QNAME = new QName("http://secured.services.wattalyst.org/", "addBaseline");
     private final static QName _GetTaskDefinitionsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getTaskDefinitionsResponse");
     private final static QName _GetBaselineData_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineData");
-    private final static QName _Login_QNAME = new QName("http://secured.services.wattalyst.org/", "login");
-    private final static QName _SetAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatusResponse");
     private final static QName _GetDetailsByLocationAndDRSignalId_QNAME = new QName("http://secured.services.wattalyst.org/", "getDetailsByLocationAndDRSignalId");
+    private final static QName _SetAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatusResponse");
     private final static QName _GetBaselines_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselines");
-    private final static QName _GetTotalEarnedCoinsByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getTotalEarnedCoinsByLocation");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.wattalyst.services.secured
@@ -176,6 +180,14 @@ public class ObjectFactory {
      */
     public SetPerformanceIndicatorResponse createSetPerformanceIndicatorResponse() {
         return new SetPerformanceIndicatorResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllDRUseCasesResponse }
+     * 
+     */
+    public GetAllDRUseCasesResponse createGetAllDRUseCasesResponse() {
+        return new GetAllDRUseCasesResponse();
     }
 
     /**
@@ -411,6 +423,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetAllSignalsForUseCaseResponse }
+     * 
+     */
+    public GetAllSignalsForUseCaseResponse createGetAllSignalsForUseCaseResponse() {
+        return new GetAllSignalsForUseCaseResponse();
+    }
+
+    /**
      * Create an instance of {@link SetDRSignalStatusResponse }
      * 
      */
@@ -456,6 +476,22 @@ public class ObjectFactory {
      */
     public GetBaselineDataAsCSVResponse createGetBaselineDataAsCSVResponse() {
         return new GetBaselineDataAsCSVResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetAllDRUseCases }
+     * 
+     */
+    public GetAllDRUseCases createGetAllDRUseCases() {
+        return new GetAllDRUseCases();
+    }
+
+    /**
+     * Create an instance of {@link GetAllSignalsForUseCase }
+     * 
+     */
+    public GetAllSignalsForUseCase createGetAllSignalsForUseCase() {
+        return new GetAllSignalsForUseCase();
     }
 
     /**
@@ -627,6 +663,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DrUseCaseListResultContainer }
+     * 
+     */
+    public DrUseCaseListResultContainer createDrUseCaseListResultContainer() {
+        return new DrUseCaseListResultContainer();
+    }
+
+    /**
      * Create an instance of {@link ConstraintDto }
      * 
      */
@@ -755,12 +799,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllDRUseCasesResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "loginResponse")
-    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
-        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllDRUseCasesResponse")
+    public JAXBElement<GetAllDRUseCasesResponse> createGetAllDRUseCasesResponse(GetAllDRUseCasesResponse value) {
+        return new JAXBElement<GetAllDRUseCasesResponse>(_GetAllDRUseCasesResponse_QNAME, GetAllDRUseCasesResponse.class, null, value);
     }
 
     /**
@@ -773,39 +817,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByEventStatuses }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByEventStatuses")
-    public JAXBElement<GetDRSignalsByEventStatuses> createGetDRSignalsByEventStatuses(GetDRSignalsByEventStatuses value) {
-        return new JAXBElement<GetDRSignalsByEventStatuses>(_GetDRSignalsByEventStatuses_QNAME, GetDRSignalsByEventStatuses.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSV }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSV")
-    public JAXBElement<GetBaselineDataAsCSV> createGetBaselineDataAsCSV(GetBaselineDataAsCSV value) {
-        return new JAXBElement<GetBaselineDataAsCSV>(_GetBaselineDataAsCSV_QNAME, GetBaselineDataAsCSV.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetTotalEarnedCoinsByLocationResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTotalEarnedCoinsByLocationResponse")
     public JAXBElement<GetTotalEarnedCoinsByLocationResponse> createGetTotalEarnedCoinsByLocationResponse(GetTotalEarnedCoinsByLocationResponse value) {
         return new JAXBElement<GetTotalEarnedCoinsByLocationResponse>(_GetTotalEarnedCoinsByLocationResponse_QNAME, GetTotalEarnedCoinsByLocationResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetPerformanceIndicator }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setPerformanceIndicator")
-    public JAXBElement<SetPerformanceIndicator> createSetPerformanceIndicator(SetPerformanceIndicator value) {
-        return new JAXBElement<SetPerformanceIndicator>(_SetPerformanceIndicator_QNAME, SetPerformanceIndicator.class, null, value);
     }
 
     /**
@@ -824,24 +841,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getNewDRSignalByLocation")
     public JAXBElement<GetNewDRSignalByLocation> createGetNewDRSignalByLocation(GetNewDRSignalByLocation value) {
         return new JAXBElement<GetNewDRSignalByLocation>(_GetNewDRSignalByLocation_QNAME, GetNewDRSignalByLocation.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPerformanceIndicator }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getPerformanceIndicator")
-    public JAXBElement<GetPerformanceIndicator> createGetPerformanceIndicator(GetPerformanceIndicator value) {
-        return new JAXBElement<GetPerformanceIndicator>(_GetPerformanceIndicator_QNAME, GetPerformanceIndicator.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetDRSignalStatusResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setDRSignalStatusResponse")
-    public JAXBElement<SetDRSignalStatusResponse> createSetDRSignalStatusResponse(SetDRSignalStatusResponse value) {
-        return new JAXBElement<SetDRSignalStatusResponse>(_SetDRSignalStatusResponse_QNAME, SetDRSignalStatusResponse.class, null, value);
     }
 
     /**
@@ -881,57 +880,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatus }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatus")
-    public JAXBElement<GetSignalIdsBySignalStatus> createGetSignalIdsBySignalStatus(GetSignalIdsBySignalStatus value) {
-        return new JAXBElement<GetSignalIdsBySignalStatus>(_GetSignalIdsBySignalStatus_QNAME, GetSignalIdsBySignalStatus.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSVResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSVResponse")
-    public JAXBElement<GetBaselineDataAsCSVResponse> createGetBaselineDataAsCSVResponse(GetBaselineDataAsCSVResponse value) {
-        return new JAXBElement<GetBaselineDataAsCSVResponse>(_GetBaselineDataAsCSVResponse_QNAME, GetBaselineDataAsCSVResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetUserFeedback }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setUserFeedback")
-    public JAXBElement<SetUserFeedback> createSetUserFeedback(SetUserFeedback value) {
-        return new JAXBElement<SetUserFeedback>(_SetUserFeedback_QNAME, SetUserFeedback.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetCoinsForSignalByLocationResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getCoinsForSignalByLocationResponse")
     public JAXBElement<GetCoinsForSignalByLocationResponse> createGetCoinsForSignalByLocationResponse(GetCoinsForSignalByLocationResponse value) {
         return new JAXBElement<GetCoinsForSignalByLocationResponse>(_GetCoinsForSignalByLocationResponse_QNAME, GetCoinsForSignalByLocationResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineData }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineData")
-    public JAXBElement<UploadBaselineData> createUploadBaselineData(UploadBaselineData value) {
-        return new JAXBElement<UploadBaselineData>(_UploadBaselineData_QNAME, UploadBaselineData.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineDataResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineDataResponse")
-    public JAXBElement<UploadBaselineDataResponse> createUploadBaselineDataResponse(UploadBaselineDataResponse value) {
-        return new JAXBElement<UploadBaselineDataResponse>(_UploadBaselineDataResponse_QNAME, UploadBaselineDataResponse.class, null, value);
     }
 
     /**
@@ -950,6 +904,204 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignal")
     public JAXBElement<CancelSignal> createCancelSignal(CancelSignal value) {
         return new JAXBElement<CancelSignal>(_CancelSignal_QNAME, CancelSignal.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatusResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatusResponse")
+    public JAXBElement<GetSignalIdsBySignalStatusResponse> createGetSignalIdsBySignalStatusResponse(GetSignalIdsBySignalStatusResponse value) {
+        return new JAXBElement<GetSignalIdsBySignalStatusResponse>(_GetSignalIdsBySignalStatusResponse_QNAME, GetSignalIdsBySignalStatusResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsByAcceptanceStatusResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsByAcceptanceStatusResponse")
+    public JAXBElement<GetSignalIdsByAcceptanceStatusResponse> createGetSignalIdsByAcceptanceStatusResponse(GetSignalIdsByAcceptanceStatusResponse value) {
+        return new JAXBElement<GetSignalIdsByAcceptanceStatusResponse>(_GetSignalIdsByAcceptanceStatusResponse_QNAME, GetSignalIdsByAcceptanceStatusResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAccessibleLocations }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAccessibleLocations")
+    public JAXBElement<GetAccessibleLocations> createGetAccessibleLocations(GetAccessibleLocations value) {
+        return new JAXBElement<GetAccessibleLocations>(_GetAccessibleLocations_QNAME, GetAccessibleLocations.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetNewDRSignalByLocationResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getNewDRSignalByLocationResponse")
+    public JAXBElement<GetNewDRSignalByLocationResponse> createGetNewDRSignalByLocationResponse(GetNewDRSignalByLocationResponse value) {
+        return new JAXBElement<GetNewDRSignalByLocationResponse>(_GetNewDRSignalByLocationResponse_QNAME, GetNewDRSignalByLocationResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetAcceptanceStatus }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setAcceptanceStatus")
+    public JAXBElement<SetAcceptanceStatus> createSetAcceptanceStatus(SetAcceptanceStatus value) {
+        return new JAXBElement<SetAcceptanceStatus>(_SetAcceptanceStatus_QNAME, SetAcceptanceStatus.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignalForLocation }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignalForLocation")
+    public JAXBElement<CancelSignalForLocation> createCancelSignalForLocation(CancelSignalForLocation value) {
+        return new JAXBElement<CancelSignalForLocation>(_CancelSignalForLocation_QNAME, CancelSignalForLocation.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "login")
+    public JAXBElement<Login> createLogin(Login value) {
+        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTotalEarnedCoinsByLocation }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTotalEarnedCoinsByLocation")
+    public JAXBElement<GetTotalEarnedCoinsByLocation> createGetTotalEarnedCoinsByLocation(GetTotalEarnedCoinsByLocation value) {
+        return new JAXBElement<GetTotalEarnedCoinsByLocation>(_GetTotalEarnedCoinsByLocation_QNAME, GetTotalEarnedCoinsByLocation.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "loginResponse")
+    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
+        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByEventStatuses }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByEventStatuses")
+    public JAXBElement<GetDRSignalsByEventStatuses> createGetDRSignalsByEventStatuses(GetDRSignalsByEventStatuses value) {
+        return new JAXBElement<GetDRSignalsByEventStatuses>(_GetDRSignalsByEventStatuses_QNAME, GetDRSignalsByEventStatuses.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSV }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSV")
+    public JAXBElement<GetBaselineDataAsCSV> createGetBaselineDataAsCSV(GetBaselineDataAsCSV value) {
+        return new JAXBElement<GetBaselineDataAsCSV>(_GetBaselineDataAsCSV_QNAME, GetBaselineDataAsCSV.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetPerformanceIndicator }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setPerformanceIndicator")
+    public JAXBElement<SetPerformanceIndicator> createSetPerformanceIndicator(SetPerformanceIndicator value) {
+        return new JAXBElement<SetPerformanceIndicator>(_SetPerformanceIndicator_QNAME, SetPerformanceIndicator.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPerformanceIndicator }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getPerformanceIndicator")
+    public JAXBElement<GetPerformanceIndicator> createGetPerformanceIndicator(GetPerformanceIndicator value) {
+        return new JAXBElement<GetPerformanceIndicator>(_GetPerformanceIndicator_QNAME, GetPerformanceIndicator.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetDRSignalStatusResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setDRSignalStatusResponse")
+    public JAXBElement<SetDRSignalStatusResponse> createSetDRSignalStatusResponse(SetDRSignalStatusResponse value) {
+        return new JAXBElement<SetDRSignalStatusResponse>(_SetDRSignalStatusResponse_QNAME, SetDRSignalStatusResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllSignalsForUseCaseResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllSignalsForUseCaseResponse")
+    public JAXBElement<GetAllSignalsForUseCaseResponse> createGetAllSignalsForUseCaseResponse(GetAllSignalsForUseCaseResponse value) {
+        return new JAXBElement<GetAllSignalsForUseCaseResponse>(_GetAllSignalsForUseCaseResponse_QNAME, GetAllSignalsForUseCaseResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatus }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatus")
+    public JAXBElement<GetSignalIdsBySignalStatus> createGetSignalIdsBySignalStatus(GetSignalIdsBySignalStatus value) {
+        return new JAXBElement<GetSignalIdsBySignalStatus>(_GetSignalIdsBySignalStatus_QNAME, GetSignalIdsBySignalStatus.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllSignalsForUseCase }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllSignalsForUseCase")
+    public JAXBElement<GetAllSignalsForUseCase> createGetAllSignalsForUseCase(GetAllSignalsForUseCase value) {
+        return new JAXBElement<GetAllSignalsForUseCase>(_GetAllSignalsForUseCase_QNAME, GetAllSignalsForUseCase.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSVResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSVResponse")
+    public JAXBElement<GetBaselineDataAsCSVResponse> createGetBaselineDataAsCSVResponse(GetBaselineDataAsCSVResponse value) {
+        return new JAXBElement<GetBaselineDataAsCSVResponse>(_GetBaselineDataAsCSVResponse_QNAME, GetBaselineDataAsCSVResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllDRUseCases }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllDRUseCases")
+    public JAXBElement<GetAllDRUseCases> createGetAllDRUseCases(GetAllDRUseCases value) {
+        return new JAXBElement<GetAllDRUseCases>(_GetAllDRUseCases_QNAME, GetAllDRUseCases.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetUserFeedback }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setUserFeedback")
+    public JAXBElement<SetUserFeedback> createSetUserFeedback(SetUserFeedback value) {
+        return new JAXBElement<SetUserFeedback>(_SetUserFeedback_QNAME, SetUserFeedback.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineDataResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineDataResponse")
+    public JAXBElement<UploadBaselineDataResponse> createUploadBaselineDataResponse(UploadBaselineDataResponse value) {
+        return new JAXBElement<UploadBaselineDataResponse>(_UploadBaselineDataResponse_QNAME, UploadBaselineDataResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineData }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineData")
+    public JAXBElement<UploadBaselineData> createUploadBaselineData(UploadBaselineData value) {
+        return new JAXBElement<UploadBaselineData>(_UploadBaselineData_QNAME, UploadBaselineData.class, null, value);
     }
 
     /**
@@ -998,24 +1150,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatusResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatusResponse")
-    public JAXBElement<GetSignalIdsBySignalStatusResponse> createGetSignalIdsBySignalStatusResponse(GetSignalIdsBySignalStatusResponse value) {
-        return new JAXBElement<GetSignalIdsBySignalStatusResponse>(_GetSignalIdsBySignalStatusResponse_QNAME, GetSignalIdsBySignalStatusResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsByAcceptanceStatusResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsByAcceptanceStatusResponse")
-    public JAXBElement<GetSignalIdsByAcceptanceStatusResponse> createGetSignalIdsByAcceptanceStatusResponse(GetSignalIdsByAcceptanceStatusResponse value) {
-        return new JAXBElement<GetSignalIdsByAcceptanceStatusResponse>(_GetSignalIdsByAcceptanceStatusResponse_QNAME, GetSignalIdsByAcceptanceStatusResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByEventStatusesResponse }{@code >}}
      * 
      */
@@ -1052,15 +1186,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAccessibleLocations }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAccessibleLocations")
-    public JAXBElement<GetAccessibleLocations> createGetAccessibleLocations(GetAccessibleLocations value) {
-        return new JAXBElement<GetAccessibleLocations>(_GetAccessibleLocations_QNAME, GetAccessibleLocations.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link StoreAndActivateSignal }{@code >}}
      * 
      */
@@ -1088,24 +1213,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SetAcceptanceStatus }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setAcceptanceStatus")
-    public JAXBElement<SetAcceptanceStatus> createSetAcceptanceStatus(SetAcceptanceStatus value) {
-        return new JAXBElement<SetAcceptanceStatus>(_SetAcceptanceStatus_QNAME, SetAcceptanceStatus.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetNewDRSignalByLocationResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getNewDRSignalByLocationResponse")
-    public JAXBElement<GetNewDRSignalByLocationResponse> createGetNewDRSignalByLocationResponse(GetNewDRSignalByLocationResponse value) {
-        return new JAXBElement<GetNewDRSignalByLocationResponse>(_GetNewDRSignalByLocationResponse_QNAME, GetNewDRSignalByLocationResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SetUserFeedbackResponse }{@code >}}
      * 
      */
@@ -1121,15 +1228,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "storeAndActivateSignalResponse")
     public JAXBElement<StoreAndActivateSignalResponse> createStoreAndActivateSignalResponse(StoreAndActivateSignalResponse value) {
         return new JAXBElement<StoreAndActivateSignalResponse>(_StoreAndActivateSignalResponse_QNAME, StoreAndActivateSignalResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignalForLocation }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignalForLocation")
-    public JAXBElement<CancelSignalForLocation> createCancelSignalForLocation(CancelSignalForLocation value) {
-        return new JAXBElement<CancelSignalForLocation>(_CancelSignalForLocation_QNAME, CancelSignalForLocation.class, null, value);
     }
 
     /**
@@ -1160,12 +1258,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDetailsByLocationAndDRSignalId }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "login")
-    public JAXBElement<Login> createLogin(Login value) {
-        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDetailsByLocationAndDRSignalId")
+    public JAXBElement<GetDetailsByLocationAndDRSignalId> createGetDetailsByLocationAndDRSignalId(GetDetailsByLocationAndDRSignalId value) {
+        return new JAXBElement<GetDetailsByLocationAndDRSignalId>(_GetDetailsByLocationAndDRSignalId_QNAME, GetDetailsByLocationAndDRSignalId.class, null, value);
     }
 
     /**
@@ -1178,30 +1276,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetDetailsByLocationAndDRSignalId }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDetailsByLocationAndDRSignalId")
-    public JAXBElement<GetDetailsByLocationAndDRSignalId> createGetDetailsByLocationAndDRSignalId(GetDetailsByLocationAndDRSignalId value) {
-        return new JAXBElement<GetDetailsByLocationAndDRSignalId>(_GetDetailsByLocationAndDRSignalId_QNAME, GetDetailsByLocationAndDRSignalId.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselines }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselines")
     public JAXBElement<GetBaselines> createGetBaselines(GetBaselines value) {
         return new JAXBElement<GetBaselines>(_GetBaselines_QNAME, GetBaselines.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetTotalEarnedCoinsByLocation }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTotalEarnedCoinsByLocation")
-    public JAXBElement<GetTotalEarnedCoinsByLocation> createGetTotalEarnedCoinsByLocation(GetTotalEarnedCoinsByLocation value) {
-        return new JAXBElement<GetTotalEarnedCoinsByLocation>(_GetTotalEarnedCoinsByLocation_QNAME, GetTotalEarnedCoinsByLocation.class, null, value);
     }
 
 }

@@ -1,16 +1,18 @@
 
 package org.wattalyst.services.secured;
 
-import java.net.MalformedURLException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
-
-import ch.epfl.lsir.wattalyst.webserver.Constants;
 
 
 /**
@@ -19,7 +21,7 @@ import ch.epfl.lsir.wattalyst.webserver.Constants;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "SecuredDataAccessService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "file:/private/tmp/SecuredDataAccess-CI.WSDL")
+@WebServiceClient(name = "SecuredDataAccessService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "https://wattalyst.se.rwth-aachen.de/SPEC/SecuredDataAccess-PROD.WSDL")
 public class SecuredDataAccessService
     extends Service
 {
@@ -32,14 +34,28 @@ public class SecuredDataAccessService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL(Constants.DATA_WSDL_URL);
-        } catch (MalformedURLException ex) {
+            url = new URL(setConfigUrl());
+        } catch (IOException ex) {
             e = new WebServiceException(ex);
         }
         SECUREDDATAACCESSSERVICE_WSDL_LOCATION = url;
         SECUREDDATAACCESSSERVICE_EXCEPTION = e;
     }
 
+    /**
+	 * 
+	 * @param port
+	 * @return the authentication token
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static String setConfigUrl() throws FileNotFoundException, IOException{
+		Properties prop = new Properties();
+    	prop.load(new FileInputStream("webserver.config"));
+		String dataWsdlUrl = prop.getProperty("dataWsdlUrl");
+		return dataWsdlUrl;
+	}
+	
     public SecuredDataAccessService() {
         super(__getWsdlLocation(), SECUREDDATAACCESSSERVICE_QNAME);
     }

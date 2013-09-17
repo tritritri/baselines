@@ -497,9 +497,9 @@ public class Supervised implements Baseline{
 	}
 
 	@Override
-	public void writeResultToWattalystDB(String authenticationToken, String baselineID) {
+	public void writeResultToWattalystDB(String baselineID) {
 		WebserverDataWriter writer = new WebserverDataWriter();
-		writer.updateBaselineData(authenticationToken, baselineID, data[1]);
+		writer.updateBaselineData(baselineID, data[1]);
 	}
 
 	@Override

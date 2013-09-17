@@ -48,7 +48,6 @@ public class StoreBaselineData {
 		} 
 
 		// process default operand
-		String authenticationToken = "mheqzghwnhh+";
 		String sensor = args[args.length-3];
 		String baseline = args[args.length-2];
 		String inputfile = args[args.length-1];
@@ -56,7 +55,7 @@ public class StoreBaselineData {
 		// Check if the baseline ID exists
 		WebserverDataReader reader = new WebserverDataReader();
 		boolean foundBaseline = false;
-		for(String bl : reader.getBaselines(authenticationToken, sensor)){
+		for(String bl : reader.getBaselines(sensor)){
 			if(bl.equals(baseline)){
 				foundBaseline = true;
 				break;
@@ -78,7 +77,7 @@ public class StoreBaselineData {
 		
 		// Write the sensor readings data structure into the DB
 		WebserverDataWriter writer = new WebserverDataWriter();
-		boolean result = writer.updateBaselineData(authenticationToken, baseline, baselineData);
+		boolean result = writer.updateBaselineData(baseline, baselineData);
 		System.out.println("Baseline data storage: " + (result ? "OK" : "FAILED"));
 	}
 	

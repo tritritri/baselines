@@ -30,14 +30,12 @@ public class KPITask {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		
-		String authenticationToken = "mheqzghwnhh+";
 				
 		WebserverDataReader reader = new WebserverDataReader();
 		WebserverDataWriter writer = new WebserverDataWriter();
 		
 		// 1. Retrieve all DR messages that have not been evaluated
-		HashMap<LocationDto, List<DrSignalDto>> toBeEvaluated = reader.getNotEvaluatedDRSignals(authenticationToken);
+		HashMap<LocationDto, List<DrSignalDto>> toBeEvaluated = reader.getNotEvaluatedDRSignals();
 		
 		// 2. For all the locations
 		for(LocationDto location : toBeEvaluated.keySet()){
@@ -66,39 +64,47 @@ public class KPITask {
 						Date end = new Date(interval.getEndDate());
 						
 						// 7. For all the sensors of the specified type
-						for(String sensorID : reader.getLocationSensorsByAnnotation(authenticationToken, location.getFullQualifiedName(),
-								"SensorType", sensorType)){
+						List<String> sensorsOfType = reader.getLocationSensorsByAnnotation(location.getFullQualifiedName(),
+								"SensorType", sensorType);
+						
+						for(String sensorID : sensorsOfType){
+							
 							String baselineID = sensorID + ".baseline_" + baselineType;
 						        
 							// 8. Retrieve baseline data and real consumption data
 							SensorReadings realConsumption = 
-									reader.getValuesForSensorByRange(authenticationToken, sensorID, start, end, true);
-							SensorReadings baselineConsumption =
-									reader.getBaselineData(authenticationToken, baselineID, start, end);
+									reader.getValuesForSensorByRange(sensorID, start, end, true);
+							SensorReadings baselineConsumption = 
+									reader.getBaselineData(baselineID, start, end);
 						
-							// 9. Compute KPIs
-							double cca = computeConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							double ccp = computeConsumptionChangePerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							double cca_t = computeConsumptionChangePerTokenAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							double ccp_t = computeConsumptionChangePerTokenPerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							double t_cca = computeTokenPerConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+							// 9. Check if baseline and real data have correct size
+							if(realConsumption.getMinDate() == start.getTime() && realConsumption.getMaxDate() == end.getTime() &&
+									baselineConsumption.getMinDate() == start.getTime() && baselineConsumption.getMaxDate() == end.getTime()){
 							
-							//REDUCED_CONSUMPTION --> real over the time window = baseline - absolute change +- tolerance 
+								// 10. Compute KPIs
+								double cca = computeConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								double ccp = computeConsumptionChangePerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								double cca_t = computeConsumptionChangePerTokenAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								double ccp_t = computeConsumptionChangePerTokenPerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								double t_cca = computeTokenPerConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								
-							// 10. Store KPIs
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), cca, 
-									"Absolute change in consumption (kWh)", (cca >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), ccp, 
-									"Percentage change in consumption (%)", (ccp >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), cca_t, 
-									"Absolute change in consumption per reward token (kWh/token)", (cca_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), ccp_t, 
-									"Percentage change in consumption per reward token (%/token)", (ccp_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), t_cca, 
-									"Number of reward tokens per absolute change in consumption (token/kWh)", SuccessStatus.NA.name());
-							writer.setPerformanceIndicator(authenticationToken, drSignalID, location.getFullQualifiedName(), cla, 
-									"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								//REDUCED_CONSUMPTION --> real over the time window = baseline - absolute change +- tolerance 
+									
+								// 11. Store KPIs
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cca, 
+										"Absolute change in consumption (kWh)", (cca >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), ccp, 
+										"Percentage change in consumption (%)", (ccp >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cca_t, 
+										"Absolute change in consumption per reward token (kWh/token)", (cca_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), ccp_t, 
+										"Percentage change in consumption per reward token (%/token)", (ccp_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), t_cca, 
+										"Number of reward tokens per absolute change in consumption (token/kWh)", SuccessStatus.NA.name());
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cla, 
+										"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+							}
 						}
 					}
 				}

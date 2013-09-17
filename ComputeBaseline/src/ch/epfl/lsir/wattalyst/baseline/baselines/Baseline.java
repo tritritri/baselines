@@ -54,9 +54,8 @@ public interface Baseline {
 	public void setInputHistoryOption(boolean flag);
 
 	/**
-	 * @param baselineID 
-	 * @param authenticationToken 
 	 * 
+	 * @param baselineID
 	 */
-	public void writeResultToWattalystDB(String authenticationToken, String baselineID);
+	public void writeResultToWattalystDB(String baselineID);
 }

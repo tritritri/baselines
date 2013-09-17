@@ -46,6 +46,21 @@ public interface SecuredDRSignalManagement {
     /**
      * 
      * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.DrUseCaseListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "useCaseListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAllDRUseCases", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllDRUseCases")
+    @ResponseWrapper(localName = "getAllDRUseCasesResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllDRUseCasesResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAllDRUseCasesRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAllDRUseCasesResponse")
+    public DrUseCaseListResultContainer getAllDRUseCases(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken);
+
+    /**
+     * 
+     * @param authenticationToken
      * @param locationname
      * @param acceptanceStatus
      * @param signalId
@@ -537,6 +552,24 @@ public interface SecuredDRSignalManagement {
     public LocationListResultContainer getAccessibleLocations(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @param useCaseId
+     * @return
+     *     returns org.wattalyst.services.secured.DrSignalListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "drSignalListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAllSignalsForUseCase", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllSignalsForUseCase")
+    @ResponseWrapper(localName = "getAllSignalsForUseCaseResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllSignalsForUseCaseResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAllSignalsForUseCaseRequest", output = "http://secured.services.wattalyst.org/SecuredDRSignalManagement/getAllSignalsForUseCaseResponse")
+    public DrSignalListResultContainer getAllSignalsForUseCase(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "useCaseId", targetNamespace = "")
+        String useCaseId);
 
     /**
      * 
