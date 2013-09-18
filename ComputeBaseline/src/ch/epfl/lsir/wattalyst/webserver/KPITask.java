@@ -81,13 +81,12 @@ public class KPITask {
 							if(realConsumption.getMinDate() == start.getTime() && realConsumption.getMaxDate() == end.getTime() &&
 									baselineConsumption.getMinDate() == start.getTime() && baselineConsumption.getMaxDate() == end.getTime()){
 							
-								// 10. Compute KPIs
+								// 10. Compute KPIs that involves baselines
 								double cca = computeConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								double ccp = computeConsumptionChangePerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								double cca_t = computeConsumptionChangePerTokenAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								double ccp_t = computeConsumptionChangePerTokenPerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								double t_cca = computeTokenPerConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								
 								//REDUCED_CONSUMPTION --> real over the time window = baseline - absolute change +- tolerance 
 									
@@ -102,9 +101,13 @@ public class KPITask {
 										"Percentage change in consumption per reward token (%/token)", (ccp_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
 								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), t_cca, 
 										"Number of reward tokens per absolute change in consumption (token/kWh)", SuccessStatus.NA.name());
-								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cla, 
-										"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
 							}
+							
+							// 12. Compute KPIs that do not involve baselines 
+							double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+							writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cla, 
+									"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+							
 						}
 					}
 				}
