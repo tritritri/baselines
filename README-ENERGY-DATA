@@ -1,0 +1,11 @@
+
+1) Execute ${SITE}-energydata.sh 
+2) Files "sensorname.txt" with energy data are generated
+3) Open ${SITE}-energydata.xlsx
+4) Update data
+
+5) Execute ${SITE}-baselinedata.sh
+6) Files "sensorname.baseline.txt" with baseline data are generated
+7) Open ${SITE}-baselinedata.xlsx
+8) Update data
+

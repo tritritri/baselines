@@ -129,7 +129,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving sensor data. \n +" +
+				System.err.println("Error when retrieving sensor data. \n" +
 						"Method getValuesForSensorByRange() returned message " + result.getStatusMessage());
 			}
 		}
@@ -180,7 +180,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving baseline IDs. \n +" +
+				System.err.println("Error when retrieving baseline IDs. \n" +
 						"Method getBaselines() returned message " + result.getStatusMessage());
 			}
 		}
@@ -218,7 +218,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving sensor IDs. \n +" +
+				System.err.println("Error when retrieving sensor IDs. \n" +
 						"Method getBaselines() returned message " + result.getStatusMessage());
 			}
 		}
@@ -232,11 +232,10 @@ public class WebserverDataReader {
 	/**
 	 * 
 	 * @param location
-	 * @param annotationKey
-	 * @param annotationValue
+	 * @param category
 	 * @return
 	 */
-	public List<String> getLocationSensorsByAnnotation(String location, String annotationKey, String annotationValue) {
+	public List<String> getLocationSensorsByCategory(String location, String category) {
 		
 		List<String> sensorList = new ArrayList<String>();
 		
@@ -247,10 +246,8 @@ public class WebserverDataReader {
 			
 			String authenticationToken = setConfigBinding(port);
 						
-			//SensorListResultContainer sensors = port.getLocationSensorsByAnnotation(authenticationToken, location,
-			//		annotationKey, annotationValue);
 			SensorListResultContainer result = port.getLocationSensorsByCategory(authenticationToken, location, 
-					annotationValue);
+					category);
 			
 			if("OK".equals(result.getStatus().value())){
 				for(SensorDto s : result.getSensors()){
@@ -258,7 +255,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving sensor IDs. \n +" +
+				System.err.println("Error when retrieving sensor IDs. \n" +
 						"Method getLocationSensorsByCategory() returned message " + result.getStatusMessage());
 			}
 		}
@@ -302,7 +299,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving baseline data. \n +" +
+				System.err.println("Error when retrieving baseline data. \n" +
 						"Method getBaselineData() returned message " + result.getStatusMessage());
 			}
 		}
@@ -351,7 +348,7 @@ public class WebserverDataReader {
 						}
 					}
 					else{
-						System.err.println("Error when retrieving DR signal data. \n +" +
+						System.err.println("Error when retrieving DR signal data. \n" +
 								"Method getDRSignalsByLocationAndStatuses() returned message " + signals.getStatusMessage());
 					}
 					
@@ -360,7 +357,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving location data. \n +" +
+				System.err.println("Error when retrieving location data. \n" +
 						"Method getAllLocations() returned message " + locations.getStatusMessage());
 			}
 		}

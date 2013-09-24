@@ -64,8 +64,7 @@ public class KPITask {
 						Date end = new Date(interval.getEndDate());
 						
 						// 7. For all the sensors of the specified type
-						List<String> sensorsOfType = reader.getLocationSensorsByAnnotation(location.getFullQualifiedName(),
-								"SensorType", sensorType);
+						List<String> sensorsOfType = reader.getLocationSensorsByCategory(location.getFullQualifiedName(), sensorType);
 						
 						for(String sensorID : sensorsOfType){
 							
