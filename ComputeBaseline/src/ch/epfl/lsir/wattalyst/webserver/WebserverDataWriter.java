@@ -284,10 +284,10 @@ public class WebserverDataWriter {
 			}
 			br.close();
 			
-			for(String s : sensors){
-				writer.addBaseline("CAISO baseline", "CAISO", s);
-				Thread.sleep(2000);
-			}
+//			for(String s : sensors){
+//				writer.addBaseline("CAISO baseline", "CAISO", s);
+//				Thread.sleep(2000);
+//			}
 			
 			WebserverDataReader reader = new WebserverDataReader();
 			List<String> baselines = new ArrayList<String>();
