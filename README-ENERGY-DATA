@@ -9,3 +9,10 @@
 7) Open ${SITE}-baselinedata.xlsx
 8) Update data
 
+When the event is finished 
+9) Set the offset in ${SITE}-kpidata.sh to the number of days between the day we execute the script and the target day
+10) Execute ${SITE}-kpidata.sh
+11) Files "sensorname.kpi.txt" with energy consumption data of the target day are generated
+12) Open ${SITE}-kpidata.xlsx
+13) Update data
+
