@@ -216,34 +216,34 @@ public class WebserverDataWriter {
 		/** LULEA                                                           */
 		/*********************************************************************/		
 		
-		try{
-			WebserverDataWriter writer = new WebserverDataWriter();
-			BufferedReader br = new BufferedReader(new FileReader(new File("LULEA-sensors.txt")));
-			String sensor = "";
-			List<String> sensors = new ArrayList<String>();
-			while((sensor = br.readLine()) != null){
-				sensors.add(sensor);
-			}
-			br.close();
-			
-			for(String s : sensors){
-				writer.addBaseline("CAISO baseline", "CAISO", s);
-				Thread.sleep(2000);
-			}
-			
-			WebserverDataReader reader = new WebserverDataReader();
-			List<String> baselines = new ArrayList<String>();
-			for(String s : sensors){
-				baselines = reader.getBaselines(s);
-				System.out.println("Sensor " + s);
-				for(String b : baselines){
-					System.out.println("Retrieved baseline " + b);
-				}
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//			WebserverDataWriter writer = new WebserverDataWriter();
+//			BufferedReader br = new BufferedReader(new FileReader(new File("LULEA-sensors.txt")));
+//			String sensor = "";
+//			List<String> sensors = new ArrayList<String>();
+//			while((sensor = br.readLine()) != null){
+//				sensors.add(sensor);
+//			}
+//			br.close();
+//			
+//			for(String s : sensors){
+//				writer.addBaseline("CAISO baseline", "CAISO", s);
+//				Thread.sleep(2000);
+//			}
+//			
+//			WebserverDataReader reader = new WebserverDataReader();
+//			List<String> baselines = new ArrayList<String>();
+//			for(String s : sensors){
+//				baselines = reader.getBaselines(s);
+//				System.out.println("Sensor " + s);
+//				for(String b : baselines){
+//					System.out.println("Retrieved baseline " + b);
+//				}
+//			}
+//		}
+//		catch(Exception e){
+//			e.printStackTrace();
+//		}
 		
 //		SensorReadings baseline = new SensorReadings();
 //		Calendar current = Calendar.getInstance();
@@ -284,10 +284,10 @@ public class WebserverDataWriter {
 			}
 			br.close();
 			
-//			for(String s : sensors){
-//				writer.addBaseline("CAISO baseline", "CAISO", s);
-//				Thread.sleep(2000);
-//			}
+			for(String s : sensors){
+				writer.addBaseline("CAISO baseline", "CAISO", s);
+				Thread.sleep(2000);
+			}
 			
 			WebserverDataReader reader = new WebserverDataReader();
 			List<String> baselines = new ArrayList<String>();

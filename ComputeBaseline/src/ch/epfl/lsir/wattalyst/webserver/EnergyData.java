@@ -170,6 +170,73 @@ public class EnergyData {
 				"wattalyst.lulea.location_160.sensor_1998".equals(sensor)){
 			return 12.3;
 		}		
+		// SAMPOL
+		else if("wattalyst.mallorca.sampol.Building.sensor_117".equals(sensor)){
+			return 80;
+		}
+		else if("wattalyst.mallorca.sampol.Building.sensor_111".equals(sensor)){
+			return 30;
+		}
+		else if("wattalyst.mallorca.sampol.Building.sensor_99".equals(sensor)){
+			return 48;
+		}
+		else if("wattalyst.mallorca.sampol.Building.sensor_105".equals(sensor)){
+			return 140;
+		}
+		else if("wattalyst.mallorca.sampol.TechnologicalIntegration.sensor_19".equals(sensor)){
+			return 20;
+		}
+		else if("wattalyst.mallorca.sampol.TechnologicalIntegration.sensor_17".equals(sensor)){
+			return 10;
+		}
+		else if("wattalyst.mallorca.sampol.TechnologicalIntegration.sensor_1069".equals(sensor)){
+			return 30;
+		}
+		else if("wattalyst.mallorca.sampol.AdministrativeAccounting.sensor_1078".equals(sensor)){
+			return 20;
+		}
+		else if("wattalyst.mallorca.sampol.AdministrativeAccounting.sensor_26".equals(sensor)){
+			return 10;
+		}
+		else if("wattalyst.mallorca.sampol.AdministrativeAccounting.sensor_1030".equals(sensor)){
+			return 30;
+		}
+		else if("wattalyst.mallorca.sampol.ITDepartment.sensor_1097".equals(sensor)){
+			return 10;
+		}
+		else if("wattalyst.mallorca.sampol.ITDepartment.sensor_1088".equals(sensor)){
+			return 20;
+		}
+		else if("wattalyst.mallorca.sampol.ITDepartment.sensor_1095".equals(sensor)){
+			return 30;
+		}
+		else if("wattalyst.mallorca.sampol.InstallationsDepartment.sensor_56".equals(sensor)){
+			return 15;
+		}
+		else if("wattalyst.mallorca.sampol.InstallationsDepartment.sensor_1103".equals(sensor)){
+			return 25;
+		}
+		else if("wattalyst.mallorca.sampol.InstallationsDepartment.sensor_50".equals(sensor)){
+			return 10;
+		}
+		else if("wattalyst.mallorca.sampol.EnergyDepartment.sensor_68".equals(sensor)){
+			return 25;
+		}
+		else if("wattalyst.mallorca.sampol.EnergyDepartment.sensor_62".equals(sensor)){
+			return 15;
+		}
+		else if("wattalyst.mallorca.sampol.EnergyDepartment.sensor_1110".equals(sensor)){
+			return 40;
+		}
+		else if("wattalyst.mallorca.sampol.Storehouse.sensor_74".equals(sensor)){
+			return 60;
+		}
+		else if("wattalyst.mallorca.sampol.Storehouse.sensor_1116".equals(sensor)){
+			return 30;
+		}
+		else if("wattalyst.mallorca.sampol.Storehouse.sensor_1119".equals(sensor)){
+			return 90;
+		}
 		return Double.POSITIVE_INFINITY;
 	}
 	
