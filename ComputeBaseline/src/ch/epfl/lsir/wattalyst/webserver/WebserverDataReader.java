@@ -3,8 +3,6 @@ package ch.epfl.lsir.wattalyst.webserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -340,7 +338,7 @@ public class WebserverDataReader {
 					
 					List<DrSignalDto> toEval = new ArrayList<DrSignalDto>();
 					DrSignalListResultContainer signals = drPort.getDRSignalsByLocationAndStatuses(authenticationToken, loc.getFullQualifiedName(), signalStatuses);
-				
+					
 					// Put the result in list
 					if("OK".equals(signals.getStatus().value())){
 						for(DrSignalDto signal : signals.getSignals()){
@@ -367,39 +365,7 @@ public class WebserverDataReader {
 		
 		return toBeEvaluated;
 	}
-
-	/**
-	 * 
-	 * @param args
-	 * @throws ParseException 
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public static void main(String[] args) throws ParseException, FileNotFoundException, IOException{
-		WebserverDataReader reader = new WebserverDataReader();
-		Date startDate = new SimpleDateFormat(ch.epfl.lsir.wattalyst.baseline.constants.Constants.DATETIME_FORMAT).parse("2013-07-03 00:00:00");
-		Date endDate = new SimpleDateFormat(ch.epfl.lsir.wattalyst.baseline.constants.Constants.DATETIME_FORMAT).parse("2013-07-03 23:59:00");
-		SensorReadings readings = reader.getValuesForSensorByRange("wattalyst.lulea.location_120.sensor_1460", startDate, endDate, true);
-		System.out.println(readings.toStringAsc());
-//		try{
-//			java.io.BufferedWriter r = new java.io.BufferedWriter(new java.io.FileWriter("/tmp/out.txt"));
-//			for(long date = readings.getMinDate(); date <= readings.getMaxDate(); date = date + 10*60*1000){
-//				r.write("insert into daily_profile values(" + date + 
-//						", \'wattalyst.lulea.location_43.sensor_348\', " + (date/1000) + 
-//						", " + readings.get(date) + ");");
-//				r.newLine();
-//			}
-//			r.flush();
-//			r.close();
-//		}
-//		catch(Exception e){}
-		
-		SensorReadings baseline = reader.getBaselineData("wattalyst.lulea.location_120.sensor_1460.baseline_CAISO", 
-				startDate, endDate);
-		System.out.println(baseline.toStringAsc());
-	}
-
-
+	
 //	/**
 //	 * 
 //	 * @param sensor
@@ -470,5 +436,6 @@ public class WebserverDataReader {
 //		}
 //		return readings;
 //	}	
+
 	
 }
