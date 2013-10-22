@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class ConsumptionLimitAbs extends KPI {
 
-	private double achieved;
+	private Double achieved;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -16,7 +16,7 @@ public class ConsumptionLimitAbs extends KPI {
 	 * Consumption limit reached or not
 	 */
 	public ConsumptionLimitAbs(){
-		achieved = Double.NaN;
+		achieved = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -28,7 +28,7 @@ public class ConsumptionLimitAbs extends KPI {
 	@Override
 	protected void doCompute() {
 				
-		achieved = -1;
+		achieved = -1.0;
 		
 		double cons = 0;
 		
@@ -39,7 +39,7 @@ public class ConsumptionLimitAbs extends KPI {
 			current.add(Calendar.HOUR_OF_DAY, 1);
 		}
 		
-		achieved = cons <= consumptionLimit ? 1 : -1;
+		achieved = cons <= consumptionLimit ? 1.0 : -1.0;
 	}
 
 	/*
@@ -56,7 +56,7 @@ public class ConsumptionLimitAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return achieved;
 	}
 

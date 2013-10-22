@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class TokenPerConsumptionChangeAbs extends KPI {
 
-	private double tokensPerConsumptionChange;
+	private Double tokensPerConsumptionChange;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -20,7 +20,7 @@ public class TokenPerConsumptionChangeAbs extends KPI {
 	 * the DR system, since the consumer increased the consumption.
 	 */
 	public TokenPerConsumptionChangeAbs(){
-		tokensPerConsumptionChange = Double.NaN;
+		tokensPerConsumptionChange = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -39,7 +39,7 @@ public class TokenPerConsumptionChangeAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return tokensPerConsumptionChange;
 	}
 	
@@ -50,7 +50,7 @@ public class TokenPerConsumptionChangeAbs extends KPI {
 	@Override
 	protected void doCompute() {
 				
-		tokensPerConsumptionChange = 0;
+		tokensPerConsumptionChange = 0.0;
 		
 		Calendar current = Calendar.getInstance();
 		current.setTime(startCal.getTime());

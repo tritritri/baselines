@@ -94,7 +94,7 @@ public abstract class KPI {
 	 * 
 	 * @return
 	 */
-	public abstract double getResult();
+	public abstract Double getResult();
 
 	/*
 	 * (non-Javadoc)

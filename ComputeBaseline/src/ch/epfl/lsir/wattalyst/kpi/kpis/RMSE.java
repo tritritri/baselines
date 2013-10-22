@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class RMSE extends KPI {
 
-	private double rmse;
+	private Double rmse;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -15,7 +15,7 @@ public class RMSE extends KPI {
 	 * Round mean square error
 	 */
 	public RMSE(){
-		rmse = Double.NaN;
+		rmse = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -34,7 +34,7 @@ public class RMSE extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return rmse;
 	}
 	
@@ -45,7 +45,7 @@ public class RMSE extends KPI {
 	@Override
 	protected void doCompute() {
 
-		rmse = 0;
+		rmse = 0.0;
 		int count = 0;
 				
 		Calendar current = Calendar.getInstance();

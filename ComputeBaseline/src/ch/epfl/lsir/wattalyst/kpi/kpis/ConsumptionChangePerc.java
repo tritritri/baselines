@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class ConsumptionChangePerc extends KPI {
 
-	private double consumptionChange;
+	private Double consumptionChange;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -16,7 +16,7 @@ public class ConsumptionChangePerc extends KPI {
 	 * Consumption change in percentage terms: (consumption - baseline)/baseline
 	 */
 	public ConsumptionChangePerc(){
-		consumptionChange = Double.NaN;
+		consumptionChange = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -28,7 +28,7 @@ public class ConsumptionChangePerc extends KPI {
 	@Override
 	protected void doCompute() {
 
-		consumptionChange = 0;
+		consumptionChange = 0.0;
 		
 		double totalBaseline = 0.0;
 				
@@ -41,10 +41,10 @@ public class ConsumptionChangePerc extends KPI {
 		}
 		
 		// If total baseline is 0, then the KPI is not applicable.
-		// Return Double.POSITIVE_INFINITY and manage it in KPITask
+		// Set to null and manage it in KPITask
 		if(totalBaseline == 0)
 		{
-			consumptionChange = Double.POSITIVE_INFINITY;
+			consumptionChange = null;
 		}
 		else{
 			consumptionChange = 100.0*consumptionChange/totalBaseline;
@@ -65,7 +65,7 @@ public class ConsumptionChangePerc extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return consumptionChange;
 	}
 }

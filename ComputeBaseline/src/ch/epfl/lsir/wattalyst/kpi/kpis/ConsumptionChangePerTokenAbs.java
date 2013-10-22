@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class ConsumptionChangePerTokenAbs extends KPI {
 
-	private double consumptionChangePerToken;
+	private Double consumptionChangePerToken;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -16,7 +16,7 @@ public class ConsumptionChangePerTokenAbs extends KPI {
 	 * Consumption change in absolute terms per token received: (consumption - baseline)/tokens
 	 */
 	public ConsumptionChangePerTokenAbs(){
-		consumptionChangePerToken = Double.NaN;
+		consumptionChangePerToken = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -28,7 +28,7 @@ public class ConsumptionChangePerTokenAbs extends KPI {
 	@Override
 	protected void doCompute() {
 				
-		consumptionChangePerToken = 0;
+		consumptionChangePerToken = 0.0;
 		
 		Calendar current = Calendar.getInstance();
 		current.setTime(startCal.getTime());
@@ -54,7 +54,7 @@ public class ConsumptionChangePerTokenAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return consumptionChangePerToken;
 	}
 	

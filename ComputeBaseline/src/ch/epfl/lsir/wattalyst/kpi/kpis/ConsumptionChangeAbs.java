@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class ConsumptionChangeAbs extends KPI {
 
-	private double consumptionChange;
+	private Double consumptionChange;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -16,7 +16,7 @@ public class ConsumptionChangeAbs extends KPI {
 	 * Consumption change in absolute terms: (consumption - baseline)
 	 */
 	public ConsumptionChangeAbs(){
-		consumptionChange = Double.NaN;
+		consumptionChange = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -28,7 +28,7 @@ public class ConsumptionChangeAbs extends KPI {
 	@Override
 	protected void doCompute() {
 				
-		consumptionChange = 0;
+		consumptionChange = 0.0;
 		
 		Calendar current = Calendar.getInstance();
 		current.setTime(startCal.getTime());
@@ -53,7 +53,7 @@ public class ConsumptionChangeAbs extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return consumptionChange;
 	}
 

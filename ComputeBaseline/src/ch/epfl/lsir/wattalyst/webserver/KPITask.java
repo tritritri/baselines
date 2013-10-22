@@ -19,7 +19,6 @@ import ch.epfl.lsir.wattalyst.kpi.kpis.ConsumptionChangePerTokenAbs;
 import ch.epfl.lsir.wattalyst.kpi.kpis.ConsumptionChangePerTokenPerc;
 import ch.epfl.lsir.wattalyst.kpi.kpis.ConsumptionChangePerc;
 import ch.epfl.lsir.wattalyst.kpi.kpis.ConsumptionLimitAbs;
-import ch.epfl.lsir.wattalyst.kpi.kpis.TokenPerConsumptionChangeAbs;
 
 
 public class KPITask {
@@ -54,6 +53,8 @@ public class KPITask {
 					String sensorType = constraint.getSensorType().name();
 					
 					// 5. Retrieve reward tokens and consumption limits
+					// If the value is 0, the parameter has not been set,
+					// therefore the KPIs that use it should not be computed
 					double numTokens = constraint.getRewardTokens();
 					double consumptionLimit = constraint.getThresholdAmount();
 					
@@ -84,41 +85,39 @@ public class KPITask {
 							if(realConsumption.getMinDate() == start.getTime() && realConsumption.getMaxDate() == end.getTime() &&
 									baselineConsumption.getMinDate() == start.getTime() && baselineConsumption.getMaxDate() == end.getTime()){
 							
-								// 10. Compute KPIs that involves baselines
-								double cca = computeConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								double ccp = computeConsumptionChangePerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								double cca_t = computeConsumptionChangePerTokenAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								double ccp_t = computeConsumptionChangePerTokenPerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								//double t_cca = computeTokenPerConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-								
-								//REDUCED_CONSUMPTION --> real over the time window = baseline - absolute change +- tolerance 
-									
-								// 11. Store KPIs
+								// 10. Compute KPIs that involves baselines and store them
+								Double cca = computeConsumptionChangeAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
 								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cca, 
 										"Absolute change in consumption (kWh)", (cca >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
 								
-								if(ccp != Double.POSITIVE_INFINITY){
+								Double ccp = computeConsumptionChangePerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								if(ccp != null){
 									writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), ccp, 
 										"Percentage change in consumption (%)", (ccp >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
 								}
 								
-								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cca_t, 
-										"Absolute change in consumption per reward token (kWh/token)", (cca_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+								if(numTokens > 0){
+									Double cca_t = computeConsumptionChangePerTokenAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+									writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cca_t, 
+											"Absolute change in consumption per reward token (kWh/token)", (cca_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
 								
-								if(ccp_t != Double.POSITIVE_INFINITY){
-									writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), ccp_t, 
-										"Percentage change in consumption per reward token (%/token)", (ccp_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+									Double ccp_t = computeConsumptionChangePerTokenPerc(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+									if(ccp_t != null){
+										writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), ccp_t, 
+												"Percentage change in consumption per reward token (%/token)", (ccp_t >=0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+									}
 								}
 								
-								// writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), t_cca, 
-								//		"Number of reward tokens per absolute change in consumption (token/kWh)", SuccessStatus.NA.name());
+								//TODO 
+								// REDUCED_CONSUMPTION --> real over the time window = baseline - absolute change +- tolerance 
 							}
 							
-							// 12. Compute KPIs that do not involve baselines 
-							double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
-							writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cla, 
-									"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
-							
+							// 11. Compute KPIs that do not involve baselines and store them
+							if(consumptionLimit > 0){
+								Double cla = computeConsumptionLimitAbs(baselineConsumption, realConsumption, start, end, numTokens, consumptionLimit);
+								writer.setPerformanceIndicator(drSignalID, location.getFullQualifiedName(), cla, 
+										"Consumption limit achieved", (cla >= 0 ? SuccessStatus.ACCOMPLISHED.name() : SuccessStatus.NOT_ACCOMPLISHED.name()));
+							}
 						}
 					}
 				}
@@ -129,7 +128,7 @@ public class KPITask {
 	/*
 	 * 
 	 */
-	private static double computeConsumptionChangeAbs(SensorReadings baselineConsumption, 
+	private static Double computeConsumptionChangeAbs(SensorReadings baselineConsumption, 
 			SensorReadings realConsumption, Date start, Date end, double numTokens, double consumptionLimit) {
 
 		Calendar startCal = Calendar.getInstance();
@@ -145,7 +144,7 @@ public class KPITask {
 	/*
 	 * 
 	 */
-	private static double computeConsumptionChangePerc(SensorReadings baselineConsumption, 
+	private static Double computeConsumptionChangePerc(SensorReadings baselineConsumption, 
 			SensorReadings realConsumption, Date start, Date end, double numTokens, double consumptionLimit) {
 
 		Calendar startCal = Calendar.getInstance();
@@ -161,7 +160,7 @@ public class KPITask {
 	/*
 	 * 
 	 */
-	private static double computeConsumptionChangePerTokenAbs(SensorReadings baselineConsumption, 
+	private static Double computeConsumptionChangePerTokenAbs(SensorReadings baselineConsumption, 
 			SensorReadings realConsumption, Date start, Date end, double numTokens, double consumptionLimit) {
 
 		Calendar startCal = Calendar.getInstance();
@@ -177,7 +176,7 @@ public class KPITask {
 	/*
 	 * 
 	 */
-	private static double computeConsumptionChangePerTokenPerc(SensorReadings baselineConsumption, 
+	private static Double computeConsumptionChangePerTokenPerc(SensorReadings baselineConsumption, 
 			SensorReadings realConsumption, Date start, Date end, double numTokens, double consumptionLimit) {
 
 		Calendar startCal = Calendar.getInstance();
@@ -210,7 +209,7 @@ public class KPITask {
 	/*
 	 * 
 	 */
-	private static double computeConsumptionLimitAbs(SensorReadings baselineConsumption, 
+	private static Double computeConsumptionLimitAbs(SensorReadings baselineConsumption, 
 			SensorReadings realConsumption, Date start, Date end, double numTokens, double consumptionLimit) {
 
 		Calendar startCal = Calendar.getInstance();

@@ -7,7 +7,7 @@ import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 
 public class ConsumptionChangePerTokenPerc extends KPI {
 
-	private double consumptionChangePerToken;
+	private Double consumptionChangePerToken;
 	private SimpleDateFormat dayFormatter;
 	private SimpleDateFormat hourFormatter;
 	
@@ -16,7 +16,7 @@ public class ConsumptionChangePerTokenPerc extends KPI {
 	 * Consumption change in percentage terms per token received: ((consumption - baseline)/baseline)/tokens
 	 */
 	public ConsumptionChangePerTokenPerc(){
-		consumptionChangePerToken = Double.NaN;
+		consumptionChangePerToken = null;
 		dayFormatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		hourFormatter = new SimpleDateFormat("hh");
 	}
@@ -28,7 +28,7 @@ public class ConsumptionChangePerTokenPerc extends KPI {
 	@Override
 	protected void doCompute() {
 
-		consumptionChangePerToken = 0;
+		consumptionChangePerToken = 0.0;
 		
 		double totalBaseline = 0.0;
 				
@@ -41,9 +41,9 @@ public class ConsumptionChangePerTokenPerc extends KPI {
 		}
 		
 		// If total baseline is 0, then the KPI is not applicable.
-		// Return Double.POSITIVE_INFINITY and manage it in KPITask
+		// Set to null and manage it in KPITask
 		if(totalBaseline == 0){
-			consumptionChangePerToken = Double.POSITIVE_INFINITY;
+			consumptionChangePerToken = null;
 		}
 		else{
 			consumptionChangePerToken = consumptionChangePerToken/totalBaseline;
@@ -65,7 +65,7 @@ public class ConsumptionChangePerTokenPerc extends KPI {
 	 * (non-Javadoc)
 	 * @see ch.epfl.lsir.wattalyst.kpi.kpis.KPI#getResult()
 	 */
-	public double getResult(){
+	public Double getResult(){
 		return consumptionChangePerToken;
 	}
 	
