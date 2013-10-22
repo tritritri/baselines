@@ -40,7 +40,15 @@ public class ConsumptionChangePerc extends KPI {
 			current.add(Calendar.HOUR_OF_DAY, 1);
 		}
 		
-		consumptionChange = 100.0*consumptionChange/totalBaseline;
+		// If total baseline is 0, then the KPI is not applicable.
+		// Return Double.POSITIVE_INFINITY and manage it in KPITask
+		if(totalBaseline == 0)
+		{
+			consumptionChange = Double.POSITIVE_INFINITY;
+		}
+		else{
+			consumptionChange = 100.0*consumptionChange/totalBaseline;
+		}
 	}
 
 	/*

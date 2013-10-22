@@ -40,8 +40,15 @@ public class ConsumptionChangePerTokenPerc extends KPI {
 			current.add(Calendar.HOUR_OF_DAY, 1);
 		}
 		
-		consumptionChangePerToken = consumptionChangePerToken/totalBaseline;
-		consumptionChangePerToken = 100.0 * consumptionChangePerToken/numTokens;
+		// If total baseline is 0, then the KPI is not applicable.
+		// Return Double.POSITIVE_INFINITY and manage it in KPITask
+		if(totalBaseline == 0){
+			consumptionChangePerToken = Double.POSITIVE_INFINITY;
+		}
+		else{
+			consumptionChangePerToken = consumptionChangePerToken/totalBaseline;
+			consumptionChangePerToken = 100.0 * consumptionChangePerToken/numTokens;
+		}
 	}
 
 	/*

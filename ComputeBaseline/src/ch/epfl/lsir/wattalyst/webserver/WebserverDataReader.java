@@ -339,6 +339,10 @@ public class WebserverDataReader {
 					List<DrSignalDto> toEval = new ArrayList<DrSignalDto>();
 					DrSignalListResultContainer signals = drPort.getDRSignalsByLocationAndStatuses(authenticationToken, loc.getFullQualifiedName(), signalStatuses);
 					
+					// TODO
+					// retrieve the signals attached to a TERMINATED DR event with 
+					// <message name="getDRSignalsByEventStatuses">
+					
 					// Put the result in list
 					if("OK".equals(signals.getStatus().value())){
 						for(DrSignalDto signal : signals.getSignals()){
