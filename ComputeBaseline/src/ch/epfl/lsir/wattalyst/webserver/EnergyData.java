@@ -95,7 +95,7 @@ public class EnergyData {
 	public void removeOutliers(String sensor) {
 		double maxCap = getEnergyMaxCap(sensor);
 		double minCap = 0;
-		for(long timestamp = energy.getMinDate(); timestamp < energy.getMaxDate(); timestamp = timestamp + 3600000){
+		for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
 			if(energy.get(timestamp) > maxCap){
 				energy.insert(timestamp, 0);
 			}
