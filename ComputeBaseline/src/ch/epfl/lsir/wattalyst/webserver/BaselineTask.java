@@ -6,6 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
+
 import ch.epfl.lsir.wattalyst.baseline.baselines.Baseline;
 import ch.epfl.lsir.wattalyst.baseline.constants.Constants;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
@@ -17,9 +24,65 @@ public class BaselineTask {
 	 * 
 	 * @param args
 	 * @throws RemoteException 
+	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws RemoteException {
 		
+		// Parse available options
+		Options opts = createOptions();
+		CommandLineParser parser = new PosixParser();
+		CommandLine cmd = null;
+		
+		try{
+			cmd = parser.parse(opts, args);
+		}
+		catch(ParseException e){
+			HelpFormatter help = new HelpFormatter();
+			help.setWidth(160);
+			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
+							+ "Compute all the baselines and store them in the DB \n"
+							+ "Example: java -jar BaselineTask.jar -t 3\n"
+							+ "\n OPTIONS: \n";
+			help.printHelp(helpString, opts);
+			return;
+		}
+		
+		// if help needed
+		if (cmd.hasOption("h") || !(args.length == 0 || args.length == 2)) {
+			HelpFormatter help = new HelpFormatter();
+			help.setWidth(160);
+			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
+							+ "Compute all the baselines and store them in the DB \n"
+							+ "Example: java -jar BaselineTask.jar -t 3\n"
+							+ "\n OPTIONS: \n";
+			help.printHelp(helpString, opts);
+			return;
+		} 
+
+		// process default operand
+		String targetDayLagStr = "2";
+		if(args.length == 2){
+			targetDayLagStr = args[1];
+		}				
+		
+		int targetDayLag = 2;
+		try{
+			targetDayLag = Integer.parseInt(targetDayLagStr);
+			if(targetDayLag <= 0){
+				throw new NumberFormatException();
+			}
+		}
+		catch(NumberFormatException e){
+			HelpFormatter help = new HelpFormatter();
+			help.setWidth(160);
+			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
+							+ "Compute all the baselines and store them in the DB \n"
+							+ "Example: java -jar BaselineTask.jar -t 3\n"
+							+ "\n OPTIONS: \n";
+			help.printHelp(helpString, opts);
+			return;
+		}
+				
 		Calendar history = Calendar.getInstance();
 		Date endDate = history.getTime();
 		history.add(Calendar.DAY_OF_YEAR, -60);
@@ -27,7 +90,7 @@ public class BaselineTask {
 		Date startDate = history.getTime();
 				
 		Calendar target = Calendar.getInstance();
-		target.add(Calendar.DAY_OF_YEAR, 2);
+		target.add(Calendar.DAY_OF_YEAR, targetDayLag);
 		Util.setToTheEndOfTheDay(history);
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		String targetDate = formatter.format(target.getTime());
@@ -88,5 +151,15 @@ public class BaselineTask {
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.ISONE";
 		}
 		throw new RuntimeException("Type " + type + " not allowed");  
+	}
+	
+	/*
+	 * 
+	 */
+	private static Options createOptions(){
+		Options options = new Options();
+		options.addOption("h", "help", false, "Help. Print this message.");	
+		options.addOption("t", "target", true, "Set the target day. A number > 0 is expected, where 1 means tomorrow, 2 the day after, etc.");		
+		return options;	
 	}
 }
