@@ -27,6 +27,7 @@ import org.wattalyst.services.secured.SecuredDataAccess;
 import org.wattalyst.services.secured.SecuredDataAccessService;
 import org.wattalyst.services.secured.SensorDto;
 import org.wattalyst.services.secured.SensorListResultContainer;
+import org.wattalyst.services.secured.SensorResultContainer;
 import org.wattalyst.services.secured.SignalStatus;
 import org.wattalyst.services.secured.ValueListResultContainer;
 
@@ -263,6 +264,39 @@ public class WebserverDataReader {
 		
 		return sensorList;
 	}
+	
+	
+	public List<String> getSensorByLocationAndSensorType(String location, String type) {
+		
+		List<String> sensorList = new ArrayList<String>();
+		
+		try{
+			// Invoke the web service and retrieve the result
+			SecuredDataAccessService service = new SecuredDataAccessService();
+			SecuredDataAccess port = service.getSecuredDataAccessPort();
+			
+			String authenticationToken = setConfigBinding(port);
+						
+			SensorResultContainer result = port.getSensorByLocationAndSensorType(authenticationToken, location, type);
+			
+			
+			
+			if("OK".equals(result.getStatus().value())){
+				SensorDto s = result.getSensor();
+				sensorList.add(s.getFullQualifiedName());
+				}
+			else{
+				System.err.println("Error when retrieving sensor IDs. \n" +
+						"Method getLocationSensorsByCategory() returned message " + result.getStatusMessage());
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return sensorList;
+	}
+
 
 	
 	/**
@@ -288,7 +322,9 @@ public class WebserverDataReader {
 			ValueListResultContainer result = port.getBaselineData(authenticationToken, baselineID, startDate.getTime(),
 					endDate.getTime());
 			
-			// Put the result in sensor readingas
+			System.out.println(result.getStatus().value());
+			
+			// Put the result in sensor readings
 			if("OK".equals(result.getStatus().value())){
 				for(AValueDto r : result.getValues()){
 					if(r instanceof NumericValueDto){

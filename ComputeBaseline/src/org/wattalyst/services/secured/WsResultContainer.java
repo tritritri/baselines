@@ -33,19 +33,14 @@ import javax.xml.bind.annotation.XmlType;
     "statusMessage"
 })
 @XmlSeeAlso({
-    PiResultContainer.class,
-    FeedbackResultContainer.class,
-    DrSignalListResultContainer.class,
     StringResultContainer.class,
-    DrUseCaseListResultContainer.class,
-    BooleanResultContainer.class,
-    DrSignalResultContainer.class,
-    TaskListResultContainer.class,
-    StringListResultContainer.class,
-    IntegerResultContainer.class,
+    SensorResultContainer.class,
     LocationListResultContainer.class,
+    LocationResultContainer.class,
     ValueListResultContainer.class,
-    BaselineListResultContainer.class
+    SensorListResultContainer.class,
+    ByteResultContainer.class,
+    ValueResultContainer.class
 })
 public abstract class WsResultContainer {
 

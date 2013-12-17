@@ -12,6 +12,7 @@ import org.wattalyst.services.secured.LocationDto;
 import org.wattalyst.services.secured.SuccessStatus;
 import org.wattalyst.services.secured.TaskDto;
 import org.wattalyst.services.secured.TimeIntervalDto;
+import org.wattalyst.services.secured.SignalStatus;
 
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.kpi.kpis.ConsumptionChangeAbs;
@@ -33,16 +34,21 @@ public class KPITask {
 		WebserverDataReader reader = new WebserverDataReader();
 		WebserverDataWriter writer = new WebserverDataWriter();
 		
+		//writer.setDRSignalStatus("wattalyst.lulea.campaign_7.signal_2", "wattalyst.lulea.location_159", SignalStatus.EXPIRED.name());
+		
+		
 		// 1. Retrieve all DR messages that have not been evaluated
 		HashMap<LocationDto, List<DrSignalDto>> toBeEvaluated = reader.getNotEvaluatedDRSignals();
-		
+		System.out.println(toBeEvaluated.size());
 		// 2. For all the locations
 		for(LocationDto location : toBeEvaluated.keySet()){
+			System.out.println(location.getFullQualifiedName());
 			
 			// 3. For all the signals of the location
 			for(DrSignalDto drSignal : toBeEvaluated.get(location)){
 				
 				String drSignalID = drSignal.getFullQualifiedName();
+				System.out.println(drSignalID);
 			
 				// 3. For all the tasks of the signal
 				for(TaskDto task : drSignal.getTasks()){
@@ -51,6 +57,7 @@ public class KPITask {
 					ConstraintDto constraint = task.getConstraint();
 					String baselineType = constraint.getBaselineType().name();
 					String sensorType = constraint.getSensorType().name();
+					System.out.println(sensorType);
 					
 					// 5. Retrieve reward tokens and consumption limits
 					// If the value is 0, the parameter has not been set,
@@ -65,19 +72,22 @@ public class KPITask {
 						Date end = new Date(interval.getEndDate());
 						
 						// 7. For all the sensors of the specified type
-						List<String> sensorsOfType = reader.getLocationSensorsByCategory(location.getFullQualifiedName(), sensorType);
+						//List<String> sensorsOfType = reader.getLocationSensorsByCategory(location.getFullQualifiedName(), sensorType);
+						
 						
 						// TODO
 						// invoke new method getSensorByLocationAndSensorType(String authenticationToken, String
 						// fullQualifiedLocationName, String sensorType)
-						
+						List<String> sensorsOfType = reader.getSensorByLocationAndSensorType(location.getFullQualifiedName(), sensorType);
 						for(String sensorID : sensorsOfType){
 							
+							System.out.println(sensorID);
 							String baselineID = sensorID + ".baseline_" + baselineType;
 						        
 							// 8. Retrieve baseline data and real consumption data
 							SensorReadings realConsumption = 
 									reader.getValuesForSensorByRange(sensorID, start, end, true);
+							
 							SensorReadings baselineConsumption = 
 									reader.getBaselineData(baselineID, start, end);
 						
