@@ -70,9 +70,6 @@ public class BaselineTask {
 		int targetDayLag;
 		try{
 			targetDayLag = Integer.parseInt(targetDayLagStr);
-			if(targetDayLag <= 0){
-				throw new NumberFormatException();
-			}
 		}
 		catch(NumberFormatException e){
 			HelpFormatter help = new HelpFormatter();
@@ -111,16 +108,21 @@ public class BaselineTask {
 			help.printHelp(helpString, opts);
 			return;
 		}
-							
+		
+		// initialize the calendar to the target date
 		Calendar history = Calendar.getInstance();
+		history.add(Calendar.DAY_OF_YEAR, targetDayLag);
+		Util.setToTheEndOfTheDay(history);
 		Date endDate = history.getTime();
+		
+		// roll back 60 days from the target day
 		history.add(Calendar.DAY_OF_YEAR, -60);
 		Util.setToTheBeginningOfTheDay(history);
 		Date startDate = history.getTime();
 				
 		Calendar target = Calendar.getInstance();
 		target.add(Calendar.DAY_OF_YEAR, targetDayLag);
-		Util.setToTheEndOfTheDay(history);
+		Util.setToTheEndOfTheDay(target);
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		String targetDate = formatter.format(target.getTime());
 				
