@@ -27,7 +27,6 @@ import org.wattalyst.services.secured.SecuredDataAccess;
 import org.wattalyst.services.secured.SecuredDataAccessService;
 import org.wattalyst.services.secured.SensorDto;
 import org.wattalyst.services.secured.SensorListResultContainer;
-import org.wattalyst.services.secured.SensorResultContainer;
 import org.wattalyst.services.secured.SignalStatus;
 import org.wattalyst.services.secured.ValueListResultContainer;
 
@@ -265,40 +264,6 @@ public class WebserverDataReader {
 		return sensorList;
 	}
 	
-	
-	public List<String> getSensorByLocationAndSensorType(String location, String type) {
-		
-		List<String> sensorList = new ArrayList<String>();
-		
-		try{
-			// Invoke the web service and retrieve the result
-			SecuredDataAccessService service = new SecuredDataAccessService();
-			SecuredDataAccess port = service.getSecuredDataAccessPort();
-			
-			String authenticationToken = setConfigBinding(port);
-						
-			SensorResultContainer result = port.getSensorByLocationAndSensorType(authenticationToken, location, type);
-			
-			
-			
-			if("OK".equals(result.getStatus().value())){
-				SensorDto s = result.getSensor();
-				sensorList.add(s.getFullQualifiedName());
-				}
-			else{
-				System.err.println("Error when retrieving sensor IDs. \n" +
-						"Method getLocationSensorsByCategory() returned message " + result.getStatusMessage());
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return sensorList;
-	}
-
-
-	
 	/**
 	 * 
 	 * @param baselineID
@@ -321,8 +286,6 @@ public class WebserverDataReader {
 							
 			ValueListResultContainer result = port.getBaselineData(authenticationToken, baselineID, startDate.getTime(),
 					endDate.getTime());
-			
-			System.out.println(result.getStatus().value());
 			
 			// Put the result in sensor readings
 			if("OK".equals(result.getStatus().value())){
@@ -375,10 +338,6 @@ public class WebserverDataReader {
 					List<DrSignalDto> toEval = new ArrayList<DrSignalDto>();
 					DrSignalListResultContainer signals = drPort.getDRSignalsByLocationAndStatuses(authenticationToken, loc.getFullQualifiedName(), signalStatuses);
 					
-					// TODO
-					// retrieve the signals attached to a TERMINATED DR event with 
-					// <message name="getDRSignalsByEventStatuses">
-					
 					// Put the result in list
 					if("OK".equals(signals.getStatus().value())){
 						for(DrSignalDto signal : signals.getSignals()){
@@ -405,77 +364,5 @@ public class WebserverDataReader {
 		
 		return toBeEvaluated;
 	}
-	
-//	/**
-//	 * 
-//	 * @param sensor
-//	 * @param startDate these dates are in executing machine time zone
-//	 * @param endDate these dates are in executing machine time zone
-//	 * @param useDifferenceMethod
-//	 * @return
-//	 */
-//	public SensorReadings getValuesForSensorByRange(String sensor, Date startDate, Date endDate, boolean useDifferenceMethod) {
-//					
-//		try {
-//			
-//			// Invoke the web service and retrieve the result
-//			SecuredDataAccessService service = new SecuredDataAccessService();
-//			SecuredDataAccess port = service.getSecuredDataAccessPort();
-//			
-//			String endpointURL = "https://wattalyst-ci.se.rwth-aachen.de/SecuredDataAccessService/SecuredDataAccess";
-//			BindingProvider bp = (BindingProvider) port;
-//			bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-//						
-//			// Create a sensor readings data structure 
-//			SensorReadings readings = new SensorReadings();
-//			
-//			String username = "wattalyst";
-//			byte[] pwd = "bqdyoq35".getBytes("UTF-8");
-//			byte[] digestedPwd = MessageDigest.getInstance("MD5").digest(pwd);
-//			byte[] base64DigestedPwd = Base64.encodeBase64(digestedPwd);
-//			String password = new String(base64DigestedPwd);
-//					
-//			String authenticationToken = port.login(username, password);
-//			
-//			ValueListResultContainer result = port.getValuesForSensorByRange(authenticationToken, sensor, startDate.getTime(), endDate.getTime());
-//			
-//			// Put the result in a sorted set
-//			if("OK".equals(result.getStatus().value())){
-//				TreeSet<AValueDto> sortedSet = new TreeSet<AValueDto>();
-//				for(AValueDto r : result.getValues()){
-//					sortedSet.add(r);
-//				}
-//				
-//				// Generate a sensor readings data set using the difference method (e.g. for energy)
-//				if(useDifferenceMethod){
-//					Calendar current = Calendar.getInstance();
-//					current.setTime(startDate);
-//					while(!current.getTime().after(endDate)){
-//						Double lower = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime());
-//						Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000 - 1); //3600000 = 1*60*60*1000: 1 hour shift
-//						
-//						if(lower.isNaN() || upper.isNaN()){
-//							readings.insert(current.getTimeInMillis(), Double.NaN);
-//						}
-//						else {
-//							readings.insert(current.getTimeInMillis(), (upper - lower));
-//						}
-//						
-//						current.add(Calendar.HOUR_OF_DAY, 1);
-//						//current.add(Calendar.MINUTE, 10);
-//					}
-//				}
-//				// Generate a sensor readings data set aggregating different readings in the same hour (e.g. for power)
-//				else{
-//					throw new RuntimeException("Not implemented yet!");
-//				}
-//			}
-//		}
-//		catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return readings;
-//	}	
-
 	
 }

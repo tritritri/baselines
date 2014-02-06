@@ -76,9 +76,9 @@ public class KPITask {
 						
 						
 						// TODO
-						// invoke new method getSensorByLocationAndSensorType(String authenticationToken, String
-						// fullQualifiedLocationName, String sensorType)
-						List<String> sensorsOfType = reader.getSensorByLocationAndSensorType(location.getFullQualifiedName(), sensorType);
+						// Use new call getSensorByLocationAndSensorType()
+						
+						List<String> sensorsOfType = null;//reader.getSensorByLocationAndSensorType(location.getFullQualifiedName(), sensorType);
 						for(String sensorID : sensorsOfType){
 							
 							System.out.println(sensorID);

@@ -4,6 +4,7 @@ package org.wattalyst.services.secured;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -34,15 +35,15 @@ public class SecuredDRSignalManagementService
         URL url = null;
         WebServiceException e = null;
         try {
-        	url = new URL(setConfigUrl());
+            url = new URL(setConfigUrl());
         } catch (IOException ex) {
             e = new WebServiceException(ex);
         }
         SECUREDDRSIGNALMANAGEMENTSERVICE_WSDL_LOCATION = url;
         SECUREDDRSIGNALMANAGEMENTSERVICE_EXCEPTION = e;
     }
-    
-    /**
+
+ /**
 	 * 
 	 * @param port
 	 * @return the authentication token

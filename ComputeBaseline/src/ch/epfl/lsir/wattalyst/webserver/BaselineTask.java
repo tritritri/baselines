@@ -47,19 +47,19 @@ public class BaselineTask {
 			help.setWidth(160);
 			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
 							+ "Compute all the baselines and store them in the DB \n"
-							+ "Example: java -jar BaselineTask.jar -t 2 -e exclude.txt -l LULEA\n"
+							+ "Example: java -jar BaselineTask.jar -t 1 -e exclude.txt -l LULEA\n"
 							+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
 		}
 		
 		// if help needed
-		if (cmd.hasOption("h") || !(args.length == 0 || args.length == 6)) {
+		if (cmd.hasOption("h") || args.length != 6) {
 			HelpFormatter help = new HelpFormatter();
 			help.setWidth(160);
 			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
 							+ "Compute all the baselines and store them in the DB \n"
-							+ "Example: java -jar BaselineTask.jar -t 2 -e exclude.txt -l LULEA\n"
+							+ "Example: java -jar BaselineTask.jar -t 1 -e exclude.txt -l LULEA\n"
 							+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
@@ -79,7 +79,7 @@ public class BaselineTask {
 			help.setWidth(160);
 			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
 							+ "Compute all the baselines and store them in the DB \n"
-							+ "Example: java -jar BaselineTask.jar -t 2 -e exclude.txt -l LULEA\n"
+							+ "Example: java -jar BaselineTask.jar -t 1 -e exclude.txt -l LULEA\n"
 							+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
@@ -93,7 +93,7 @@ public class BaselineTask {
 			help.setWidth(160);
 			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
 							+ "Compute all the baselines and store them in the DB \n"
-							+ "Example: java -jar BaselineTask.jar -t 2 -e exclude.txt -l LULEA\n"
+							+ "Example: java -jar BaselineTask.jar -t 1 -e exclude.txt -l LULEA\n"
 							+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
@@ -106,7 +106,7 @@ public class BaselineTask {
 			help.setWidth(160);
 			String helpString = "java -jar BaselineTask.jar [OPTIONS] \n" 
 							+ "Compute all the baselines and store them in the DB \n"
-							+ "Example: java -jar BaselineTask.jar -t 2 -e exclude.txt -l LULEA\n"
+							+ "Example: java -jar BaselineTask.jar -t 1 -e exclude.txt -l LULEA\n"
 							+ "\n OPTIONS: \n";
 			help.printHelp(helpString, opts);
 			return;
