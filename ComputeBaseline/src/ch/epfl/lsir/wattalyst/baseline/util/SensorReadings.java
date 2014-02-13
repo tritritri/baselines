@@ -322,7 +322,7 @@ public class SensorReadings {
 			long ts = so.getKey(i);
 			Date dt = new Date(ts);
 			double value = (double) so.getContent(i);	
-			res = res + formatter.format(dt) + "," + value + "\n";
+			res = res + formatter.format(dt) + "," + value + "," + ts + "\n";
 		}
 		return res;		
 	}

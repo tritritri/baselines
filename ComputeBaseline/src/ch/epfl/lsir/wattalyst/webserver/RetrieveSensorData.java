@@ -1,6 +1,7 @@
 package ch.epfl.lsir.wattalyst.webserver;
 
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,17 +75,20 @@ public class RetrieveSensorData {
 		EnergyData e = new EnergyData();
 		e.compute(sensorName, startDate, endDate, false);
 		SensorReadings data = e.getData();
-		System.out.println(data.toStringRawAsc());
 		
 		// output the result
-		/*
+		PrintWriter fileOut;
 		if (cmd.hasOption("o")){
-			e.writeResultToFile(cmd.getOptionValue("o"));
-		} else {
-			System.out.println();
-			e.writeResult(System.out);
-		}		
-		*/
+			fileOut = new PrintWriter(cmd.getOptionValue("o"));
+		}
+		else{
+			fileOut = new PrintWriter(System.out);
+		}
+		
+		fileOut.print(data.toStringRawAsc());
+		fileOut.close();
+				
+	
 	}
 	
 	/*
@@ -92,8 +96,8 @@ public class RetrieveSensorData {
 	 */
 	private static Options createOptions(){
 		Options options = new Options();
-		//options.addOption("o", "output", true, "Write the energy data into a file.");
 		options.addOption("h", "help", false, "Help. Print this message.");	
+		options.addOption("o", "output", true, "Write the sensor data into a file.");
 		options.addOption("t", "timezone", true, "Use the specified time zone instead of local time zone. " +
 				"Example of format accepted: GMT+2, Europe/Zurich, CET. Any wrong format will be treated as GMT+0.");		
 		return options;	
