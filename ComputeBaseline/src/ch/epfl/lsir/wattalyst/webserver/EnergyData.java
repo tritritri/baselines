@@ -1,12 +1,16 @@
 package ch.epfl.lsir.wattalyst.webserver;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TreeSet;
 
 import ch.epfl.lsir.wattalyst.baseline.util.SensorReadings;
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
@@ -44,7 +48,7 @@ public class EnergyData {
 			throw new RuntimeException("Start date must be before or equal to end date");
 		}
 				
-		energy = new SensorReadings();
+		//energy = new SensorReadings();
 		
 		// Save the original start and end date into the calendars
 		startCal.setTime(startDate);
@@ -55,6 +59,80 @@ public class EnergyData {
 		// Invoke Aachen webservice
 		WebserverDataReader webserverDataReader = new WebserverDataReader();
 		energy = webserverDataReader.getValuesForSensorByRange(sensorName, startDate, endDate, useDifferenceMethod);
+	}
+	
+	/**
+	 * 
+	 * @param sensorDataFile
+	 */
+	public void compute(String sensorDataFile){
+		
+		energy = new SensorReadings();
+				
+		try{
+			
+			BufferedReader br = new BufferedReader(new FileReader(new File(sensorDataFile)));
+			String line = "";
+			TreeSet<TimestampValue> sortedSet = new TreeSet<TimestampValue>();
+			long minTs = Long.MAX_VALUE;
+			long maxTs = Long.MIN_VALUE;
+			while( (line = br.readLine()) != null )
+			{
+				long ts = Long.valueOf(line.split(",")[3]);
+				double value = Double.valueOf(line.split(",")[2]);
+				minTs = ts < minTs ? ts : minTs;
+				maxTs = ts > maxTs ? ts : maxTs;
+				sortedSet.add(new TimestampValue(ts, value));
+			}
+			br.close();
+			
+			Calendar current = Calendar.getInstance();
+			Date startDate = new Date(minTs);
+			current.setTime(startDate);
+			Util.setToTheBeginningOfTheHour(current);
+			Date endDate = new Date(maxTs);
+			
+			// Save the original start and end date into the calendars
+			startCal.setTime(startDate);
+			Util.setToTheBeginningOfTheDay(startCal);
+			endCal.setTime(endDate);
+			Util.setToTheEndOfTheDay(endCal);
+						
+			while(!current.getTime().after(endDate)){
+								
+				Double lower = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime());
+				Double upper = findLastValueBeforeOrEqual(sortedSet, current.getTime().getTime() + 3600000); //3600000 = 1*60*60*1000: 1 hour shift
+				
+				if(lower.isNaN() || upper.isNaN()){
+					energy.insert(current.getTimeInMillis(), Double.NaN);
+				}
+				else {
+					energy.insert(current.getTimeInMillis(), (upper - lower));
+				}
+
+				current.add(Calendar.HOUR_OF_DAY, 1);
+				//current.add(Calendar.MINUTE, 10);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	/*
+	 * 
+	 */
+	private double findLastValueBeforeOrEqual(TreeSet<TimestampValue> sortedSet, long time) {
+		Double lastValue = Double.NaN;
+		for(TimestampValue v : sortedSet){
+			if(v.ts <= time){
+				lastValue = v.value;
+			}
+			else{
+				break;
+			}
+		}
+		return lastValue;
 	}
 	
 	/**
@@ -95,6 +173,15 @@ public class EnergyData {
 	public void removeOutliers(String sensor) {
 		double maxCap = getEnergyMaxCap(sensor);
 		double minCap = 0;
+		removeOutliers(minCap, maxCap);
+	}
+	
+	/**
+	 * 
+	 * @param minCap
+	 * @param maxCap
+	 */
+	public void removeOutliers(double minCap, double maxCap) {
 		for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
 			if(energy.get(timestamp) > maxCap){
 				energy.insert(timestamp, 0);
@@ -103,7 +190,7 @@ public class EnergyData {
 				energy.insert(timestamp, 0);
 			}
 		}
-	}
+	}	
 
 	/**
 	 * 
@@ -129,7 +216,7 @@ public class EnergyData {
 				"wattalyst.lulea.location_123.sensor_1502".equals(sensor) || 
 				"wattalyst.lulea.location_46.sensor_545".equals(sensor) ||
 				"wattalyst.lulea.location_160.sensor_1992".equals(sensor)){
-			return 59.2;
+			return 20;
 		}
 		// Energy heating DH
 		else if("wattalyst.lulea.location_43.sensor_346".equals(sensor) ||
@@ -142,7 +229,7 @@ public class EnergyData {
 				"wattalyst.lulea.location_123.sensor_1504".equals(sensor) || 
 				"wattalyst.lulea.location_46.sensor_560".equals(sensor) ||
 				"wattalyst.lulea.location_160.sensor_1994".equals(sensor)){
-			return 9.4;
+			return 10;
 		}
 		// Energy water DH
 		else if("wattalyst.lulea.location_43.sensor_348".equals(sensor) ||
@@ -155,7 +242,7 @@ public class EnergyData {
 				"wattalyst.lulea.location_123.sensor_1506".equals(sensor) || 
 				"wattalyst.lulea.location_46.sensor_562".equals(sensor) ||
 				"wattalyst.lulea.location_160.sensor_1996".equals(sensor)){
-			return 56.2;
+			return 10;
 		}
 		// Energy EL
 		else if("wattalyst.lulea.location_43.sensor_590".equals(sensor) ||
@@ -238,6 +325,32 @@ public class EnergyData {
 			return 90;
 		}
 		return Double.POSITIVE_INFINITY;
+	}
+	
+}
+
+/*
+ * 
+ */
+class TimestampValue implements Comparable<TimestampValue>{
+	
+	long ts;
+	double value;
+
+	public TimestampValue(long ts, double value)
+	{
+		this.ts = ts;
+		this.value = value;
+	}
+
+	/*
+	 * 
+	 */
+	@Override
+	public int compareTo(TimestampValue o) {
+		if( this.ts < o.ts )      return -1;
+		else if( this.ts > o.ts ) return 1;
+		else                      return 0;
 	}
 	
 }
