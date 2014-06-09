@@ -1,8 +1,0 @@
-energy-file = data/1083.txt
-temperature-file = data/temp_lulea_hourly_fixed.txt
-algorithm-file = data/algLinearRegression.txt
-history-weekday = 20
-history-weekend = 10
-lag-weekday = 5
-lag-weekend = 2
-min-value-allowed = 0
