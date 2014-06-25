@@ -31,10 +31,10 @@ import javax.xml.bind.annotation.XmlType;
     "timestamp"
 })
 @XmlSeeAlso({
-    MissingValueDto.class,
     BooleanValueDto.class,
-    TextValueDto.class,
-    NumericValueDto.class
+    NumericValueDto.class,
+    MissingValueDto.class,
+    TextValueDto.class
 })
 public abstract class AValueDto
     extends EntityDto implements Comparable<AValueDto>
@@ -81,5 +81,6 @@ public abstract class AValueDto
     		return 0;
     	}
     }
+
 
 }

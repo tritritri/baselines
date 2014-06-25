@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,10 +29,9 @@ public class BaselineTask {
 	/**
 	 * 
 	 * @param args
-	 * @throws RemoteException 
-	 * @throws ParseException 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws IOException {
 		
 		// Parse available options
 		Options opts = createOptions();
@@ -109,6 +108,20 @@ public class BaselineTask {
 			return;
 		}
 		
+		// set the sensor list
+		List<String> toBeBaselined = new ArrayList<String>();
+		BufferedReader br = null;
+		if("LULEA".equals(locationStr)){
+			br = new BufferedReader(new FileReader(new File("LULEA-sensors.txt")));
+		}
+		else if("MALLORCA".equals(locationStr)){
+			br = new BufferedReader(new FileReader(new File("SAMPOL-sensors.txt")));
+		}
+		String s = "";
+		while( (s = br.readLine()) != null){
+			toBeBaselined.add(s);
+		}
+		
 		// initialize the calendar to the target date
 		Calendar history = Calendar.getInstance();
 		history.add(Calendar.DAY_OF_YEAR, targetDayLag);
@@ -129,32 +142,37 @@ public class BaselineTask {
 		WebserverDataReader reader = new WebserverDataReader();
 		
 		// 1. Retrieve all sensors
-		for(String sensor : reader.getSensors()){
-			
+    		for(String sensor : reader.getSensors()){
+						
 			// 2. Extract the field trial location of the sensor
 			String loc = sensor.split("\\.")[1];
 			if(loc.equalsIgnoreCase(locationStr)){
-			
-				// 3. Retrieve baselines for the sensor
+		
+				// 2. Wattalyst DB has far more baseline IDs than needed,
+				// so we filter out those that are not of interest
+				if(!toBeBaselined.contains(sensor))
+					continue;
+				
+				// 4. Retrieve baselines for the sensor
 				List<String> baselines = reader.getBaselines(sensor);
 				if(!baselines.isEmpty()){
-					// 4. Retrieve sensor historic data and write to file
+					// 5. Retrieve sensor historic data and write to file
 					EnergyData e = new EnergyData();
 					e.compute(sensor, startDate, endDate, true);
 					e.removeOutliers(sensor);
 					e.writeResultToFile(sensor + ".txt");
-					// 5. Cycle over baselines
+					// 6. Cycle over baselines
 					for(String baselineID : baselines){
 						
 						try {
 						
-							// 6. Compute baseline
+							// 7. Compute baseline
 							HashMap<Long,Byte> exclDays = parseExcludedDays(excludeDaysStr);
 							String baselineClass = getBaselineClass(baselineID);
 							Baseline b = (Baseline) Class.forName(baselineClass).newInstance();
 							b.compute(sensor + ".txt", targetDate, targetDate, exclDays);
 							
-							// 7. Store baseline
+							// 8. Store baseline
 							b.writeResultToWattalystDB(baselineID);
 							System.out.println("Computed baseline " + baselineID);
 							b.writeResult(System.out);
@@ -209,7 +227,7 @@ public class BaselineTask {
 		if(type.equals("CAISO")){
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.CAISO";
 		}
-		else if(type.equals("PJMEco")){
+		else if(type.equals("PJM")){
 			return "ch.epfl.lsir.wattalyst.baseline.baselines.PJMEco";
 		}
 		else if(type.equals("ISONE")){

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
@@ -20,7 +21,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;extension base="{http://secured.services.wattalyst.org/}fullQualifiedEntityDto">
  *       &lt;sequence>
  *         &lt;element name="quantization" type="{http://secured.services.wattalyst.org/}quantizationDto" minOccurs="0"/>
- *         &lt;element name="category" type="{http://secured.services.wattalyst.org/}category" minOccurs="0"/>
+ *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="sensor_type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="maximum" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *         &lt;element name="minimum" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/>
  *         &lt;element name="firstValueTimestamp" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "sensorDto", propOrder = {
     "quantization",
     "category",
+    "sensorType",
     "maximum",
     "minimum",
     "firstValueTimestamp",
@@ -58,7 +61,9 @@ public class SensorDto
 {
 
     protected QuantizationDto quantization;
-    protected Category category;
+    protected String category;
+    @XmlElement(name = "sensor_type")
+    protected String sensorType;
     protected Double maximum;
     protected Double minimum;
     protected Long firstValueTimestamp;
@@ -97,10 +102,10 @@ public class SensorDto
      * 
      * @return
      *     possible object is
-     *     {@link Category }
+     *     {@link String }
      *     
      */
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -109,11 +114,35 @@ public class SensorDto
      * 
      * @param value
      *     allowed object is
-     *     {@link Category }
+     *     {@link String }
      *     
      */
-    public void setCategory(Category value) {
+    public void setCategory(String value) {
         this.category = value;
+    }
+
+    /**
+     * Gets the value of the sensorType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSensorType() {
+        return sensorType;
+    }
+
+    /**
+     * Sets the value of the sensorType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSensorType(String value) {
+        this.sensorType = value;
     }
 
     /**

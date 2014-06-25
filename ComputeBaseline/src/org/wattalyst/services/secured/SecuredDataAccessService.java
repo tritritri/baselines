@@ -4,7 +4,6 @@ package org.wattalyst.services.secured;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -22,7 +21,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "SecuredDataAccessService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "https://wattalyst.se.rwth-aachen.de/SPEC/SecuredDataAccess-PROD.WSDL")
+@WebServiceClient(name = "SecuredDataAccessService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "https://wattalyst.se.rwth-aachen.de/SPEC/SecuredDataAccess-PROD.wsdl")
 public class SecuredDataAccessService
     extends Service
 {
@@ -56,7 +55,6 @@ public class SecuredDataAccessService
 		String dataWsdlUrl = prop.getProperty("dataWsdlUrl");
 		return dataWsdlUrl;
 	}
-
 
     public SecuredDataAccessService() {
         super(__getWsdlLocation(), SECUREDDATAACCESSSERVICE_QNAME);

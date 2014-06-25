@@ -4,7 +4,6 @@ package org.wattalyst.services.secured;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -22,7 +21,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "SecuredDRSignalManagementService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "https://wattalyst.se.rwth-aachen.de/SPEC/SecuredDRSignalManagement-PROD.WSDL")
+@WebServiceClient(name = "SecuredDRSignalManagementService", targetNamespace = "http://secured.services.wattalyst.org/", wsdlLocation = "https://wattalyst.se.rwth-aachen.de/SPEC/SecuredDRSignalManagement-PROD.wsdl")
 public class SecuredDRSignalManagementService
     extends Service
 {
@@ -43,7 +42,7 @@ public class SecuredDRSignalManagementService
         SECUREDDRSIGNALMANAGEMENTSERVICE_EXCEPTION = e;
     }
 
- /**
+    /**
 	 * 
 	 * @param port
 	 * @return the authentication token

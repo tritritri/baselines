@@ -31,19 +31,19 @@ import javax.xml.bind.annotation.XmlType;
     "entityId"
 })
 @XmlSeeAlso({
-    ConstraintDto.class,
     KpiPerformanceDto.class,
-    MetaDatumDto.class,
     QuantizationDto.class,
-    FeedbackDto.class,
-    AValueDto.class,
-    ScheduleDto.class,
-    TimeIntervalDto.class,
     RecipientContextDto.class,
     UnitDto.class,
     DrUseCaseDto.class,
     TaskDto.class,
     DrStatusDto.class,
+    ConstraintDto.class,
+    MetaDatumDto.class,
+    AValueDto.class,
+    FeedbackDto.class,
+    ScheduleDto.class,
+    TimeIntervalDto.class,
     FullQualifiedEntityDto.class
 })
 public abstract class EntityDto {
