@@ -178,7 +178,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving baseline IDs. \n" +
+				System.err.println("Error when retrieving baseline IDs for sensor " + sensor + "\n" +
 						"Method getBaselines() returned message " + result.getStatusMessage());
 			}
 		}
@@ -296,7 +296,7 @@ public class WebserverDataReader {
 				}
 			}
 			else{
-				System.err.println("Error when retrieving baseline data. \n" +
+				System.err.println("Error when retrieving baseline data for baselineID " + baselineID + "\n" +
 						"Method getBaselineData() returned message " + result.getStatusMessage());
 			}
 		}
