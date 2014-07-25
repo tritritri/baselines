@@ -2,7 +2,6 @@
 package org.wattalyst.services.secured;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -46,10 +45,9 @@ public class SecuredDRSignalManagementService
 	 * 
 	 * @param port
 	 * @return the authentication token
-	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private static String setConfigUrl() throws FileNotFoundException, IOException{
+	private static String setConfigUrl() throws IOException{
 		Properties prop = new Properties();
     	prop.load(new FileInputStream("webserver.config"));
 		String dataWsdlUrl = prop.getProperty("drSignalWsdlUrl");

@@ -45,225 +45,6 @@ public interface SecuredDataAccess {
 
     /**
      * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.LocationListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "sublocationListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getSubLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSubLocations")
-    @ResponseWrapper(localName = "getSubLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSubLocationsResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getSubLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getSubLocationsResponse")
-    public LocationListResultContainer getSubLocations(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param sensorCategory
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.SensorListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getLocationSensorsByCategory", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByCategory")
-    @ResponseWrapper(localName = "getLocationSensorsByCategoryResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByCategoryResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByCategoryRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByCategoryResponse")
-    public SensorListResultContainer getLocationSensorsByCategory(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName,
-        @WebParam(name = "sensorCategory", targetNamespace = "")
-        String sensorCategory);
-
-    /**
-     * 
-     * @param annotationValue
-     * @param annotationKey
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.SensorListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getLocationSensorsByAnnotation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByAnnotation")
-    @ResponseWrapper(localName = "getLocationSensorsByAnnotationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByAnnotationResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByAnnotationRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByAnnotationResponse")
-    public SensorListResultContainer getLocationSensorsByAnnotation(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName,
-        @WebParam(name = "annotationKey", targetNamespace = "")
-        String annotationKey,
-        @WebParam(name = "annotationValue", targetNamespace = "")
-        String annotationValue);
-
-    /**
-     * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.SensorResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "sensorResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSensor")
-    @ResponseWrapper(localName = "getSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSensorResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getSensorResponse")
-    public SensorResultContainer getSensor(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.ByteResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "byteResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getExportedData", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetExportedData")
-    @ResponseWrapper(localName = "getExportedDataResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetExportedDataResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getExportedDataRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getExportedDataResponse")
-    public ByteResultContainer getExportedData(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.LocationListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "locationListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getAllLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocations")
-    @ResponseWrapper(localName = "getAllLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocationsResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsResponse")
-    public LocationListResultContainer getAllLocations(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken);
-
-    /**
-     * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.SensorListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getLocationSensors", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensors")
-    @ResponseWrapper(localName = "getLocationSensorsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsResponse")
-    public SensorListResultContainer getLocationSensors(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param values
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.BooleanResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "booleanResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "uploadSensorData", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.UploadSensorData")
-    @ResponseWrapper(localName = "uploadSensorDataResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.UploadSensorDataResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/uploadSensorDataRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/uploadSensorDataResponse")
-    public BooleanResultContainer uploadSensorData(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName,
-        @WebParam(name = "values", targetNamespace = "")
-        String values);
-
-    /**
-     * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.ValueResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "valueResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getLastValueForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLastValueForSensor")
-    @ResponseWrapper(localName = "getLastValueForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLastValueForSensorResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLastValueForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLastValueForSensorResponse")
-    public ValueResultContainer getLastValueForSensor(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @return
-     *     returns org.wattalyst.services.secured.ByteResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "byteResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getBinaryValuesForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetBinaryValuesForSensor")
-    @ResponseWrapper(localName = "getBinaryValuesForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetBinaryValuesForSensorResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getBinaryValuesForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getBinaryValuesForSensorResponse")
-    public ByteResultContainer getBinaryValuesForSensor(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName);
-
-    /**
-     * 
-     * @param quantization
-     * @param start
-     * @param fullQualifiedName
-     * @param authenticationToken
-     * @param type
-     * @param end
-     * @return
-     *     returns org.wattalyst.services.secured.ValueListResultContainer
-     */
-    @WebMethod
-    @WebResult(name = "valueListResultContainer", targetNamespace = "")
-    @RequestWrapper(localName = "getAggregatedValuesForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAggregatedValuesForSensor")
-    @ResponseWrapper(localName = "getAggregatedValuesForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAggregatedValuesForSensorResponse")
-    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAggregatedValuesForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAggregatedValuesForSensorResponse")
-    public ValueListResultContainer getAggregatedValuesForSensor(
-        @WebParam(name = "authenticationToken", targetNamespace = "")
-        String authenticationToken,
-        @WebParam(name = "fullQualifiedName", targetNamespace = "")
-        String fullQualifiedName,
-        @WebParam(name = "start", targetNamespace = "")
-        long start,
-        @WebParam(name = "end", targetNamespace = "")
-        long end,
-        @WebParam(name = "quantization", targetNamespace = "")
-        String quantization,
-        @WebParam(name = "type", targetNamespace = "")
-        String type);
-
-    /**
-     * 
      * @param sensorType
      * @param authenticationToken
      * @param fullQualifiedLocationName
@@ -561,9 +342,9 @@ public interface SecuredDataAccess {
         @WebParam(name = "end", targetNamespace = "")
         long end,
         @WebParam(name = "quantization", targetNamespace = "")
-        String quantization,
+        List<String> quantization,
         @WebParam(name = "type", targetNamespace = "")
-        String type);
+        List<String> type);
 
     /**
      * 
@@ -591,9 +372,9 @@ public interface SecuredDataAccess {
         @WebParam(name = "end", targetNamespace = "")
         long end,
         @WebParam(name = "quantization", targetNamespace = "")
-        String quantization,
+        List<String> quantization,
         @WebParam(name = "type", targetNamespace = "")
-        String type);
+        List<String> type);
 
     /**
      * 
@@ -627,6 +408,225 @@ public interface SecuredDataAccess {
     public StringResultContainer dumpAllSensorValuesToZippedCSV(
         @WebParam(name = "authenticationToken", targetNamespace = "")
         String authenticationToken);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.ValueResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "valueResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getLastValueForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLastValueForSensor")
+    @ResponseWrapper(localName = "getLastValueForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLastValueForSensorResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLastValueForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLastValueForSensorResponse")
+    public ValueResultContainer getLastValueForSensor(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.ByteResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "byteResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getBinaryValuesForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetBinaryValuesForSensor")
+    @ResponseWrapper(localName = "getBinaryValuesForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetBinaryValuesForSensorResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getBinaryValuesForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getBinaryValuesForSensorResponse")
+    public ByteResultContainer getBinaryValuesForSensor(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param quantization
+     * @param start
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @param type
+     * @param end
+     * @return
+     *     returns org.wattalyst.services.secured.ValueListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "valueListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAggregatedValuesForSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAggregatedValuesForSensor")
+    @ResponseWrapper(localName = "getAggregatedValuesForSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAggregatedValuesForSensorResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAggregatedValuesForSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAggregatedValuesForSensorResponse")
+    public ValueListResultContainer getAggregatedValuesForSensor(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName,
+        @WebParam(name = "start", targetNamespace = "")
+        long start,
+        @WebParam(name = "end", targetNamespace = "")
+        long end,
+        @WebParam(name = "quantization", targetNamespace = "")
+        String quantization,
+        @WebParam(name = "type", targetNamespace = "")
+        String type);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.SensorResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "sensorResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getSensor", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSensor")
+    @ResponseWrapper(localName = "getSensorResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSensorResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getSensorRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getSensorResponse")
+    public SensorResultContainer getSensor(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.ByteResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "byteResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getExportedData", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetExportedData")
+    @ResponseWrapper(localName = "getExportedDataResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetExportedDataResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getExportedDataRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getExportedDataResponse")
+    public ByteResultContainer getExportedData(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.LocationListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "locationListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getAllLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocations")
+    @ResponseWrapper(localName = "getAllLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetAllLocationsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getAllLocationsResponse")
+    public LocationListResultContainer getAllLocations(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.SensorListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getLocationSensors", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensors")
+    @ResponseWrapper(localName = "getLocationSensorsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsResponse")
+    public SensorListResultContainer getLocationSensors(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.LocationListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "sublocationListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getSubLocations", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSubLocations")
+    @ResponseWrapper(localName = "getSubLocationsResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetSubLocationsResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getSubLocationsRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getSubLocationsResponse")
+    public LocationListResultContainer getSubLocations(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName);
+
+    /**
+     * 
+     * @param sensorCategory
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.SensorListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getLocationSensorsByCategory", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByCategory")
+    @ResponseWrapper(localName = "getLocationSensorsByCategoryResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByCategoryResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByCategoryRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByCategoryResponse")
+    public SensorListResultContainer getLocationSensorsByCategory(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName,
+        @WebParam(name = "sensorCategory", targetNamespace = "")
+        String sensorCategory);
+
+    /**
+     * 
+     * @param annotationValue
+     * @param annotationKey
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.SensorListResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "sensorListResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "getLocationSensorsByAnnotation", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByAnnotation")
+    @ResponseWrapper(localName = "getLocationSensorsByAnnotationResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.GetLocationSensorsByAnnotationResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByAnnotationRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/getLocationSensorsByAnnotationResponse")
+    public SensorListResultContainer getLocationSensorsByAnnotation(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName,
+        @WebParam(name = "annotationKey", targetNamespace = "")
+        String annotationKey,
+        @WebParam(name = "annotationValue", targetNamespace = "")
+        String annotationValue);
+
+    /**
+     * 
+     * @param values
+     * @param fullQualifiedName
+     * @param authenticationToken
+     * @return
+     *     returns org.wattalyst.services.secured.BooleanResultContainer
+     */
+    @WebMethod
+    @WebResult(name = "booleanResultContainer", targetNamespace = "")
+    @RequestWrapper(localName = "uploadSensorData", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.UploadSensorData")
+    @ResponseWrapper(localName = "uploadSensorDataResponse", targetNamespace = "http://secured.services.wattalyst.org/", className = "org.wattalyst.services.secured.UploadSensorDataResponse")
+    @Action(input = "http://secured.services.wattalyst.org/SecuredDataAccess/uploadSensorDataRequest", output = "http://secured.services.wattalyst.org/SecuredDataAccess/uploadSensorDataResponse")
+    public BooleanResultContainer uploadSensorData(
+        @WebParam(name = "authenticationToken", targetNamespace = "")
+        String authenticationToken,
+        @WebParam(name = "fullQualifiedName", targetNamespace = "")
+        String fullQualifiedName,
+        @WebParam(name = "values", targetNamespace = "")
+        String values);
 
     /**
      * 

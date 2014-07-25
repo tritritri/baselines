@@ -24,64 +24,66 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _GetAggregatedBinaryValuesForSensorsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedBinaryValuesForSensorsResponse");
-    private final static QName _GetSubLocations_QNAME = new QName("http://secured.services.wattalyst.org/", "getSubLocations");
-    private final static QName _GetLastValueForSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLastValueForSensorResponse");
-    private final static QName _GetBinaryValuesForSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensor");
-    private final static QName _GetLocationSensorsByCategory_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensorsByCategory");
-    private final static QName _GetValuesForSensorsByRange_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorsByRange");
-    private final static QName _GetBinaryValuesForSensorsByRangeResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorsByRangeResponse");
-    private final static QName _GetValuesForSensorsByRangeDropMissingResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorsByRangeDropMissingResponse");
-    private final static QName _UploadSensorData_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadSensorData");
-    private final static QName _GetValuesForSensorByRangeDropMissingResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorByRangeDropMissingResponse");
-    private final static QName _GetAggregatedBinaryValuesForSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedBinaryValuesForSensorResponse");
-    private final static QName _GetAllLocationsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllLocationsResponse");
-    private final static QName _GetSubLocationsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSubLocationsResponse");
-    private final static QName _DumpAllSensorValuesToZippedCSV_QNAME = new QName("http://secured.services.wattalyst.org/", "dumpAllSensorValuesToZippedCSV");
-    private final static QName _GetSensorByLocationAndSensorTypeResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensorByLocationAndSensorTypeResponse");
-    private final static QName _GetBinaryValuesForSensorsByRangeDropMissingResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorsByRangeDropMissingResponse");
-    private final static QName _GetAggregatedValuesForSensors_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedValuesForSensors");
-    private final static QName _GetLastValuesForSensorsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLastValuesForSensorsResponse");
-    private final static QName _GetLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationResponse");
-    private final static QName _GetLastValuesForSensors_QNAME = new QName("http://secured.services.wattalyst.org/", "getLastValuesForSensors");
-    private final static QName _GetBinaryValuesForSensorByRange_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorByRange");
-    private final static QName _GetSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensorResponse");
-    private final static QName _GetValuesForSensorByRangeDropMissing_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorByRangeDropMissing");
-    private final static QName _GetBinaryValuesForSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorResponse");
-    private final static QName _GetSensorValuesAsCsvZipFileResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensorValuesAsCsvZipFileResponse");
-    private final static QName _DumpAllSensorValuesToZippedCSVResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "dumpAllSensorValuesToZippedCSVResponse");
-    private final static QName _GetValuesForSensorsByRangeResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorsByRangeResponse");
-    private final static QName _GetValuesForSensorByRangeResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorByRangeResponse");
-    private final static QName _GetExportedDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getExportedDataResponse");
-    private final static QName _GetValuesForSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensor");
-    private final static QName _GetSensorByLocationAndSensorType_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensorByLocationAndSensorType");
+    private final static QName _GetAllDRUseCasesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllDRUseCasesResponse");
+    private final static QName _SetPerformanceIndicatorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setPerformanceIndicatorResponse");
+    private final static QName _GetTotalEarnedCoinsByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getTotalEarnedCoinsByLocationResponse");
+    private final static QName _GetSignalIdsByAcceptanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsByAcceptanceStatus");
+    private final static QName _GetNewDRSignalByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getNewDRSignalByLocation");
+    private final static QName _CancelSignalResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalResponse");
+    private final static QName _GetCoinsForSignalByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getCoinsForSignalByLocation");
+    private final static QName _GetDRSignalsByLocationAndStatusesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByLocationAndStatusesResponse");
+    private final static QName _AddBaselineResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "addBaselineResponse");
+    private final static QName _GetCoinsForSignalByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getCoinsForSignalByLocationResponse");
+    private final static QName _GetBaselinesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselinesResponse");
+    private final static QName _CancelSignal_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignal");
+    private final static QName _GetSignalDetailsForLocationInIntervalResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalDetailsForLocationInIntervalResponse");
+    private final static QName _GetDRSignalPerformanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalPerformanceStatus");
+    private final static QName _GetSignalIdsBySignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatusResponse");
+    private final static QName _GetSignalIdsByAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsByAcceptanceStatusResponse");
+    private final static QName _GetAccessibleLocations_QNAME = new QName("http://secured.services.wattalyst.org/", "getAccessibleLocations");
+    private final static QName _SetAcceptanceStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatus");
+    private final static QName _GetNewDRSignalByLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getNewDRSignalByLocationResponse");
+    private final static QName _CancelSignalForLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalForLocation");
     private final static QName _Login_QNAME = new QName("http://secured.services.wattalyst.org/", "login");
-    private final static QName _GetValuesForSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorResponse");
-    private final static QName _GetAggregatedValuesForSensorsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedValuesForSensorsResponse");
+    private final static QName _GetTotalEarnedCoinsByLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getTotalEarnedCoinsByLocation");
     private final static QName _LoginResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "loginResponse");
-    private final static QName _GetLocationSensorsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensorsResponse");
-    private final static QName _GetValuesForSensorDropMissingResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorDropMissingResponse");
-    private final static QName _GetAggregatedBinaryValuesForSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedBinaryValuesForSensor");
-    private final static QName _GetValuesForSensorsByRangeDropMissing_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorsByRangeDropMissing");
-    private final static QName _GetSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensor");
-    private final static QName _GetAggregatedValuesForSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedValuesForSensor");
-    private final static QName _GetBinaryValuesForSensorsByRange_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorsByRange");
-    private final static QName _GetLocationSensorsByAnnotation_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensorsByAnnotation");
-    private final static QName _GetLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocation");
-    private final static QName _GetLocationSensors_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensors");
-    private final static QName _UploadSensorDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadSensorDataResponse");
-    private final static QName _GetAggregatedValuesForSensorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedValuesForSensorResponse");
-    private final static QName _GetValuesForSensorByRange_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorByRange");
-    private final static QName _GetLastValueForSensor_QNAME = new QName("http://secured.services.wattalyst.org/", "getLastValueForSensor");
-    private final static QName _GetBinaryValuesForSensorByRangeResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorByRangeResponse");
-    private final static QName _GetExportedData_QNAME = new QName("http://secured.services.wattalyst.org/", "getExportedData");
-    private final static QName _GetAggregatedBinaryValuesForSensors_QNAME = new QName("http://secured.services.wattalyst.org/", "getAggregatedBinaryValuesForSensors");
-    private final static QName _GetValuesForSensorDropMissing_QNAME = new QName("http://secured.services.wattalyst.org/", "getValuesForSensorDropMissing");
-    private final static QName _GetAllLocations_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllLocations");
-    private final static QName _GetBinaryValuesForSensorsByRangeDropMissing_QNAME = new QName("http://secured.services.wattalyst.org/", "getBinaryValuesForSensorsByRangeDropMissing");
-    private final static QName _GetLocationSensorsByAnnotationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensorsByAnnotationResponse");
-    private final static QName _GetSensorValuesAsCsvZipFile_QNAME = new QName("http://secured.services.wattalyst.org/", "getSensorValuesAsCsvZipFile");
-    private final static QName _GetLocationSensorsByCategoryResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getLocationSensorsByCategoryResponse");
+    private final static QName _GetDRSignalsByEventStatuses_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByEventStatuses");
+    private final static QName _GetBaselineDataAsCSV_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSV");
+    private final static QName _SetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "setPerformanceIndicator");
+    private final static QName _GetPerformanceIndicator_QNAME = new QName("http://secured.services.wattalyst.org/", "getPerformanceIndicator");
+    private final static QName _SetDRSignalStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setDRSignalStatusResponse");
+    private final static QName _GetAllSignalsForUseCaseResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllSignalsForUseCaseResponse");
+    private final static QName _GetSignalIdsBySignalStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalIdsBySignalStatus");
+    private final static QName _GetAllSignalsForUseCase_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllSignalsForUseCase");
+    private final static QName _GetAllDRUseCases_QNAME = new QName("http://secured.services.wattalyst.org/", "getAllDRUseCases");
+    private final static QName _GetBaselineDataAsCSVResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataAsCSVResponse");
+    private final static QName _SetUserFeedback_QNAME = new QName("http://secured.services.wattalyst.org/", "setUserFeedback");
+    private final static QName _UploadBaselineData_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineData");
+    private final static QName _UploadBaselineDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "uploadBaselineDataResponse");
+    private final static QName _CancelSignalForLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "cancelSignalForLocationResponse");
+    private final static QName _GetDetailsByLocationAndDRSignalIdResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDetailsByLocationAndDRSignalIdResponse");
+    private final static QName _GetPerformanceIndicatorResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getPerformanceIndicatorResponse");
+    private final static QName _GetTaskDefinitions_QNAME = new QName("http://secured.services.wattalyst.org/", "getTaskDefinitions");
+    private final static QName _GetAccessibleLocationsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getAccessibleLocationsResponse");
+    private final static QName _GetDRSignalPerformanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalPerformanceStatusResponse");
+    private final static QName _ReportDREventDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "reportDREventDataResponse");
+    private final static QName _GetDRSignalsByEventStatusesResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByEventStatusesResponse");
+    private final static QName _GetUserFeedbackForLocation_QNAME = new QName("http://secured.services.wattalyst.org/", "getUserFeedbackForLocation");
+    private final static QName _GetDRSignalsByLocationAndStatuses_QNAME = new QName("http://secured.services.wattalyst.org/", "getDRSignalsByLocationAndStatuses");
+    private final static QName _GetSignalDetailsForLocationInInterval_QNAME = new QName("http://secured.services.wattalyst.org/", "getSignalDetailsForLocationInInterval");
+    private final static QName _GetUserFeedbackForLocationResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getUserFeedbackForLocationResponse");
+    private final static QName _StoreAndActivateSignal_QNAME = new QName("http://secured.services.wattalyst.org/", "storeAndActivateSignal");
+    private final static QName _SetDRSignalStatus_QNAME = new QName("http://secured.services.wattalyst.org/", "setDRSignalStatus");
+    private final static QName _GetBaselineDataResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineDataResponse");
+    private final static QName _ReportDREventData_QNAME = new QName("http://secured.services.wattalyst.org/", "reportDREventData");
+    private final static QName _SetUserFeedbackResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setUserFeedbackResponse");
+    private final static QName _StoreAndActivateSignalResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "storeAndActivateSignalResponse");
+    private final static QName _AddBaseline_QNAME = new QName("http://secured.services.wattalyst.org/", "addBaseline");
+    private final static QName _GetTaskDefinitionsResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "getTaskDefinitionsResponse");
+    private final static QName _GetBaselineData_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselineData");
+    private final static QName _SetAcceptanceStatusResponse_QNAME = new QName("http://secured.services.wattalyst.org/", "setAcceptanceStatusResponse");
+    private final static QName _GetDetailsByLocationAndDRSignalId_QNAME = new QName("http://secured.services.wattalyst.org/", "getDetailsByLocationAndDRSignalId");
+    private final static QName _GetBaselines_QNAME = new QName("http://secured.services.wattalyst.org/", "getBaselines");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.wattalyst.services.secured
@@ -107,115 +109,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLastValuesForSensorsResponse }
+     * Create an instance of {@link GetSignalIdsByAcceptanceStatusResponse }
      * 
      */
-    public GetLastValuesForSensorsResponse createGetLastValuesForSensorsResponse() {
-        return new GetLastValuesForSensorsResponse();
+    public GetSignalIdsByAcceptanceStatusResponse createGetSignalIdsByAcceptanceStatusResponse() {
+        return new GetSignalIdsByAcceptanceStatusResponse();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorsByRangeDropMissingResponse }
+     * Create an instance of {@link GetSignalIdsBySignalStatusResponse }
      * 
      */
-    public GetBinaryValuesForSensorsByRangeDropMissingResponse createGetBinaryValuesForSensorsByRangeDropMissingResponse() {
-        return new GetBinaryValuesForSensorsByRangeDropMissingResponse();
+    public GetSignalIdsBySignalStatusResponse createGetSignalIdsBySignalStatusResponse() {
+        return new GetSignalIdsBySignalStatusResponse();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedValuesForSensors }
+     * Create an instance of {@link GetDRSignalPerformanceStatus }
      * 
      */
-    public GetAggregatedValuesForSensors createGetAggregatedValuesForSensors() {
-        return new GetAggregatedValuesForSensors();
+    public GetDRSignalPerformanceStatus createGetDRSignalPerformanceStatus() {
+        return new GetDRSignalPerformanceStatus();
     }
 
     /**
-     * Create an instance of {@link GetSensorByLocationAndSensorTypeResponse }
+     * Create an instance of {@link GetAccessibleLocations }
      * 
      */
-    public GetSensorByLocationAndSensorTypeResponse createGetSensorByLocationAndSensorTypeResponse() {
-        return new GetSensorByLocationAndSensorTypeResponse();
+    public GetAccessibleLocations createGetAccessibleLocations() {
+        return new GetAccessibleLocations();
     }
 
     /**
-     * Create an instance of {@link DumpAllSensorValuesToZippedCSV }
+     * Create an instance of {@link SetAcceptanceStatus }
      * 
      */
-    public DumpAllSensorValuesToZippedCSV createDumpAllSensorValuesToZippedCSV() {
-        return new DumpAllSensorValuesToZippedCSV();
+    public SetAcceptanceStatus createSetAcceptanceStatus() {
+        return new SetAcceptanceStatus();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorByRange }
+     * Create an instance of {@link GetNewDRSignalByLocationResponse }
      * 
      */
-    public GetBinaryValuesForSensorByRange createGetBinaryValuesForSensorByRange() {
-        return new GetBinaryValuesForSensorByRange();
+    public GetNewDRSignalByLocationResponse createGetNewDRSignalByLocationResponse() {
+        return new GetNewDRSignalByLocationResponse();
     }
 
     /**
-     * Create an instance of {@link GetLastValuesForSensors }
+     * Create an instance of {@link GetTotalEarnedCoinsByLocation }
      * 
      */
-    public GetLastValuesForSensors createGetLastValuesForSensors() {
-        return new GetLastValuesForSensors();
-    }
-
-    /**
-     * Create an instance of {@link GetLocationResponse }
-     * 
-     */
-    public GetLocationResponse createGetLocationResponse() {
-        return new GetLocationResponse();
-    }
-
-    /**
-     * Create an instance of {@link DumpAllSensorValuesToZippedCSVResponse }
-     * 
-     */
-    public DumpAllSensorValuesToZippedCSVResponse createDumpAllSensorValuesToZippedCSVResponse() {
-        return new DumpAllSensorValuesToZippedCSVResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetSensorValuesAsCsvZipFileResponse }
-     * 
-     */
-    public GetSensorValuesAsCsvZipFileResponse createGetSensorValuesAsCsvZipFileResponse() {
-        return new GetSensorValuesAsCsvZipFileResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetBinaryValuesForSensorResponse }
-     * 
-     */
-    public GetBinaryValuesForSensorResponse createGetBinaryValuesForSensorResponse() {
-        return new GetBinaryValuesForSensorResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetValuesForSensorByRangeDropMissing }
-     * 
-     */
-    public GetValuesForSensorByRangeDropMissing createGetValuesForSensorByRangeDropMissing() {
-        return new GetValuesForSensorByRangeDropMissing();
-    }
-
-    /**
-     * Create an instance of {@link GetSensorResponse }
-     * 
-     */
-    public GetSensorResponse createGetSensorResponse() {
-        return new GetSensorResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetValuesForSensorResponse }
-     * 
-     */
-    public GetValuesForSensorResponse createGetValuesForSensorResponse() {
-        return new GetValuesForSensorResponse();
+    public GetTotalEarnedCoinsByLocation createGetTotalEarnedCoinsByLocation() {
+        return new GetTotalEarnedCoinsByLocation();
     }
 
     /**
@@ -227,275 +173,299 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetSensorByLocationAndSensorType }
+     * Create an instance of {@link CancelSignalForLocation }
      * 
      */
-    public GetSensorByLocationAndSensorType createGetSensorByLocationAndSensorType() {
-        return new GetSensorByLocationAndSensorType();
+    public CancelSignalForLocation createCancelSignalForLocation() {
+        return new CancelSignalForLocation();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensor }
+     * Create an instance of {@link GetTotalEarnedCoinsByLocationResponse }
      * 
      */
-    public GetValuesForSensor createGetValuesForSensor() {
-        return new GetValuesForSensor();
+    public GetTotalEarnedCoinsByLocationResponse createGetTotalEarnedCoinsByLocationResponse() {
+        return new GetTotalEarnedCoinsByLocationResponse();
     }
 
     /**
-     * Create an instance of {@link GetExportedDataResponse }
+     * Create an instance of {@link SetPerformanceIndicatorResponse }
      * 
      */
-    public GetExportedDataResponse createGetExportedDataResponse() {
-        return new GetExportedDataResponse();
+    public SetPerformanceIndicatorResponse createSetPerformanceIndicatorResponse() {
+        return new SetPerformanceIndicatorResponse();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorByRangeResponse }
+     * Create an instance of {@link GetAllDRUseCasesResponse }
      * 
      */
-    public GetValuesForSensorByRangeResponse createGetValuesForSensorByRangeResponse() {
-        return new GetValuesForSensorByRangeResponse();
+    public GetAllDRUseCasesResponse createGetAllDRUseCasesResponse() {
+        return new GetAllDRUseCasesResponse();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorsByRangeResponse }
+     * Create an instance of {@link GetDRSignalsByLocationAndStatusesResponse }
      * 
      */
-    public GetValuesForSensorsByRangeResponse createGetValuesForSensorsByRangeResponse() {
-        return new GetValuesForSensorsByRangeResponse();
+    public GetDRSignalsByLocationAndStatusesResponse createGetDRSignalsByLocationAndStatusesResponse() {
+        return new GetDRSignalsByLocationAndStatusesResponse();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensorsByCategory }
+     * Create an instance of {@link GetCoinsForSignalByLocation }
      * 
      */
-    public GetLocationSensorsByCategory createGetLocationSensorsByCategory() {
-        return new GetLocationSensorsByCategory();
+    public GetCoinsForSignalByLocation createGetCoinsForSignalByLocation() {
+        return new GetCoinsForSignalByLocation();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensor }
+     * Create an instance of {@link CancelSignalResponse }
      * 
      */
-    public GetBinaryValuesForSensor createGetBinaryValuesForSensor() {
-        return new GetBinaryValuesForSensor();
+    public CancelSignalResponse createCancelSignalResponse() {
+        return new CancelSignalResponse();
     }
 
     /**
-     * Create an instance of {@link GetLastValueForSensorResponse }
+     * Create an instance of {@link GetNewDRSignalByLocation }
      * 
      */
-    public GetLastValueForSensorResponse createGetLastValueForSensorResponse() {
-        return new GetLastValueForSensorResponse();
+    public GetNewDRSignalByLocation createGetNewDRSignalByLocation() {
+        return new GetNewDRSignalByLocation();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedBinaryValuesForSensorsResponse }
+     * Create an instance of {@link GetSignalIdsByAcceptanceStatus }
      * 
      */
-    public GetAggregatedBinaryValuesForSensorsResponse createGetAggregatedBinaryValuesForSensorsResponse() {
-        return new GetAggregatedBinaryValuesForSensorsResponse();
+    public GetSignalIdsByAcceptanceStatus createGetSignalIdsByAcceptanceStatus() {
+        return new GetSignalIdsByAcceptanceStatus();
     }
 
     /**
-     * Create an instance of {@link GetSubLocations }
+     * Create an instance of {@link CancelSignal }
      * 
      */
-    public GetSubLocations createGetSubLocations() {
-        return new GetSubLocations();
+    public CancelSignal createCancelSignal() {
+        return new CancelSignal();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorsByRangeDropMissingResponse }
+     * Create an instance of {@link GetBaselinesResponse }
      * 
      */
-    public GetValuesForSensorsByRangeDropMissingResponse createGetValuesForSensorsByRangeDropMissingResponse() {
-        return new GetValuesForSensorsByRangeDropMissingResponse();
+    public GetBaselinesResponse createGetBaselinesResponse() {
+        return new GetBaselinesResponse();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorsByRangeResponse }
+     * Create an instance of {@link GetCoinsForSignalByLocationResponse }
      * 
      */
-    public GetBinaryValuesForSensorsByRangeResponse createGetBinaryValuesForSensorsByRangeResponse() {
-        return new GetBinaryValuesForSensorsByRangeResponse();
+    public GetCoinsForSignalByLocationResponse createGetCoinsForSignalByLocationResponse() {
+        return new GetCoinsForSignalByLocationResponse();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorsByRange }
+     * Create an instance of {@link AddBaselineResponse }
      * 
      */
-    public GetValuesForSensorsByRange createGetValuesForSensorsByRange() {
-        return new GetValuesForSensorsByRange();
+    public AddBaselineResponse createAddBaselineResponse() {
+        return new AddBaselineResponse();
     }
 
     /**
-     * Create an instance of {@link UploadSensorData }
+     * Create an instance of {@link GetSignalDetailsForLocationInIntervalResponse }
      * 
      */
-    public UploadSensorData createUploadSensorData() {
-        return new UploadSensorData();
+    public GetSignalDetailsForLocationInIntervalResponse createGetSignalDetailsForLocationInIntervalResponse() {
+        return new GetSignalDetailsForLocationInIntervalResponse();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorByRangeDropMissingResponse }
+     * Create an instance of {@link GetDRSignalsByEventStatusesResponse }
      * 
      */
-    public GetValuesForSensorByRangeDropMissingResponse createGetValuesForSensorByRangeDropMissingResponse() {
-        return new GetValuesForSensorByRangeDropMissingResponse();
+    public GetDRSignalsByEventStatusesResponse createGetDRSignalsByEventStatusesResponse() {
+        return new GetDRSignalsByEventStatusesResponse();
     }
 
     /**
-     * Create an instance of {@link GetSubLocationsResponse }
+     * Create an instance of {@link ReportDREventDataResponse }
      * 
      */
-    public GetSubLocationsResponse createGetSubLocationsResponse() {
-        return new GetSubLocationsResponse();
+    public ReportDREventDataResponse createReportDREventDataResponse() {
+        return new ReportDREventDataResponse();
     }
 
     /**
-     * Create an instance of {@link GetAllLocationsResponse }
+     * Create an instance of {@link GetDRSignalPerformanceStatusResponse }
      * 
      */
-    public GetAllLocationsResponse createGetAllLocationsResponse() {
-        return new GetAllLocationsResponse();
+    public GetDRSignalPerformanceStatusResponse createGetDRSignalPerformanceStatusResponse() {
+        return new GetDRSignalPerformanceStatusResponse();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedBinaryValuesForSensorResponse }
+     * Create an instance of {@link GetAccessibleLocationsResponse }
      * 
      */
-    public GetAggregatedBinaryValuesForSensorResponse createGetAggregatedBinaryValuesForSensorResponse() {
-        return new GetAggregatedBinaryValuesForSensorResponse();
+    public GetAccessibleLocationsResponse createGetAccessibleLocationsResponse() {
+        return new GetAccessibleLocationsResponse();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorByRange }
+     * Create an instance of {@link SetDRSignalStatus }
      * 
      */
-    public GetValuesForSensorByRange createGetValuesForSensorByRange() {
-        return new GetValuesForSensorByRange();
+    public SetDRSignalStatus createSetDRSignalStatus() {
+        return new SetDRSignalStatus();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedValuesForSensorResponse }
+     * Create an instance of {@link StoreAndActivateSignal }
      * 
      */
-    public GetAggregatedValuesForSensorResponse createGetAggregatedValuesForSensorResponse() {
-        return new GetAggregatedValuesForSensorResponse();
+    public StoreAndActivateSignal createStoreAndActivateSignal() {
+        return new StoreAndActivateSignal();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorByRangeResponse }
+     * Create an instance of {@link GetUserFeedbackForLocationResponse }
      * 
      */
-    public GetBinaryValuesForSensorByRangeResponse createGetBinaryValuesForSensorByRangeResponse() {
-        return new GetBinaryValuesForSensorByRangeResponse();
+    public GetUserFeedbackForLocationResponse createGetUserFeedbackForLocationResponse() {
+        return new GetUserFeedbackForLocationResponse();
     }
 
     /**
-     * Create an instance of {@link GetLastValueForSensor }
+     * Create an instance of {@link GetDRSignalsByLocationAndStatuses }
      * 
      */
-    public GetLastValueForSensor createGetLastValueForSensor() {
-        return new GetLastValueForSensor();
+    public GetDRSignalsByLocationAndStatuses createGetDRSignalsByLocationAndStatuses() {
+        return new GetDRSignalsByLocationAndStatuses();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorDropMissing }
+     * Create an instance of {@link GetSignalDetailsForLocationInInterval }
      * 
      */
-    public GetValuesForSensorDropMissing createGetValuesForSensorDropMissing() {
-        return new GetValuesForSensorDropMissing();
+    public GetSignalDetailsForLocationInInterval createGetSignalDetailsForLocationInInterval() {
+        return new GetSignalDetailsForLocationInInterval();
     }
 
     /**
-     * Create an instance of {@link GetExportedData }
+     * Create an instance of {@link GetUserFeedbackForLocation }
      * 
      */
-    public GetExportedData createGetExportedData() {
-        return new GetExportedData();
+    public GetUserFeedbackForLocation createGetUserFeedbackForLocation() {
+        return new GetUserFeedbackForLocation();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedBinaryValuesForSensors }
+     * Create an instance of {@link SetUserFeedbackResponse }
      * 
      */
-    public GetAggregatedBinaryValuesForSensors createGetAggregatedBinaryValuesForSensors() {
-        return new GetAggregatedBinaryValuesForSensors();
+    public SetUserFeedbackResponse createSetUserFeedbackResponse() {
+        return new SetUserFeedbackResponse();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensorsByCategoryResponse }
+     * Create an instance of {@link GetBaselineDataResponse }
      * 
      */
-    public GetLocationSensorsByCategoryResponse createGetLocationSensorsByCategoryResponse() {
-        return new GetLocationSensorsByCategoryResponse();
+    public GetBaselineDataResponse createGetBaselineDataResponse() {
+        return new GetBaselineDataResponse();
     }
 
     /**
-     * Create an instance of {@link GetSensorValuesAsCsvZipFile }
+     * Create an instance of {@link ReportDREventData }
      * 
      */
-    public GetSensorValuesAsCsvZipFile createGetSensorValuesAsCsvZipFile() {
-        return new GetSensorValuesAsCsvZipFile();
+    public ReportDREventData createReportDREventData() {
+        return new ReportDREventData();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensorsByAnnotationResponse }
+     * Create an instance of {@link GetBaselines }
      * 
      */
-    public GetLocationSensorsByAnnotationResponse createGetLocationSensorsByAnnotationResponse() {
-        return new GetLocationSensorsByAnnotationResponse();
+    public GetBaselines createGetBaselines() {
+        return new GetBaselines();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorsByRangeDropMissing }
+     * Create an instance of {@link SetAcceptanceStatusResponse }
      * 
      */
-    public GetBinaryValuesForSensorsByRangeDropMissing createGetBinaryValuesForSensorsByRangeDropMissing() {
-        return new GetBinaryValuesForSensorsByRangeDropMissing();
+    public SetAcceptanceStatusResponse createSetAcceptanceStatusResponse() {
+        return new SetAcceptanceStatusResponse();
     }
 
     /**
-     * Create an instance of {@link GetAllLocations }
+     * Create an instance of {@link GetDetailsByLocationAndDRSignalId }
      * 
      */
-    public GetAllLocations createGetAllLocations() {
-        return new GetAllLocations();
+    public GetDetailsByLocationAndDRSignalId createGetDetailsByLocationAndDRSignalId() {
+        return new GetDetailsByLocationAndDRSignalId();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorsByRangeDropMissing }
+     * Create an instance of {@link GetBaselineData }
      * 
      */
-    public GetValuesForSensorsByRangeDropMissing createGetValuesForSensorsByRangeDropMissing() {
-        return new GetValuesForSensorsByRangeDropMissing();
+    public GetBaselineData createGetBaselineData() {
+        return new GetBaselineData();
     }
 
     /**
-     * Create an instance of {@link GetValuesForSensorDropMissingResponse }
+     * Create an instance of {@link GetTaskDefinitionsResponse }
      * 
      */
-    public GetValuesForSensorDropMissingResponse createGetValuesForSensorDropMissingResponse() {
-        return new GetValuesForSensorDropMissingResponse();
+    public GetTaskDefinitionsResponse createGetTaskDefinitionsResponse() {
+        return new GetTaskDefinitionsResponse();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedBinaryValuesForSensor }
+     * Create an instance of {@link AddBaseline }
      * 
      */
-    public GetAggregatedBinaryValuesForSensor createGetAggregatedBinaryValuesForSensor() {
-        return new GetAggregatedBinaryValuesForSensor();
+    public AddBaseline createAddBaseline() {
+        return new AddBaseline();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensorsResponse }
+     * Create an instance of {@link StoreAndActivateSignalResponse }
      * 
      */
-    public GetLocationSensorsResponse createGetLocationSensorsResponse() {
-        return new GetLocationSensorsResponse();
+    public StoreAndActivateSignalResponse createStoreAndActivateSignalResponse() {
+        return new StoreAndActivateSignalResponse();
+    }
+
+    /**
+     * Create an instance of {@link SetPerformanceIndicator }
+     * 
+     */
+    public SetPerformanceIndicator createSetPerformanceIndicator() {
+        return new SetPerformanceIndicator();
+    }
+
+    /**
+     * Create an instance of {@link GetBaselineDataAsCSV }
+     * 
+     */
+    public GetBaselineDataAsCSV createGetBaselineDataAsCSV() {
+        return new GetBaselineDataAsCSV();
+    }
+
+    /**
+     * Create an instance of {@link GetDRSignalsByEventStatuses }
+     * 
+     */
+    public GetDRSignalsByEventStatuses createGetDRSignalsByEventStatuses() {
+        return new GetDRSignalsByEventStatuses();
     }
 
     /**
@@ -507,67 +477,123 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAggregatedValuesForSensorsResponse }
+     * Create an instance of {@link GetAllSignalsForUseCaseResponse }
      * 
      */
-    public GetAggregatedValuesForSensorsResponse createGetAggregatedValuesForSensorsResponse() {
-        return new GetAggregatedValuesForSensorsResponse();
+    public GetAllSignalsForUseCaseResponse createGetAllSignalsForUseCaseResponse() {
+        return new GetAllSignalsForUseCaseResponse();
     }
 
     /**
-     * Create an instance of {@link GetSensor }
+     * Create an instance of {@link SetDRSignalStatusResponse }
      * 
      */
-    public GetSensor createGetSensor() {
-        return new GetSensor();
+    public SetDRSignalStatusResponse createSetDRSignalStatusResponse() {
+        return new SetDRSignalStatusResponse();
     }
 
     /**
-     * Create an instance of {@link GetLocation }
+     * Create an instance of {@link GetPerformanceIndicator }
      * 
      */
-    public GetLocation createGetLocation() {
-        return new GetLocation();
+    public GetPerformanceIndicator createGetPerformanceIndicator() {
+        return new GetPerformanceIndicator();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensorsByAnnotation }
+     * Create an instance of {@link UploadBaselineDataResponse }
      * 
      */
-    public GetLocationSensorsByAnnotation createGetLocationSensorsByAnnotation() {
-        return new GetLocationSensorsByAnnotation();
+    public UploadBaselineDataResponse createUploadBaselineDataResponse() {
+        return new UploadBaselineDataResponse();
     }
 
     /**
-     * Create an instance of {@link GetBinaryValuesForSensorsByRange }
+     * Create an instance of {@link UploadBaselineData }
      * 
      */
-    public GetBinaryValuesForSensorsByRange createGetBinaryValuesForSensorsByRange() {
-        return new GetBinaryValuesForSensorsByRange();
+    public UploadBaselineData createUploadBaselineData() {
+        return new UploadBaselineData();
     }
 
     /**
-     * Create an instance of {@link GetAggregatedValuesForSensor }
+     * Create an instance of {@link SetUserFeedback }
      * 
      */
-    public GetAggregatedValuesForSensor createGetAggregatedValuesForSensor() {
-        return new GetAggregatedValuesForSensor();
+    public SetUserFeedback createSetUserFeedback() {
+        return new SetUserFeedback();
     }
 
     /**
-     * Create an instance of {@link UploadSensorDataResponse }
+     * Create an instance of {@link GetBaselineDataAsCSVResponse }
      * 
      */
-    public UploadSensorDataResponse createUploadSensorDataResponse() {
-        return new UploadSensorDataResponse();
+    public GetBaselineDataAsCSVResponse createGetBaselineDataAsCSVResponse() {
+        return new GetBaselineDataAsCSVResponse();
     }
 
     /**
-     * Create an instance of {@link GetLocationSensors }
+     * Create an instance of {@link GetAllDRUseCases }
      * 
      */
-    public GetLocationSensors createGetLocationSensors() {
-        return new GetLocationSensors();
+    public GetAllDRUseCases createGetAllDRUseCases() {
+        return new GetAllDRUseCases();
+    }
+
+    /**
+     * Create an instance of {@link GetAllSignalsForUseCase }
+     * 
+     */
+    public GetAllSignalsForUseCase createGetAllSignalsForUseCase() {
+        return new GetAllSignalsForUseCase();
+    }
+
+    /**
+     * Create an instance of {@link GetSignalIdsBySignalStatus }
+     * 
+     */
+    public GetSignalIdsBySignalStatus createGetSignalIdsBySignalStatus() {
+        return new GetSignalIdsBySignalStatus();
+    }
+
+    /**
+     * Create an instance of {@link GetTaskDefinitions }
+     * 
+     */
+    public GetTaskDefinitions createGetTaskDefinitions() {
+        return new GetTaskDefinitions();
+    }
+
+    /**
+     * Create an instance of {@link GetPerformanceIndicatorResponse }
+     * 
+     */
+    public GetPerformanceIndicatorResponse createGetPerformanceIndicatorResponse() {
+        return new GetPerformanceIndicatorResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDetailsByLocationAndDRSignalIdResponse }
+     * 
+     */
+    public GetDetailsByLocationAndDRSignalIdResponse createGetDetailsByLocationAndDRSignalIdResponse() {
+        return new GetDetailsByLocationAndDRSignalIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link CancelSignalForLocationResponse }
+     * 
+     */
+    public CancelSignalForLocationResponse createCancelSignalForLocationResponse() {
+        return new CancelSignalForLocationResponse();
+    }
+
+    /**
+     * Create an instance of {@link PiResultContainer }
+     * 
+     */
+    public PiResultContainer createPiResultContainer() {
+        return new PiResultContainer();
     }
 
     /**
@@ -576,6 +602,14 @@ public class ObjectFactory {
      */
     public KpiPerformanceDto createKpiPerformanceDto() {
         return new KpiPerformanceDto();
+    }
+
+    /**
+     * Create an instance of {@link DrTaskPerformanceStatusDto }
+     * 
+     */
+    public DrTaskPerformanceStatusDto createDrTaskPerformanceStatusDto() {
+        return new DrTaskPerformanceStatusDto();
     }
 
     /**
@@ -592,6 +626,14 @@ public class ObjectFactory {
      */
     public DrSignalDto createDrSignalDto() {
         return new DrSignalDto();
+    }
+
+    /**
+     * Create an instance of {@link FeedbackResultContainer }
+     * 
+     */
+    public FeedbackResultContainer createFeedbackResultContainer() {
+        return new FeedbackResultContainer();
     }
 
     /**
@@ -635,14 +677,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SensorsWithValueListResultContainer }
-     * 
-     */
-    public SensorsWithValueListResultContainer createSensorsWithValueListResultContainer() {
-        return new SensorsWithValueListResultContainer();
-    }
-
-    /**
      * Create an instance of {@link UnitDto }
      * 
      */
@@ -651,27 +685,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SensorListResultContainer }
-     * 
-     */
-    public SensorListResultContainer createSensorListResultContainer() {
-        return new SensorListResultContainer();
-    }
-
-    /**
-     * Create an instance of {@link ByteResultContainer }
-     * 
-     */
-    public ByteResultContainer createByteResultContainer() {
-        return new ByteResultContainer();
-    }
-
-    /**
      * Create an instance of {@link DrUseCaseDto }
      * 
      */
     public DrUseCaseDto createDrUseCaseDto() {
         return new DrUseCaseDto();
+    }
+
+    /**
+     * Create an instance of {@link DrSignalListResultContainer }
+     * 
+     */
+    public DrSignalListResultContainer createDrSignalListResultContainer() {
+        return new DrSignalListResultContainer();
     }
 
     /**
@@ -699,6 +725,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DrUseCaseListResultContainer }
+     * 
+     */
+    public DrUseCaseListResultContainer createDrUseCaseListResultContainer() {
+        return new DrUseCaseListResultContainer();
+    }
+
+    /**
      * Create an instance of {@link ConstraintDto }
      * 
      */
@@ -715,19 +749,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SensorWithValuesDto }
-     * 
-     */
-    public SensorWithValuesDto createSensorWithValuesDto() {
-        return new SensorWithValuesDto();
-    }
-
-    /**
      * Create an instance of {@link MissingValueDto }
      * 
      */
     public MissingValueDto createMissingValueDto() {
         return new MissingValueDto();
+    }
+
+    /**
+     * Create an instance of {@link DrSignalResultContainer }
+     * 
+     */
+    public DrSignalResultContainer createDrSignalResultContainer() {
+        return new DrSignalResultContainer();
     }
 
     /**
@@ -739,11 +773,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SensorWithBinaryValuesDto }
+     * Create an instance of {@link TaskListResultContainer }
      * 
      */
-    public SensorWithBinaryValuesDto createSensorWithBinaryValuesDto() {
-        return new SensorWithBinaryValuesDto();
+    public TaskListResultContainer createTaskListResultContainer() {
+        return new TaskListResultContainer();
     }
 
     /**
@@ -755,19 +789,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SensorsWithBinaryValuesResultContainer }
+     * Create an instance of {@link StringListResultContainer }
      * 
      */
-    public SensorsWithBinaryValuesResultContainer createSensorsWithBinaryValuesResultContainer() {
-        return new SensorsWithBinaryValuesResultContainer();
+    public StringListResultContainer createStringListResultContainer() {
+        return new StringListResultContainer();
     }
 
     /**
-     * Create an instance of {@link SensorResultContainer }
+     * Create an instance of {@link IntegerResultContainer }
      * 
      */
-    public SensorResultContainer createSensorResultContainer() {
-        return new SensorResultContainer();
+    public IntegerResultContainer createIntegerResultContainer() {
+        return new IntegerResultContainer();
     }
 
     /**
@@ -795,19 +829,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link LocationResultContainer }
-     * 
-     */
-    public LocationResultContainer createLocationResultContainer() {
-        return new LocationResultContainer();
-    }
-
-    /**
      * Create an instance of {@link ValueListResultContainer }
      * 
      */
     public ValueListResultContainer createValueListResultContainer() {
         return new ValueListResultContainer();
+    }
+
+    /**
+     * Create an instance of {@link BaselineListResultContainer }
+     * 
+     */
+    public BaselineListResultContainer createBaselineListResultContainer() {
+        return new BaselineListResultContainer();
     }
 
     /**
@@ -819,11 +853,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValueResultContainer }
+     * Create an instance of {@link DrSignalPerfomaceStatusResultContainer }
      * 
      */
-    public ValueResultContainer createValueResultContainer() {
-        return new ValueResultContainer();
+    public DrSignalPerfomaceStatusResultContainer createDrSignalPerfomaceStatusResultContainer() {
+        return new DrSignalPerfomaceStatusResultContainer();
     }
 
     /**
@@ -835,282 +869,183 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedBinaryValuesForSensorsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllDRUseCasesResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedBinaryValuesForSensorsResponse")
-    public JAXBElement<GetAggregatedBinaryValuesForSensorsResponse> createGetAggregatedBinaryValuesForSensorsResponse(GetAggregatedBinaryValuesForSensorsResponse value) {
-        return new JAXBElement<GetAggregatedBinaryValuesForSensorsResponse>(_GetAggregatedBinaryValuesForSensorsResponse_QNAME, GetAggregatedBinaryValuesForSensorsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllDRUseCasesResponse")
+    public JAXBElement<GetAllDRUseCasesResponse> createGetAllDRUseCasesResponse(GetAllDRUseCasesResponse value) {
+        return new JAXBElement<GetAllDRUseCasesResponse>(_GetAllDRUseCasesResponse_QNAME, GetAllDRUseCasesResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSubLocations }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetPerformanceIndicatorResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSubLocations")
-    public JAXBElement<GetSubLocations> createGetSubLocations(GetSubLocations value) {
-        return new JAXBElement<GetSubLocations>(_GetSubLocations_QNAME, GetSubLocations.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setPerformanceIndicatorResponse")
+    public JAXBElement<SetPerformanceIndicatorResponse> createSetPerformanceIndicatorResponse(SetPerformanceIndicatorResponse value) {
+        return new JAXBElement<SetPerformanceIndicatorResponse>(_SetPerformanceIndicatorResponse_QNAME, SetPerformanceIndicatorResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLastValueForSensorResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTotalEarnedCoinsByLocationResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLastValueForSensorResponse")
-    public JAXBElement<GetLastValueForSensorResponse> createGetLastValueForSensorResponse(GetLastValueForSensorResponse value) {
-        return new JAXBElement<GetLastValueForSensorResponse>(_GetLastValueForSensorResponse_QNAME, GetLastValueForSensorResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTotalEarnedCoinsByLocationResponse")
+    public JAXBElement<GetTotalEarnedCoinsByLocationResponse> createGetTotalEarnedCoinsByLocationResponse(GetTotalEarnedCoinsByLocationResponse value) {
+        return new JAXBElement<GetTotalEarnedCoinsByLocationResponse>(_GetTotalEarnedCoinsByLocationResponse_QNAME, GetTotalEarnedCoinsByLocationResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensor }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsByAcceptanceStatus }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensor")
-    public JAXBElement<GetBinaryValuesForSensor> createGetBinaryValuesForSensor(GetBinaryValuesForSensor value) {
-        return new JAXBElement<GetBinaryValuesForSensor>(_GetBinaryValuesForSensor_QNAME, GetBinaryValuesForSensor.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsByAcceptanceStatus")
+    public JAXBElement<GetSignalIdsByAcceptanceStatus> createGetSignalIdsByAcceptanceStatus(GetSignalIdsByAcceptanceStatus value) {
+        return new JAXBElement<GetSignalIdsByAcceptanceStatus>(_GetSignalIdsByAcceptanceStatus_QNAME, GetSignalIdsByAcceptanceStatus.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensorsByCategory }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetNewDRSignalByLocation }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensorsByCategory")
-    public JAXBElement<GetLocationSensorsByCategory> createGetLocationSensorsByCategory(GetLocationSensorsByCategory value) {
-        return new JAXBElement<GetLocationSensorsByCategory>(_GetLocationSensorsByCategory_QNAME, GetLocationSensorsByCategory.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getNewDRSignalByLocation")
+    public JAXBElement<GetNewDRSignalByLocation> createGetNewDRSignalByLocation(GetNewDRSignalByLocation value) {
+        return new JAXBElement<GetNewDRSignalByLocation>(_GetNewDRSignalByLocation_QNAME, GetNewDRSignalByLocation.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorsByRange }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignalResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorsByRange")
-    public JAXBElement<GetValuesForSensorsByRange> createGetValuesForSensorsByRange(GetValuesForSensorsByRange value) {
-        return new JAXBElement<GetValuesForSensorsByRange>(_GetValuesForSensorsByRange_QNAME, GetValuesForSensorsByRange.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignalResponse")
+    public JAXBElement<CancelSignalResponse> createCancelSignalResponse(CancelSignalResponse value) {
+        return new JAXBElement<CancelSignalResponse>(_CancelSignalResponse_QNAME, CancelSignalResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorsByRangeResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCoinsForSignalByLocation }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorsByRangeResponse")
-    public JAXBElement<GetBinaryValuesForSensorsByRangeResponse> createGetBinaryValuesForSensorsByRangeResponse(GetBinaryValuesForSensorsByRangeResponse value) {
-        return new JAXBElement<GetBinaryValuesForSensorsByRangeResponse>(_GetBinaryValuesForSensorsByRangeResponse_QNAME, GetBinaryValuesForSensorsByRangeResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getCoinsForSignalByLocation")
+    public JAXBElement<GetCoinsForSignalByLocation> createGetCoinsForSignalByLocation(GetCoinsForSignalByLocation value) {
+        return new JAXBElement<GetCoinsForSignalByLocation>(_GetCoinsForSignalByLocation_QNAME, GetCoinsForSignalByLocation.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorsByRangeDropMissingResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByLocationAndStatusesResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorsByRangeDropMissingResponse")
-    public JAXBElement<GetValuesForSensorsByRangeDropMissingResponse> createGetValuesForSensorsByRangeDropMissingResponse(GetValuesForSensorsByRangeDropMissingResponse value) {
-        return new JAXBElement<GetValuesForSensorsByRangeDropMissingResponse>(_GetValuesForSensorsByRangeDropMissingResponse_QNAME, GetValuesForSensorsByRangeDropMissingResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByLocationAndStatusesResponse")
+    public JAXBElement<GetDRSignalsByLocationAndStatusesResponse> createGetDRSignalsByLocationAndStatusesResponse(GetDRSignalsByLocationAndStatusesResponse value) {
+        return new JAXBElement<GetDRSignalsByLocationAndStatusesResponse>(_GetDRSignalsByLocationAndStatusesResponse_QNAME, GetDRSignalsByLocationAndStatusesResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadSensorData }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddBaselineResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadSensorData")
-    public JAXBElement<UploadSensorData> createUploadSensorData(UploadSensorData value) {
-        return new JAXBElement<UploadSensorData>(_UploadSensorData_QNAME, UploadSensorData.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "addBaselineResponse")
+    public JAXBElement<AddBaselineResponse> createAddBaselineResponse(AddBaselineResponse value) {
+        return new JAXBElement<AddBaselineResponse>(_AddBaselineResponse_QNAME, AddBaselineResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorByRangeDropMissingResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCoinsForSignalByLocationResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorByRangeDropMissingResponse")
-    public JAXBElement<GetValuesForSensorByRangeDropMissingResponse> createGetValuesForSensorByRangeDropMissingResponse(GetValuesForSensorByRangeDropMissingResponse value) {
-        return new JAXBElement<GetValuesForSensorByRangeDropMissingResponse>(_GetValuesForSensorByRangeDropMissingResponse_QNAME, GetValuesForSensorByRangeDropMissingResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getCoinsForSignalByLocationResponse")
+    public JAXBElement<GetCoinsForSignalByLocationResponse> createGetCoinsForSignalByLocationResponse(GetCoinsForSignalByLocationResponse value) {
+        return new JAXBElement<GetCoinsForSignalByLocationResponse>(_GetCoinsForSignalByLocationResponse_QNAME, GetCoinsForSignalByLocationResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedBinaryValuesForSensorResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselinesResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedBinaryValuesForSensorResponse")
-    public JAXBElement<GetAggregatedBinaryValuesForSensorResponse> createGetAggregatedBinaryValuesForSensorResponse(GetAggregatedBinaryValuesForSensorResponse value) {
-        return new JAXBElement<GetAggregatedBinaryValuesForSensorResponse>(_GetAggregatedBinaryValuesForSensorResponse_QNAME, GetAggregatedBinaryValuesForSensorResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselinesResponse")
+    public JAXBElement<GetBaselinesResponse> createGetBaselinesResponse(GetBaselinesResponse value) {
+        return new JAXBElement<GetBaselinesResponse>(_GetBaselinesResponse_QNAME, GetBaselinesResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllLocationsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignal }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllLocationsResponse")
-    public JAXBElement<GetAllLocationsResponse> createGetAllLocationsResponse(GetAllLocationsResponse value) {
-        return new JAXBElement<GetAllLocationsResponse>(_GetAllLocationsResponse_QNAME, GetAllLocationsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignal")
+    public JAXBElement<CancelSignal> createCancelSignal(CancelSignal value) {
+        return new JAXBElement<CancelSignal>(_CancelSignal_QNAME, CancelSignal.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSubLocationsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalDetailsForLocationInIntervalResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSubLocationsResponse")
-    public JAXBElement<GetSubLocationsResponse> createGetSubLocationsResponse(GetSubLocationsResponse value) {
-        return new JAXBElement<GetSubLocationsResponse>(_GetSubLocationsResponse_QNAME, GetSubLocationsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalDetailsForLocationInIntervalResponse")
+    public JAXBElement<GetSignalDetailsForLocationInIntervalResponse> createGetSignalDetailsForLocationInIntervalResponse(GetSignalDetailsForLocationInIntervalResponse value) {
+        return new JAXBElement<GetSignalDetailsForLocationInIntervalResponse>(_GetSignalDetailsForLocationInIntervalResponse_QNAME, GetSignalDetailsForLocationInIntervalResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DumpAllSensorValuesToZippedCSV }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalPerformanceStatus }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "dumpAllSensorValuesToZippedCSV")
-    public JAXBElement<DumpAllSensorValuesToZippedCSV> createDumpAllSensorValuesToZippedCSV(DumpAllSensorValuesToZippedCSV value) {
-        return new JAXBElement<DumpAllSensorValuesToZippedCSV>(_DumpAllSensorValuesToZippedCSV_QNAME, DumpAllSensorValuesToZippedCSV.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalPerformanceStatus")
+    public JAXBElement<GetDRSignalPerformanceStatus> createGetDRSignalPerformanceStatus(GetDRSignalPerformanceStatus value) {
+        return new JAXBElement<GetDRSignalPerformanceStatus>(_GetDRSignalPerformanceStatus_QNAME, GetDRSignalPerformanceStatus.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensorByLocationAndSensorTypeResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatusResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensorByLocationAndSensorTypeResponse")
-    public JAXBElement<GetSensorByLocationAndSensorTypeResponse> createGetSensorByLocationAndSensorTypeResponse(GetSensorByLocationAndSensorTypeResponse value) {
-        return new JAXBElement<GetSensorByLocationAndSensorTypeResponse>(_GetSensorByLocationAndSensorTypeResponse_QNAME, GetSensorByLocationAndSensorTypeResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatusResponse")
+    public JAXBElement<GetSignalIdsBySignalStatusResponse> createGetSignalIdsBySignalStatusResponse(GetSignalIdsBySignalStatusResponse value) {
+        return new JAXBElement<GetSignalIdsBySignalStatusResponse>(_GetSignalIdsBySignalStatusResponse_QNAME, GetSignalIdsBySignalStatusResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorsByRangeDropMissingResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsByAcceptanceStatusResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorsByRangeDropMissingResponse")
-    public JAXBElement<GetBinaryValuesForSensorsByRangeDropMissingResponse> createGetBinaryValuesForSensorsByRangeDropMissingResponse(GetBinaryValuesForSensorsByRangeDropMissingResponse value) {
-        return new JAXBElement<GetBinaryValuesForSensorsByRangeDropMissingResponse>(_GetBinaryValuesForSensorsByRangeDropMissingResponse_QNAME, GetBinaryValuesForSensorsByRangeDropMissingResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsByAcceptanceStatusResponse")
+    public JAXBElement<GetSignalIdsByAcceptanceStatusResponse> createGetSignalIdsByAcceptanceStatusResponse(GetSignalIdsByAcceptanceStatusResponse value) {
+        return new JAXBElement<GetSignalIdsByAcceptanceStatusResponse>(_GetSignalIdsByAcceptanceStatusResponse_QNAME, GetSignalIdsByAcceptanceStatusResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedValuesForSensors }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAccessibleLocations }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedValuesForSensors")
-    public JAXBElement<GetAggregatedValuesForSensors> createGetAggregatedValuesForSensors(GetAggregatedValuesForSensors value) {
-        return new JAXBElement<GetAggregatedValuesForSensors>(_GetAggregatedValuesForSensors_QNAME, GetAggregatedValuesForSensors.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAccessibleLocations")
+    public JAXBElement<GetAccessibleLocations> createGetAccessibleLocations(GetAccessibleLocations value) {
+        return new JAXBElement<GetAccessibleLocations>(_GetAccessibleLocations_QNAME, GetAccessibleLocations.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLastValuesForSensorsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetAcceptanceStatus }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLastValuesForSensorsResponse")
-    public JAXBElement<GetLastValuesForSensorsResponse> createGetLastValuesForSensorsResponse(GetLastValuesForSensorsResponse value) {
-        return new JAXBElement<GetLastValuesForSensorsResponse>(_GetLastValuesForSensorsResponse_QNAME, GetLastValuesForSensorsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setAcceptanceStatus")
+    public JAXBElement<SetAcceptanceStatus> createSetAcceptanceStatus(SetAcceptanceStatus value) {
+        return new JAXBElement<SetAcceptanceStatus>(_SetAcceptanceStatus_QNAME, SetAcceptanceStatus.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetNewDRSignalByLocationResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationResponse")
-    public JAXBElement<GetLocationResponse> createGetLocationResponse(GetLocationResponse value) {
-        return new JAXBElement<GetLocationResponse>(_GetLocationResponse_QNAME, GetLocationResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getNewDRSignalByLocationResponse")
+    public JAXBElement<GetNewDRSignalByLocationResponse> createGetNewDRSignalByLocationResponse(GetNewDRSignalByLocationResponse value) {
+        return new JAXBElement<GetNewDRSignalByLocationResponse>(_GetNewDRSignalByLocationResponse_QNAME, GetNewDRSignalByLocationResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLastValuesForSensors }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignalForLocation }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLastValuesForSensors")
-    public JAXBElement<GetLastValuesForSensors> createGetLastValuesForSensors(GetLastValuesForSensors value) {
-        return new JAXBElement<GetLastValuesForSensors>(_GetLastValuesForSensors_QNAME, GetLastValuesForSensors.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorByRange }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorByRange")
-    public JAXBElement<GetBinaryValuesForSensorByRange> createGetBinaryValuesForSensorByRange(GetBinaryValuesForSensorByRange value) {
-        return new JAXBElement<GetBinaryValuesForSensorByRange>(_GetBinaryValuesForSensorByRange_QNAME, GetBinaryValuesForSensorByRange.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensorResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensorResponse")
-    public JAXBElement<GetSensorResponse> createGetSensorResponse(GetSensorResponse value) {
-        return new JAXBElement<GetSensorResponse>(_GetSensorResponse_QNAME, GetSensorResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorByRangeDropMissing }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorByRangeDropMissing")
-    public JAXBElement<GetValuesForSensorByRangeDropMissing> createGetValuesForSensorByRangeDropMissing(GetValuesForSensorByRangeDropMissing value) {
-        return new JAXBElement<GetValuesForSensorByRangeDropMissing>(_GetValuesForSensorByRangeDropMissing_QNAME, GetValuesForSensorByRangeDropMissing.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorResponse")
-    public JAXBElement<GetBinaryValuesForSensorResponse> createGetBinaryValuesForSensorResponse(GetBinaryValuesForSensorResponse value) {
-        return new JAXBElement<GetBinaryValuesForSensorResponse>(_GetBinaryValuesForSensorResponse_QNAME, GetBinaryValuesForSensorResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensorValuesAsCsvZipFileResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensorValuesAsCsvZipFileResponse")
-    public JAXBElement<GetSensorValuesAsCsvZipFileResponse> createGetSensorValuesAsCsvZipFileResponse(GetSensorValuesAsCsvZipFileResponse value) {
-        return new JAXBElement<GetSensorValuesAsCsvZipFileResponse>(_GetSensorValuesAsCsvZipFileResponse_QNAME, GetSensorValuesAsCsvZipFileResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DumpAllSensorValuesToZippedCSVResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "dumpAllSensorValuesToZippedCSVResponse")
-    public JAXBElement<DumpAllSensorValuesToZippedCSVResponse> createDumpAllSensorValuesToZippedCSVResponse(DumpAllSensorValuesToZippedCSVResponse value) {
-        return new JAXBElement<DumpAllSensorValuesToZippedCSVResponse>(_DumpAllSensorValuesToZippedCSVResponse_QNAME, DumpAllSensorValuesToZippedCSVResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorsByRangeResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorsByRangeResponse")
-    public JAXBElement<GetValuesForSensorsByRangeResponse> createGetValuesForSensorsByRangeResponse(GetValuesForSensorsByRangeResponse value) {
-        return new JAXBElement<GetValuesForSensorsByRangeResponse>(_GetValuesForSensorsByRangeResponse_QNAME, GetValuesForSensorsByRangeResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorByRangeResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorByRangeResponse")
-    public JAXBElement<GetValuesForSensorByRangeResponse> createGetValuesForSensorByRangeResponse(GetValuesForSensorByRangeResponse value) {
-        return new JAXBElement<GetValuesForSensorByRangeResponse>(_GetValuesForSensorByRangeResponse_QNAME, GetValuesForSensorByRangeResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetExportedDataResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getExportedDataResponse")
-    public JAXBElement<GetExportedDataResponse> createGetExportedDataResponse(GetExportedDataResponse value) {
-        return new JAXBElement<GetExportedDataResponse>(_GetExportedDataResponse_QNAME, GetExportedDataResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensor }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensor")
-    public JAXBElement<GetValuesForSensor> createGetValuesForSensor(GetValuesForSensor value) {
-        return new JAXBElement<GetValuesForSensor>(_GetValuesForSensor_QNAME, GetValuesForSensor.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensorByLocationAndSensorType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensorByLocationAndSensorType")
-    public JAXBElement<GetSensorByLocationAndSensorType> createGetSensorByLocationAndSensorType(GetSensorByLocationAndSensorType value) {
-        return new JAXBElement<GetSensorByLocationAndSensorType>(_GetSensorByLocationAndSensorType_QNAME, GetSensorByLocationAndSensorType.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignalForLocation")
+    public JAXBElement<CancelSignalForLocation> createCancelSignalForLocation(CancelSignalForLocation value) {
+        return new JAXBElement<CancelSignalForLocation>(_CancelSignalForLocation_QNAME, CancelSignalForLocation.class, null, value);
     }
 
     /**
@@ -1123,21 +1058,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTotalEarnedCoinsByLocation }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorResponse")
-    public JAXBElement<GetValuesForSensorResponse> createGetValuesForSensorResponse(GetValuesForSensorResponse value) {
-        return new JAXBElement<GetValuesForSensorResponse>(_GetValuesForSensorResponse_QNAME, GetValuesForSensorResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedValuesForSensorsResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedValuesForSensorsResponse")
-    public JAXBElement<GetAggregatedValuesForSensorsResponse> createGetAggregatedValuesForSensorsResponse(GetAggregatedValuesForSensorsResponse value) {
-        return new JAXBElement<GetAggregatedValuesForSensorsResponse>(_GetAggregatedValuesForSensorsResponse_QNAME, GetAggregatedValuesForSensorsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTotalEarnedCoinsByLocation")
+    public JAXBElement<GetTotalEarnedCoinsByLocation> createGetTotalEarnedCoinsByLocation(GetTotalEarnedCoinsByLocation value) {
+        return new JAXBElement<GetTotalEarnedCoinsByLocation>(_GetTotalEarnedCoinsByLocation_QNAME, GetTotalEarnedCoinsByLocation.class, null, value);
     }
 
     /**
@@ -1150,210 +1076,336 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensorsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByEventStatuses }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensorsResponse")
-    public JAXBElement<GetLocationSensorsResponse> createGetLocationSensorsResponse(GetLocationSensorsResponse value) {
-        return new JAXBElement<GetLocationSensorsResponse>(_GetLocationSensorsResponse_QNAME, GetLocationSensorsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByEventStatuses")
+    public JAXBElement<GetDRSignalsByEventStatuses> createGetDRSignalsByEventStatuses(GetDRSignalsByEventStatuses value) {
+        return new JAXBElement<GetDRSignalsByEventStatuses>(_GetDRSignalsByEventStatuses_QNAME, GetDRSignalsByEventStatuses.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorDropMissingResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSV }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorDropMissingResponse")
-    public JAXBElement<GetValuesForSensorDropMissingResponse> createGetValuesForSensorDropMissingResponse(GetValuesForSensorDropMissingResponse value) {
-        return new JAXBElement<GetValuesForSensorDropMissingResponse>(_GetValuesForSensorDropMissingResponse_QNAME, GetValuesForSensorDropMissingResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSV")
+    public JAXBElement<GetBaselineDataAsCSV> createGetBaselineDataAsCSV(GetBaselineDataAsCSV value) {
+        return new JAXBElement<GetBaselineDataAsCSV>(_GetBaselineDataAsCSV_QNAME, GetBaselineDataAsCSV.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedBinaryValuesForSensor }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetPerformanceIndicator }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedBinaryValuesForSensor")
-    public JAXBElement<GetAggregatedBinaryValuesForSensor> createGetAggregatedBinaryValuesForSensor(GetAggregatedBinaryValuesForSensor value) {
-        return new JAXBElement<GetAggregatedBinaryValuesForSensor>(_GetAggregatedBinaryValuesForSensor_QNAME, GetAggregatedBinaryValuesForSensor.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setPerformanceIndicator")
+    public JAXBElement<SetPerformanceIndicator> createSetPerformanceIndicator(SetPerformanceIndicator value) {
+        return new JAXBElement<SetPerformanceIndicator>(_SetPerformanceIndicator_QNAME, SetPerformanceIndicator.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorsByRangeDropMissing }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPerformanceIndicator }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorsByRangeDropMissing")
-    public JAXBElement<GetValuesForSensorsByRangeDropMissing> createGetValuesForSensorsByRangeDropMissing(GetValuesForSensorsByRangeDropMissing value) {
-        return new JAXBElement<GetValuesForSensorsByRangeDropMissing>(_GetValuesForSensorsByRangeDropMissing_QNAME, GetValuesForSensorsByRangeDropMissing.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getPerformanceIndicator")
+    public JAXBElement<GetPerformanceIndicator> createGetPerformanceIndicator(GetPerformanceIndicator value) {
+        return new JAXBElement<GetPerformanceIndicator>(_GetPerformanceIndicator_QNAME, GetPerformanceIndicator.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensor }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetDRSignalStatusResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensor")
-    public JAXBElement<GetSensor> createGetSensor(GetSensor value) {
-        return new JAXBElement<GetSensor>(_GetSensor_QNAME, GetSensor.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setDRSignalStatusResponse")
+    public JAXBElement<SetDRSignalStatusResponse> createSetDRSignalStatusResponse(SetDRSignalStatusResponse value) {
+        return new JAXBElement<SetDRSignalStatusResponse>(_SetDRSignalStatusResponse_QNAME, SetDRSignalStatusResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedValuesForSensor }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllSignalsForUseCaseResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedValuesForSensor")
-    public JAXBElement<GetAggregatedValuesForSensor> createGetAggregatedValuesForSensor(GetAggregatedValuesForSensor value) {
-        return new JAXBElement<GetAggregatedValuesForSensor>(_GetAggregatedValuesForSensor_QNAME, GetAggregatedValuesForSensor.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllSignalsForUseCaseResponse")
+    public JAXBElement<GetAllSignalsForUseCaseResponse> createGetAllSignalsForUseCaseResponse(GetAllSignalsForUseCaseResponse value) {
+        return new JAXBElement<GetAllSignalsForUseCaseResponse>(_GetAllSignalsForUseCaseResponse_QNAME, GetAllSignalsForUseCaseResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorsByRange }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalIdsBySignalStatus }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorsByRange")
-    public JAXBElement<GetBinaryValuesForSensorsByRange> createGetBinaryValuesForSensorsByRange(GetBinaryValuesForSensorsByRange value) {
-        return new JAXBElement<GetBinaryValuesForSensorsByRange>(_GetBinaryValuesForSensorsByRange_QNAME, GetBinaryValuesForSensorsByRange.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalIdsBySignalStatus")
+    public JAXBElement<GetSignalIdsBySignalStatus> createGetSignalIdsBySignalStatus(GetSignalIdsBySignalStatus value) {
+        return new JAXBElement<GetSignalIdsBySignalStatus>(_GetSignalIdsBySignalStatus_QNAME, GetSignalIdsBySignalStatus.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensorsByAnnotation }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllSignalsForUseCase }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensorsByAnnotation")
-    public JAXBElement<GetLocationSensorsByAnnotation> createGetLocationSensorsByAnnotation(GetLocationSensorsByAnnotation value) {
-        return new JAXBElement<GetLocationSensorsByAnnotation>(_GetLocationSensorsByAnnotation_QNAME, GetLocationSensorsByAnnotation.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllSignalsForUseCase")
+    public JAXBElement<GetAllSignalsForUseCase> createGetAllSignalsForUseCase(GetAllSignalsForUseCase value) {
+        return new JAXBElement<GetAllSignalsForUseCase>(_GetAllSignalsForUseCase_QNAME, GetAllSignalsForUseCase.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocation }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllDRUseCases }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocation")
-    public JAXBElement<GetLocation> createGetLocation(GetLocation value) {
-        return new JAXBElement<GetLocation>(_GetLocation_QNAME, GetLocation.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllDRUseCases")
+    public JAXBElement<GetAllDRUseCases> createGetAllDRUseCases(GetAllDRUseCases value) {
+        return new JAXBElement<GetAllDRUseCases>(_GetAllDRUseCases_QNAME, GetAllDRUseCases.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensors }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataAsCSVResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensors")
-    public JAXBElement<GetLocationSensors> createGetLocationSensors(GetLocationSensors value) {
-        return new JAXBElement<GetLocationSensors>(_GetLocationSensors_QNAME, GetLocationSensors.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataAsCSVResponse")
+    public JAXBElement<GetBaselineDataAsCSVResponse> createGetBaselineDataAsCSVResponse(GetBaselineDataAsCSVResponse value) {
+        return new JAXBElement<GetBaselineDataAsCSVResponse>(_GetBaselineDataAsCSVResponse_QNAME, GetBaselineDataAsCSVResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link UploadSensorDataResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetUserFeedback }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadSensorDataResponse")
-    public JAXBElement<UploadSensorDataResponse> createUploadSensorDataResponse(UploadSensorDataResponse value) {
-        return new JAXBElement<UploadSensorDataResponse>(_UploadSensorDataResponse_QNAME, UploadSensorDataResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setUserFeedback")
+    public JAXBElement<SetUserFeedback> createSetUserFeedback(SetUserFeedback value) {
+        return new JAXBElement<SetUserFeedback>(_SetUserFeedback_QNAME, SetUserFeedback.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedValuesForSensorResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineData }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedValuesForSensorResponse")
-    public JAXBElement<GetAggregatedValuesForSensorResponse> createGetAggregatedValuesForSensorResponse(GetAggregatedValuesForSensorResponse value) {
-        return new JAXBElement<GetAggregatedValuesForSensorResponse>(_GetAggregatedValuesForSensorResponse_QNAME, GetAggregatedValuesForSensorResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineData")
+    public JAXBElement<UploadBaselineData> createUploadBaselineData(UploadBaselineData value) {
+        return new JAXBElement<UploadBaselineData>(_UploadBaselineData_QNAME, UploadBaselineData.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorByRange }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link UploadBaselineDataResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorByRange")
-    public JAXBElement<GetValuesForSensorByRange> createGetValuesForSensorByRange(GetValuesForSensorByRange value) {
-        return new JAXBElement<GetValuesForSensorByRange>(_GetValuesForSensorByRange_QNAME, GetValuesForSensorByRange.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "uploadBaselineDataResponse")
+    public JAXBElement<UploadBaselineDataResponse> createUploadBaselineDataResponse(UploadBaselineDataResponse value) {
+        return new JAXBElement<UploadBaselineDataResponse>(_UploadBaselineDataResponse_QNAME, UploadBaselineDataResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLastValueForSensor }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancelSignalForLocationResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLastValueForSensor")
-    public JAXBElement<GetLastValueForSensor> createGetLastValueForSensor(GetLastValueForSensor value) {
-        return new JAXBElement<GetLastValueForSensor>(_GetLastValueForSensor_QNAME, GetLastValueForSensor.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "cancelSignalForLocationResponse")
+    public JAXBElement<CancelSignalForLocationResponse> createCancelSignalForLocationResponse(CancelSignalForLocationResponse value) {
+        return new JAXBElement<CancelSignalForLocationResponse>(_CancelSignalForLocationResponse_QNAME, CancelSignalForLocationResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorByRangeResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDetailsByLocationAndDRSignalIdResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorByRangeResponse")
-    public JAXBElement<GetBinaryValuesForSensorByRangeResponse> createGetBinaryValuesForSensorByRangeResponse(GetBinaryValuesForSensorByRangeResponse value) {
-        return new JAXBElement<GetBinaryValuesForSensorByRangeResponse>(_GetBinaryValuesForSensorByRangeResponse_QNAME, GetBinaryValuesForSensorByRangeResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDetailsByLocationAndDRSignalIdResponse")
+    public JAXBElement<GetDetailsByLocationAndDRSignalIdResponse> createGetDetailsByLocationAndDRSignalIdResponse(GetDetailsByLocationAndDRSignalIdResponse value) {
+        return new JAXBElement<GetDetailsByLocationAndDRSignalIdResponse>(_GetDetailsByLocationAndDRSignalIdResponse_QNAME, GetDetailsByLocationAndDRSignalIdResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetExportedData }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPerformanceIndicatorResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getExportedData")
-    public JAXBElement<GetExportedData> createGetExportedData(GetExportedData value) {
-        return new JAXBElement<GetExportedData>(_GetExportedData_QNAME, GetExportedData.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getPerformanceIndicatorResponse")
+    public JAXBElement<GetPerformanceIndicatorResponse> createGetPerformanceIndicatorResponse(GetPerformanceIndicatorResponse value) {
+        return new JAXBElement<GetPerformanceIndicatorResponse>(_GetPerformanceIndicatorResponse_QNAME, GetPerformanceIndicatorResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAggregatedBinaryValuesForSensors }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTaskDefinitions }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAggregatedBinaryValuesForSensors")
-    public JAXBElement<GetAggregatedBinaryValuesForSensors> createGetAggregatedBinaryValuesForSensors(GetAggregatedBinaryValuesForSensors value) {
-        return new JAXBElement<GetAggregatedBinaryValuesForSensors>(_GetAggregatedBinaryValuesForSensors_QNAME, GetAggregatedBinaryValuesForSensors.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTaskDefinitions")
+    public JAXBElement<GetTaskDefinitions> createGetTaskDefinitions(GetTaskDefinitions value) {
+        return new JAXBElement<GetTaskDefinitions>(_GetTaskDefinitions_QNAME, GetTaskDefinitions.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetValuesForSensorDropMissing }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetAccessibleLocationsResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getValuesForSensorDropMissing")
-    public JAXBElement<GetValuesForSensorDropMissing> createGetValuesForSensorDropMissing(GetValuesForSensorDropMissing value) {
-        return new JAXBElement<GetValuesForSensorDropMissing>(_GetValuesForSensorDropMissing_QNAME, GetValuesForSensorDropMissing.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAccessibleLocationsResponse")
+    public JAXBElement<GetAccessibleLocationsResponse> createGetAccessibleLocationsResponse(GetAccessibleLocationsResponse value) {
+        return new JAXBElement<GetAccessibleLocationsResponse>(_GetAccessibleLocationsResponse_QNAME, GetAccessibleLocationsResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllLocations }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalPerformanceStatusResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getAllLocations")
-    public JAXBElement<GetAllLocations> createGetAllLocations(GetAllLocations value) {
-        return new JAXBElement<GetAllLocations>(_GetAllLocations_QNAME, GetAllLocations.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalPerformanceStatusResponse")
+    public JAXBElement<GetDRSignalPerformanceStatusResponse> createGetDRSignalPerformanceStatusResponse(GetDRSignalPerformanceStatusResponse value) {
+        return new JAXBElement<GetDRSignalPerformanceStatusResponse>(_GetDRSignalPerformanceStatusResponse_QNAME, GetDRSignalPerformanceStatusResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetBinaryValuesForSensorsByRangeDropMissing }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReportDREventDataResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBinaryValuesForSensorsByRangeDropMissing")
-    public JAXBElement<GetBinaryValuesForSensorsByRangeDropMissing> createGetBinaryValuesForSensorsByRangeDropMissing(GetBinaryValuesForSensorsByRangeDropMissing value) {
-        return new JAXBElement<GetBinaryValuesForSensorsByRangeDropMissing>(_GetBinaryValuesForSensorsByRangeDropMissing_QNAME, GetBinaryValuesForSensorsByRangeDropMissing.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "reportDREventDataResponse")
+    public JAXBElement<ReportDREventDataResponse> createReportDREventDataResponse(ReportDREventDataResponse value) {
+        return new JAXBElement<ReportDREventDataResponse>(_ReportDREventDataResponse_QNAME, ReportDREventDataResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensorsByAnnotationResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByEventStatusesResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensorsByAnnotationResponse")
-    public JAXBElement<GetLocationSensorsByAnnotationResponse> createGetLocationSensorsByAnnotationResponse(GetLocationSensorsByAnnotationResponse value) {
-        return new JAXBElement<GetLocationSensorsByAnnotationResponse>(_GetLocationSensorsByAnnotationResponse_QNAME, GetLocationSensorsByAnnotationResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByEventStatusesResponse")
+    public JAXBElement<GetDRSignalsByEventStatusesResponse> createGetDRSignalsByEventStatusesResponse(GetDRSignalsByEventStatusesResponse value) {
+        return new JAXBElement<GetDRSignalsByEventStatusesResponse>(_GetDRSignalsByEventStatusesResponse_QNAME, GetDRSignalsByEventStatusesResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetSensorValuesAsCsvZipFile }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserFeedbackForLocation }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSensorValuesAsCsvZipFile")
-    public JAXBElement<GetSensorValuesAsCsvZipFile> createGetSensorValuesAsCsvZipFile(GetSensorValuesAsCsvZipFile value) {
-        return new JAXBElement<GetSensorValuesAsCsvZipFile>(_GetSensorValuesAsCsvZipFile_QNAME, GetSensorValuesAsCsvZipFile.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getUserFeedbackForLocation")
+    public JAXBElement<GetUserFeedbackForLocation> createGetUserFeedbackForLocation(GetUserFeedbackForLocation value) {
+        return new JAXBElement<GetUserFeedbackForLocation>(_GetUserFeedbackForLocation_QNAME, GetUserFeedbackForLocation.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationSensorsByCategoryResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDRSignalsByLocationAndStatuses }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getLocationSensorsByCategoryResponse")
-    public JAXBElement<GetLocationSensorsByCategoryResponse> createGetLocationSensorsByCategoryResponse(GetLocationSensorsByCategoryResponse value) {
-        return new JAXBElement<GetLocationSensorsByCategoryResponse>(_GetLocationSensorsByCategoryResponse_QNAME, GetLocationSensorsByCategoryResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDRSignalsByLocationAndStatuses")
+    public JAXBElement<GetDRSignalsByLocationAndStatuses> createGetDRSignalsByLocationAndStatuses(GetDRSignalsByLocationAndStatuses value) {
+        return new JAXBElement<GetDRSignalsByLocationAndStatuses>(_GetDRSignalsByLocationAndStatuses_QNAME, GetDRSignalsByLocationAndStatuses.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignalDetailsForLocationInInterval }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getSignalDetailsForLocationInInterval")
+    public JAXBElement<GetSignalDetailsForLocationInInterval> createGetSignalDetailsForLocationInInterval(GetSignalDetailsForLocationInInterval value) {
+        return new JAXBElement<GetSignalDetailsForLocationInInterval>(_GetSignalDetailsForLocationInInterval_QNAME, GetSignalDetailsForLocationInInterval.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserFeedbackForLocationResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getUserFeedbackForLocationResponse")
+    public JAXBElement<GetUserFeedbackForLocationResponse> createGetUserFeedbackForLocationResponse(GetUserFeedbackForLocationResponse value) {
+        return new JAXBElement<GetUserFeedbackForLocationResponse>(_GetUserFeedbackForLocationResponse_QNAME, GetUserFeedbackForLocationResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link StoreAndActivateSignal }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "storeAndActivateSignal")
+    public JAXBElement<StoreAndActivateSignal> createStoreAndActivateSignal(StoreAndActivateSignal value) {
+        return new JAXBElement<StoreAndActivateSignal>(_StoreAndActivateSignal_QNAME, StoreAndActivateSignal.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetDRSignalStatus }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setDRSignalStatus")
+    public JAXBElement<SetDRSignalStatus> createSetDRSignalStatus(SetDRSignalStatus value) {
+        return new JAXBElement<SetDRSignalStatus>(_SetDRSignalStatus_QNAME, SetDRSignalStatus.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineDataResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineDataResponse")
+    public JAXBElement<GetBaselineDataResponse> createGetBaselineDataResponse(GetBaselineDataResponse value) {
+        return new JAXBElement<GetBaselineDataResponse>(_GetBaselineDataResponse_QNAME, GetBaselineDataResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReportDREventData }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "reportDREventData")
+    public JAXBElement<ReportDREventData> createReportDREventData(ReportDREventData value) {
+        return new JAXBElement<ReportDREventData>(_ReportDREventData_QNAME, ReportDREventData.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetUserFeedbackResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setUserFeedbackResponse")
+    public JAXBElement<SetUserFeedbackResponse> createSetUserFeedbackResponse(SetUserFeedbackResponse value) {
+        return new JAXBElement<SetUserFeedbackResponse>(_SetUserFeedbackResponse_QNAME, SetUserFeedbackResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link StoreAndActivateSignalResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "storeAndActivateSignalResponse")
+    public JAXBElement<StoreAndActivateSignalResponse> createStoreAndActivateSignalResponse(StoreAndActivateSignalResponse value) {
+        return new JAXBElement<StoreAndActivateSignalResponse>(_StoreAndActivateSignalResponse_QNAME, StoreAndActivateSignalResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddBaseline }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "addBaseline")
+    public JAXBElement<AddBaseline> createAddBaseline(AddBaseline value) {
+        return new JAXBElement<AddBaseline>(_AddBaseline_QNAME, AddBaseline.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTaskDefinitionsResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getTaskDefinitionsResponse")
+    public JAXBElement<GetTaskDefinitionsResponse> createGetTaskDefinitionsResponse(GetTaskDefinitionsResponse value) {
+        return new JAXBElement<GetTaskDefinitionsResponse>(_GetTaskDefinitionsResponse_QNAME, GetTaskDefinitionsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselineData }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselineData")
+    public JAXBElement<GetBaselineData> createGetBaselineData(GetBaselineData value) {
+        return new JAXBElement<GetBaselineData>(_GetBaselineData_QNAME, GetBaselineData.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SetAcceptanceStatusResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "setAcceptanceStatusResponse")
+    public JAXBElement<SetAcceptanceStatusResponse> createSetAcceptanceStatusResponse(SetAcceptanceStatusResponse value) {
+        return new JAXBElement<SetAcceptanceStatusResponse>(_SetAcceptanceStatusResponse_QNAME, SetAcceptanceStatusResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetDetailsByLocationAndDRSignalId }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getDetailsByLocationAndDRSignalId")
+    public JAXBElement<GetDetailsByLocationAndDRSignalId> createGetDetailsByLocationAndDRSignalId(GetDetailsByLocationAndDRSignalId value) {
+        return new JAXBElement<GetDetailsByLocationAndDRSignalId>(_GetDetailsByLocationAndDRSignalId_QNAME, GetDetailsByLocationAndDRSignalId.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetBaselines }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://secured.services.wattalyst.org/", name = "getBaselines")
+    public JAXBElement<GetBaselines> createGetBaselines(GetBaselines value) {
+        return new JAXBElement<GetBaselines>(_GetBaselines_QNAME, GetBaselines.class, null, value);
     }
 
 }

@@ -2,7 +2,6 @@
 package org.wattalyst.services.secured;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -31,7 +30,7 @@ public class SecuredDataAccessService
     private final static QName SECUREDDATAACCESSSERVICE_QNAME = new QName("http://secured.services.wattalyst.org/", "SecuredDataAccessService");
 
     static {
-        URL url = null;
+    	URL url = null;
         WebServiceException e = null;
         try {
             url = new URL(setConfigUrl());
@@ -43,18 +42,16 @@ public class SecuredDataAccessService
     }
 
     /**
-	 * 
-	 * @param port
-	 * @return the authentication token
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	private static String setConfigUrl() throws FileNotFoundException, IOException{
-		Properties prop = new Properties();
+     * 
+     * @return
+     * @throws IOException
+     */
+    private static String setConfigUrl() throws IOException{
+    	Properties prop = new Properties();
     	prop.load(new FileInputStream("webserver.config"));
 		String dataWsdlUrl = prop.getProperty("dataWsdlUrl");
 		return dataWsdlUrl;
-	}
+    }
 
     public SecuredDataAccessService() {
         super(__getWsdlLocation(), SECUREDDATAACCESSSERVICE_QNAME);

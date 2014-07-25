@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="fullQualifiedNames" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="start" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="end" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="quantization" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="quantization" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,8 +49,10 @@ public class GetAggregatedBinaryValuesForSensors {
     protected List<String> fullQualifiedNames;
     protected long start;
     protected long end;
-    protected String quantization;
-    protected String type;
+    @XmlElement(nillable = true)
+    protected List<String> quantization;
+    @XmlElement(nillable = true)
+    protected List<String> type;
 
     /**
      * Gets the value of the authenticationToken property.
@@ -140,49 +142,59 @@ public class GetAggregatedBinaryValuesForSensors {
     /**
      * Gets the value of the quantization property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getQuantization() {
-        return quantization;
-    }
-
-    /**
-     * Sets the value of the quantization property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the quantization property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getQuantization().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
      */
-    public void setQuantization(String value) {
-        this.quantization = value;
+    public List<String> getQuantization() {
+        if (quantization == null) {
+            quantization = new ArrayList<String>();
+        }
+        return this.quantization;
     }
 
     /**
      * Gets the value of the type property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Sets the value of the type property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the type property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
      */
-    public void setType(String value) {
-        this.type = value;
+    public List<String> getType() {
+        if (type == null) {
+            type = new ArrayList<String>();
+        }
+        return this.type;
     }
 
 }
