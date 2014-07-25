@@ -142,13 +142,13 @@ public class BaselineTask {
 		WebserverDataReader reader = new WebserverDataReader();
 		
 		// 1. Retrieve all sensors
-    		for(String sensor : reader.getSensors()){
+    	for(String sensor : reader.getSensors()){
 						
 			// 2. Extract the field trial location of the sensor
 			String loc = sensor.split("\\.")[1];
 			if(loc.equalsIgnoreCase(locationStr)){
 		
-				// 2. Wattalyst DB has far more baseline IDs than needed,
+				// 3. Wattalyst DB has far more baseline IDs than needed,
 				// so we filter out those that are not of interest
 				if(!toBeBaselined.contains(sensor))
 					continue;
@@ -156,11 +156,13 @@ public class BaselineTask {
 				// 4. Retrieve baselines for the sensor
 				List<String> baselines = reader.getBaselines(sensor);
 				if(!baselines.isEmpty()){
+					
 					// 5. Retrieve sensor historic data and write to file
 					EnergyData e = new EnergyData();
 					e.compute(sensor, startDate, endDate, true);
 					e.removeOutliers(sensor);
 					e.writeResultToFile(sensor + ".txt");
+					
 					// 6. Cycle over baselines
 					for(String baselineID : baselines){
 						
