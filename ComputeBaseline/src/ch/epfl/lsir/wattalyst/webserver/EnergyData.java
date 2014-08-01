@@ -78,8 +78,8 @@ public class EnergyData {
 			long maxTs = Long.MIN_VALUE;
 			while( (line = br.readLine()) != null )
 			{
-				long ts = Long.valueOf(line.split(",")[3]);
-				double value = Double.valueOf(line.split(",")[2]);
+				long ts = Long.valueOf(line.split(",")[2]);
+				double value = Double.valueOf(line.split(",")[1]);
 				minTs = ts < minTs ? ts : minTs;
 				maxTs = ts > maxTs ? ts : maxTs;
 				sortedSet.add(new TimestampValue(ts, value));
