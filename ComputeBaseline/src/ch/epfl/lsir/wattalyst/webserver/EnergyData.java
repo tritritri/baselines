@@ -29,9 +29,13 @@ public class EnergyData {
 		endCal = Calendar.getInstance();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public SensorReadings getData(){
 		return energy;
-	}
+	}	
 	
 	/**
 	 * 
@@ -182,14 +186,12 @@ public class EnergyData {
 	 * @param maxCap
 	 */
 	public void removeOutliers(double minCap, double maxCap) {
-		if(energy.size() > 0){
-			for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
-				if(energy.get(timestamp) > maxCap){
-					energy.insert(timestamp, 0);
-				}
-				else if(energy.get(timestamp) < minCap){
-					energy.insert(timestamp, 0);
-				}
+		for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
+			if(energy.get(timestamp) > maxCap){
+				energy.insert(timestamp, 0);
+			}
+			else if(energy.get(timestamp) < minCap){
+				energy.insert(timestamp, 0);
 			}
 		}
 	}	

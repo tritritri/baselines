@@ -160,39 +160,44 @@ public class BaselineTask {
 					// 5. Retrieve sensor historic data and write to file
 					EnergyData e = new EnergyData();
 					e.compute(sensor, startDate, endDate, true);
-					e.removeOutliers(sensor);
-					e.writeResultToFile(sensor + ".txt");
 					
-					// 6. Cycle over baselines
-					for(String baselineID : baselines){
+					// 6. If there is data available
+					if(e.getData().size() > 0){
 						
-						try {
-						
-							// 7. Compute baseline
-							HashMap<Long,Byte> exclDays = parseExcludedDays(excludeDaysStr);
-							String baselineClass = getBaselineClass(baselineID);
-							Baseline b = (Baseline) Class.forName(baselineClass).newInstance();
-							b.compute(sensor + ".txt", targetDate, targetDate, exclDays);
+						e.removeOutliers(sensor);
+						e.writeResultToFile(sensor + ".txt");
+					
+						// 7. Cycle over baselines
+						for(String baselineID : baselines){
 							
-							// 8. Store baseline
-							b.writeResultToWattalystDB(baselineID);
-							System.out.println("Computed baseline " + baselineID);
-							b.writeResult(System.out);
+							try {
 							
-						} catch (InstantiationException e1) {
-							e1.printStackTrace();
-						} catch (IllegalAccessException e1) {
-							e1.printStackTrace();
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (RuntimeException e1) {
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						} catch (ParseException e1) {
-							e1.printStackTrace();
-						} catch (java.text.ParseException e1) {
-							e1.printStackTrace();
+								// 8. Compute baseline
+								HashMap<Long,Byte> exclDays = parseExcludedDays(excludeDaysStr);
+								String baselineClass = getBaselineClass(baselineID);
+								Baseline b = (Baseline) Class.forName(baselineClass).newInstance();
+								b.compute(sensor + ".txt", targetDate, targetDate, exclDays);
+								
+								// 9. Store baseline
+								b.writeResultToWattalystDB(baselineID);
+								System.out.println("Computed baseline " + baselineID);
+								b.writeResult(System.out);
+								
+							} catch (InstantiationException e1) {
+								e1.printStackTrace();
+							} catch (IllegalAccessException e1) {
+								e1.printStackTrace();
+							} catch (ClassNotFoundException e1) {
+								e1.printStackTrace();
+							} catch (RuntimeException e1) {
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							} catch (ParseException e1) {
+								e1.printStackTrace();
+							} catch (java.text.ParseException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 				}
