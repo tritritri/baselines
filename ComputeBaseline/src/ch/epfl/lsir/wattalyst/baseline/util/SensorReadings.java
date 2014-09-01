@@ -32,6 +32,13 @@ public class SensorReadings {
 		minDate = 0;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public int size(){
+		return data.size();
+	}
 	
 	/**
 	 * Inserting date and reading.

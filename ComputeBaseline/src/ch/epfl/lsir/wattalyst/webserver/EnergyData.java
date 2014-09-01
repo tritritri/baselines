@@ -182,12 +182,14 @@ public class EnergyData {
 	 * @param maxCap
 	 */
 	public void removeOutliers(double minCap, double maxCap) {
-		for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
-			if(energy.get(timestamp) > maxCap){
-				energy.insert(timestamp, 0);
-			}
-			else if(energy.get(timestamp) < minCap){
-				energy.insert(timestamp, 0);
+		if(energy.size() > 0){
+			for(long timestamp = energy.getMinDate(); timestamp <= energy.getMaxDate(); timestamp = timestamp + 3600000){
+				if(energy.get(timestamp) > maxCap){
+					energy.insert(timestamp, 0);
+				}
+				else if(energy.get(timestamp) < minCap){
+					energy.insert(timestamp, 0);
+				}
 			}
 		}
 	}	
