@@ -56,7 +56,9 @@ public class RetrieveEnergyData {
 		// retrieve the energy data
 		EnergyData e = new EnergyData();
 		e.compute(sensorName, start, end, true);
-		e.removeOutliers(sensorName);
+		if(e.getData().size() > 0){
+			e.removeOutliers(sensorName);
+		}
 		
 		// output the result
 		if (cmd.hasOption("o")){
