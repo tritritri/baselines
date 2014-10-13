@@ -98,8 +98,17 @@ public class ComputeBaseline {
 			Constants.VERBOSE=0;
 		}
 		
-		// if horizon is set
+		// if timezone is set
+		if (cmd.hasOption("t")){
+			Constants.TIMEZONE_REF = cmd.getOptionValue("t");
+		}
+
+		if (cmd.hasOption("d")) {
+			// if end date is set
+			endDate = cmd.getOptionValue("d");			
+		} else 
 		if (cmd.hasOption("z")){
+			// if horizon is set
 			int hz = Integer.parseInt(cmd.getOptionValue("z")) - 1;
 			SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 			formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
@@ -110,11 +119,6 @@ public class ComputeBaseline {
 			endDate = formatter.format(endCal.getTime());
 		}
 	
-		// if timezone is set
-		if (cmd.hasOption("t")){
-			Constants.TIMEZONE_REF = cmd.getOptionValue("t");
-		}
-
 		// check if endDate >= startDate
 		SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT);
 		formatter.setTimeZone(TimeZone.getTimeZone(Constants.TIMEZONE_REF));
@@ -156,7 +160,10 @@ public class ComputeBaseline {
 		Options options = new Options();
 		options.addOption("v", "verbose", false, "Print some debugging information.");
 		options.addOption("o", "output", true, "Write the baseline into a file.");
-		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date).");
+		options.addOption("d", "endDate", true, "End date. Compute the baseline from TARGETDATE up to this date (inclusive). " +
+				"It is of form yyyy-MM-dd. Cannot be used together with option -z.");
+		options.addOption("z", "horizon", true, "Baseline horizon. The number of days the baseline computed (starts from the starting date). " +
+				"Cannot be used together with option -d.");
 		options.addOption("e", "excludeDays", true, "A file containing a list of date to be excluded from historical data for computing baseline. One date per line with format yyyy-MM-dd");
 		options.addOption("h", "help", false, "Help. Print this message.");		
 		options.addOption("t", "timezone", true, "Use the specified time zone instead of local time zone. " +
