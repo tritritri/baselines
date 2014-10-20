@@ -5,8 +5,8 @@ import java.util.Calendar;
 
 import ch.epfl.lsir.wattalyst.baseline.util.Util;
 /**
- * Generic class for Middle X out of Y days baseline.
- * Such as: Mid4Of6.
+ * Generic class for Low X out of Y days baseline.
+ * Such as: Low4Of5.
  * 
  * @author Tri Kurniawan Wijaya
  * @date   2013.02.27
